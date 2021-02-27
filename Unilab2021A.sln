@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unilab2020A", "Unilab2020A\Unilab2020A.csproj", "{1B010ED2-C3E5-4E54-B16E-DEED38C0E3EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unilab2021A", "Unilab2021A\Unilab2021A.csproj", "{1B010ED2-C3E5-4E54-B16E-DEED38C0E3EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

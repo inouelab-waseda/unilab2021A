@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Unilab2020A
+namespace Unilab2021A
 {
     static class Program
     {

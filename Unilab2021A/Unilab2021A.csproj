@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1B010ED2-C3E5-4E54-B16E-DEED38C0E3EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Unilab2020A</RootNamespace>
-    <AssemblyName>Unilab2020A</AssemblyName>
+    <RootNamespace>Unilab2021A</RootNamespace>
+    <AssemblyName>Unilab2021A</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -67,6 +67,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,5 +1,5 @@
 ﻿
-namespace Unilab2020A.Forms
+namespace Unilab2021A.Forms
 {
     partial class GameForm
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Unilab2020A.Forms
+namespace Unilab2021A.Forms
 {
     public partial class GameForm : Form
     {
