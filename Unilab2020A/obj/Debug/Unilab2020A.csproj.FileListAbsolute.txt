@@ -1,0 +1,10 @@
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\bin\Debug\Unilab2020A.exe.config
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\bin\Debug\Unilab2020A.exe
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\bin\Debug\Unilab2020A.pdb
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.csprojAssemblyReference.cache
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.Forms.GameForm.resources
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.Properties.Resources.resources
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.csproj.GenerateResource.cache
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.csproj.CoreCompileInputs.cache
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.exe
+C:\Users\kasai\Projects\Unilab2020A\Unilab2020A\obj\Debug\Unilab2020A.pdb
