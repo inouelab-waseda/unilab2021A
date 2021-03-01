@@ -21,5 +21,10 @@ namespace Unilab2021A.Forms
         {
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

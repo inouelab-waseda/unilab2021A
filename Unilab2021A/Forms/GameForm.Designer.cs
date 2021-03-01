@@ -35,11 +35,12 @@ namespace Unilab2021A.Forms
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(391, 31);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(124, 25);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "test2";
+            this.textBox1.Text = "test3";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // GameForm
             // 
@@ -47,7 +48,7 @@ namespace Unilab2021A.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 540);
             this.Controls.Add(this.textBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GameForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.GameForm_Load);
