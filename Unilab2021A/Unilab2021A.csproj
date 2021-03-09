@@ -52,12 +52,21 @@
     <Compile Include="Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TestStage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TestStage.Designer.cs">
+      <DependentUpon>TestStage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\Types.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TestStage.resx">
+      <DependentUpon>TestStage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -84,7 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fields\" />
-    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\snowman.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

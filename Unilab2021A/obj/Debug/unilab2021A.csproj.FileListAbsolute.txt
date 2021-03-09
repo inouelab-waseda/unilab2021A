@@ -18,3 +18,14 @@ C:\Users\kasai\Projects\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.csproj.Gen
 C:\Users\kasai\Projects\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.csproj.CoreCompileInputs.cache
 C:\Users\kasai\Projects\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.exe
 C:\Users\kasai\Projects\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.pdb
+C:\Users\ryota\unilab2021A\Unilab2021A\bin\Debug\Unilab2021A.exe.config
+C:\Users\ryota\unilab2021A\Unilab2021A\bin\Debug\Unilab2021A.exe
+C:\Users\ryota\unilab2021A\Unilab2021A\bin\Debug\Unilab2021A.pdb
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.csprojAssemblyReference.cache
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.Forms.GameForm.resources
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.Forms.TestStage.resources
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.Properties.Resources.resources
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.csproj.GenerateResource.cache
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.csproj.CoreCompileInputs.cache
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.exe
+C:\Users\ryota\unilab2021A\Unilab2021A\obj\Debug\Unilab2021A.pdb

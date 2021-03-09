@@ -16,7 +16,7 @@ namespace Unilab2021A
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Forms.GameForm());
+            Application.Run(new Forms.TestStage());
         }
     }
 }
