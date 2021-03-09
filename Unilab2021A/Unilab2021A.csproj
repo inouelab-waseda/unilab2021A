@@ -53,7 +53,9 @@
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Types.cs" />
+    <Compile Include="Interfaces\IPerson.cs" />
     <Compile Include="Objects\GameObject.cs" />
+    <Compile Include="Objects\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\GameForm.resx">
