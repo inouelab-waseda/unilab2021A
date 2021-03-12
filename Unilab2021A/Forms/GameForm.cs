@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unilab2021A.Objects;
 
 //完成に向けてすること------------------------------------------------------------------------
 //max_countはtextboxで、何回繰り返すかを書く→あとからこれを矢印の画像に対応するように変更
@@ -17,9 +18,11 @@ namespace Unilab2021A.Forms
 {
     public partial class GameForm : Form
     {
+        Person person;
         public GameForm()
         {
             InitializeComponent();
+            person = new Person();
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -32,7 +35,7 @@ namespace Unilab2021A.Forms
             //画像ファイルを読み込んで、Imageオブジェクトとして取得する
             Image img = Image.FromFile(@".\Images\Player_Right.jpg");
             //画像をcanvasの座標(0, 10)の位置に描画する
-            g.DrawImage(img, 0, 10, img.Width/2, img.Height/2);
+            g.DrawImage(img, 0, 10, img.Width / 2, img.Height / 2);
             //Imageオブジェクトのリソースを解放する
             img.Dispose();
 
@@ -86,26 +89,26 @@ namespace Unilab2021A.Forms
             //現在の繰り返し回数をcout_labelから受け取る
             i = int.Parse(cout_label.Text);
 
+            //描画先とするImageオブジェクトを作成する
+            Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            //ImageオブジェクトのGraphicsオブジェクトを作成する
+            Graphics g = Graphics.FromImage(canvas);
+
+            //画像ファイルを読み込んで、Imageオブジェクトとして取得する
+            Image img = Image.FromFile(@".\Images\Player_Right.jpg");
+
             if (i != count )
             {
-                //描画先とするImageオブジェクトを作成する
-                Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                //ImageオブジェクトのGraphicsオブジェクトを作成する
-                Graphics g = Graphics.FromImage(canvas);
-
-                //画像ファイルを読み込んで、Imageオブジェクトとして取得する
-                Image img = Image.FromFile(@".\Images\Player_Right.jpg");
-
                 //画像ファイルが大きかったので、サイズを半分にしている
-                var player_x = i * img.Width / 2;
+                person.X = i * img.Width / 2;
 
                 //画像をcanvasの座標(x, 10)の位置に描画する
-                g.DrawImage(img, player_x, 10, img.Width / 2, img.Height / 2);
+                g.DrawImage(img, person.X, 10, img.Width / 2, img.Height / 2);
                 //Imageオブジェクトのリソースを解放する
-                img.Dispose();
+                //img.Dispose();
 
                 //Graphicsオブジェクトのリソースを解放する
-                g.Dispose();
+                //g.Dispose();
                 //PictureBox1に表示する
                 pictureBox1.Image = canvas;
 
