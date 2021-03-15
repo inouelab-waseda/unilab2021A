@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unilab2021A.Objects;
 
@@ -23,6 +17,9 @@ namespace Unilab2021A.Forms
         {
             InitializeComponent();
             person = new Person();
+            //画像読込の開始
+            person.Image_Install();
+
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -32,15 +29,9 @@ namespace Unilab2021A.Forms
             //ImageオブジェクトのGraphicsオブジェクトを作成する
             Graphics g = Graphics.FromImage(canvas);
 
-            //画像ファイルを読み込んで、Imageオブジェクトとして取得する
-            Image img = Image.FromFile(@".\Images\Player_Right.jpg");
-            //画像をcanvasの座標(0, 10)の位置に描画する
-            g.DrawImage(img, 0, 10, img.Width / 2, img.Height / 2);
-            //Imageオブジェクトのリソースを解放する
-            img.Dispose();
+            //画像をcanvasの座標(X, Y)の位置に描画する
+            person.DrawImage(g,person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
 
-            //Graphicsオブジェクトのリソースを解放する
-            g.Dispose();
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
         }
@@ -60,15 +51,9 @@ namespace Unilab2021A.Forms
             //ImageオブジェクトのGraphicsオブジェクトを作成する
             Graphics g = Graphics.FromImage(canvas);
 
-            //画像ファイルを読み込んで、Imageオブジェクトとして取得する
-            Image img = Image.FromFile(@".\Images\Player_Right.jpg");
             //画像をcanvasの座標(0, 10)の位置に描画する
-            g.DrawImage(img, 0, 10, img.Width / 2, img.Height / 2);
-            //Imageオブジェクトのリソースを解放する
-            img.Dispose();
+            person.DrawImage(g, person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
 
-            //Graphicsオブジェクトのリソースを解放する
-            g.Dispose();
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
 
@@ -95,20 +80,16 @@ namespace Unilab2021A.Forms
             Graphics g = Graphics.FromImage(canvas);
 
             //画像ファイルを読み込んで、Imageオブジェクトとして取得する
-            Image img = Image.FromFile(@".\Images\Player_Right.jpg");
+
 
             if (i != count )
             {
                 //画像ファイルが大きかったので、サイズを半分にしている
-                person.X = i * img.Width / 2;
+                person.X = i * person.images[2].Width / 2;
 
                 //画像をcanvasの座標(x, 10)の位置に描画する
-                g.DrawImage(img, person.X, 10, img.Width / 2, img.Height / 2);
-                //Imageオブジェクトのリソースを解放する
-                //img.Dispose();
+                person.DrawImage(g, person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
 
-                //Graphicsオブジェクトのリソースを解放する
-                //g.Dispose();
                 //PictureBox1に表示する
                 pictureBox1.Image = canvas;
 
