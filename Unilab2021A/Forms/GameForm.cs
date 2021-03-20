@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Unilab2021A.Objects;
+using Unilab2021A.Helpers;
 
 //完成に向けてすること------------------------------------------------------------------------
 //max_countはtextboxで、何回繰り返すかを書く→あとからこれを矢印の画像に対応するように変更
@@ -20,6 +21,9 @@ namespace Unilab2021A.Forms
             //画像読込の開始
             person.Image_Install();
 
+            //上下左右が分かりやすいように
+            person.X = pictureBox1.Width / 3;
+            person.Y = pictureBox1.Height / 3;
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -29,8 +33,8 @@ namespace Unilab2021A.Forms
             //ImageオブジェクトのGraphicsオブジェクトを作成する
             Graphics g = Graphics.FromImage(canvas);
 
-            //画像をcanvasの座標(X, Y)の位置に描画する
-            person.DrawImage(g,person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
+            //画像をcanvasの座標(person.X, person.Y)の位置に描画する
+            person.DrawImage(g, (int)Types.Direction.Down);
 
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
@@ -43,20 +47,23 @@ namespace Unilab2021A.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //cout_labelは繰り返し回数のカウント用
-            cout_label.Text = "1";
    
             //描画先とするImageオブジェクトを作成する
             Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             //ImageオブジェクトのGraphicsオブジェクトを作成する
             Graphics g = Graphics.FromImage(canvas);
 
-            //画像をcanvasの座標(0, 10)の位置に描画する
-            person.DrawImage(g, person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
+            //リセット用(消す予定)
+            person.X = pictureBox1.Width / 3;
+            person.Y = pictureBox1.Height / 3;
+
+            //画像をcanvasの座標(person.X, person.Y)の位置に描画する
+            person.DrawImage(g, (int)Types.Direction.Down);
 
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
 
+            person.count = 0;
             //timerをスタート
             timer1.Enabled = true;
 
@@ -68,36 +75,27 @@ namespace Unilab2021A.Forms
             //何回繰り返すかを読み取る　※のちに矢印画像から読み取れるように変更
             var count = int.Parse(max_count.Text);
 
-            //現在の繰り返し回数のための変数の初期化
-            var i = 1;
-
-            //現在の繰り返し回数をcout_labelから受け取る
-            i = int.Parse(cout_label.Text);
+            //上下左右判定
+            if (comboBox1.Text == "上") person.direction = (int)Types.Direction.Up;
+            else if (comboBox1.Text == "下") person.direction = (int)Types.Direction.Down;
+            else if (comboBox1.Text == "右") person.direction = (int)Types.Direction.Right;
+            else if (comboBox1.Text == "左") person.direction = (int)Types.Direction.Left;
 
             //描画先とするImageオブジェクトを作成する
             Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             //ImageオブジェクトのGraphicsオブジェクトを作成する
             Graphics g = Graphics.FromImage(canvas);
 
-            //画像ファイルを読み込んで、Imageオブジェクトとして取得する
-
-
-            if (i != count )
+            if (person.count != count )
             {
-                //画像ファイルが大きかったので、サイズを半分にしている
-                person.X = i * person.images[2].Width / 2;
-
-                //画像をcanvasの座標(x, 10)の位置に描画する
-                person.DrawImage(g, person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
+                //画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                person.DrawImage(g, person.direction);
 
                 //PictureBox1に表示する
                 pictureBox1.Image = canvas;
 
                 //繰り返し回数を増やす
-                i++;
-
-                //labelの更新
-                cout_label.Text = i.ToString(); ;
+                person.count++;
             }
             //タイマーストップ
             else timer1.Enabled = false;       
