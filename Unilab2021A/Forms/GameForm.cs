@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Unilab2021A.Fields;
 using Unilab2021A.Objects;
 
 //完成に向けてすること------------------------------------------------------------------------
@@ -13,13 +14,21 @@ namespace Unilab2021A.Forms
     public partial class GameForm : Form
     {
         Person person;
+        Stage stage;
+        private Graphics g;
+
         public GameForm()
         {
             InitializeComponent();
             person = new Person();
+            stage = new Stage();
             //画像読込の開始
             person.Image_Install();
 
+            //描画先とするImageオブジェクトを作成する
+            Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            //ImageオブジェクトのGraphicsオブジェクトを作成する
+            g = Graphics.FromImage(canvas);
         }
 
         private void GameForm_Load(object sender, EventArgs e)
@@ -31,6 +40,8 @@ namespace Unilab2021A.Forms
 
             //画像をcanvasの座標(X, Y)の位置に描画する
             person.DrawImage(g,person.images[2], person.X, person.Y, person.images[2].Width / 2, person.images[2].Height / 2);
+
+            stage.CreateStage(g);
 
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
