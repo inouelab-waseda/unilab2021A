@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Unilab2021A.Fields;
 using Unilab2021A.Objects;
 
 //完成に向けてすること------------------------------------------------------------------------
@@ -68,6 +67,8 @@ namespace Unilab2021A.Forms
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
 
+            stage.CreateStage(g);
+
             //timerをスタート
             timer1.Enabled = true;
 
@@ -95,6 +96,8 @@ namespace Unilab2021A.Forms
 
             if (i != count )
             {
+                stage.CreateStage(g);
+
                 //画像ファイルが大きかったので、サイズを半分にしている
                 person.X = i * person.images[2].Width / 2;
 
