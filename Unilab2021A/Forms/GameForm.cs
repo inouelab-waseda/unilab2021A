@@ -97,10 +97,10 @@ namespace Unilab2021A.Forms
 
             if (person.count != count )
             {
+                stage.CreateStage(g);
+
                 //画像をcanvasの座標(person.X, person.Y)の位置に描画する
                 person.DrawImage(g, person.direction);
-
-                stage.CreateStage(g);
 
                 //PictureBox1に表示する
                 pictureBox1.Image = canvas;
