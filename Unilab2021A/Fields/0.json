@@ -1,0 +1,10 @@
+﻿{
+    "Actions": [
+        {
+            "Type": "Right"
+        },
+        {
+            "Type": "Left"
+        }
+    ]
+}

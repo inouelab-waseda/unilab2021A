@@ -102,6 +102,7 @@ namespace Unilab2021A.Forms
             this.ResumeLayout(false);
             this.PerformLayout();
 
+
         }
 
         #endregion

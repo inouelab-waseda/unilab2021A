@@ -14,10 +14,14 @@ namespace Unilab2021A.Forms
     public partial class GameForm : Form
     {
         Person person;
+        Stage stage;
+        private Graphics g;
+
         public GameForm()
         {
             InitializeComponent();
             person = new Person();
+            stage = new Stage();
             //画像読込の開始
             person.Image_Install();
 
@@ -35,6 +39,8 @@ namespace Unilab2021A.Forms
 
             //画像をcanvasの座標(person.X, person.Y)の位置に描画する
             person.DrawImage(g, (int)Types.Direction.Down);
+
+            stage.CreateStage(g);
 
             //PictureBox1に表示する
             pictureBox1.Image = canvas;
@@ -64,6 +70,9 @@ namespace Unilab2021A.Forms
             pictureBox1.Image = canvas;
 
             person.count = 0;
+
+            stage.CreateStage(g);
+
             //timerをスタート
             timer1.Enabled = true;
 
@@ -90,6 +99,8 @@ namespace Unilab2021A.Forms
             {
                 //画像をcanvasの座標(person.X, person.Y)の位置に描画する
                 person.DrawImage(g, person.direction);
+
+                stage.CreateStage(g);
 
                 //PictureBox1に表示する
                 pictureBox1.Image = canvas;
