@@ -6,41 +6,34 @@ using System.Text;
 using System.Threading.Tasks;
 using Unilab2021A.Helpers;
 using System.Windows.Forms;
+using static Unilab2021A.Helpers.Types;
+using System.IO;
+using System.Reflection;
 
 namespace Unilab2021A.Objects
 {
     class Person
     {
-        private int x, y;
-        private Graphics g;
-        public Person()
-        {
-            X = 0;
-            Y = 0;
-        }
+        private Image[] images = new Image[5];
         //playerのx座標,y座標
         public int X { get; set; }
         public int Y { get; set; }
         //playerの移動回数
-        public int count { get; set; }
+        public int Count { get; set; }
         //playerの向き
-        public int direction { get; set; }
-        //public Types.Direction Direction{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Types.Direction Direction { get; set; } = Types.Direction.None;
+        public Types.Direction Direction { get; set; }
 
-        //画像読込
-        public Image[] images = new Image[5];
+        public Graphics Graphics { get; set; }
 
-        public void Image_Install() 
+        public Person(Graphics graphics)
         {
-            //images[(int)Types.Direction.None] = Image.FromFile(@".\Images\Player_None.jpg");
-            images[(int)Types.Direction.Up] = Image.FromFile(@".\Images\Player_Up.jpg");//上の画像
-            images[(int)Types.Direction.Down] = Image.FromFile(@".\Images\Player_Down.jpg");//下の画像
-            images[(int)Types.Direction.Right] = Image.FromFile(@".\Images\Player_Right.jpg");//右の画像
-            images[(int)Types.Direction.Left] = Image.FromFile(@".\Images\Player_Left.jpg");//左の画像
-        }
+            this.Graphics = graphics;
 
-        // { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            images[(int)Direction.Up] = GetBitmap("Player_Down.png");//上の画像
+            images[(int)Types.Direction.Down] = GetBitmap("Player_Down.png");//下の画像
+            images[(int)Types.Direction.Right] = GetBitmap("Player_Right.png");//右の画像
+            images[(int)Types.Direction.Left] = GetBitmap("Player_Left.png");//左の画像
+        }
 
         public void Dispose()
         {
@@ -48,30 +41,37 @@ namespace Unilab2021A.Objects
         }
 
         //描画
-        public void DrawImage(Graphics g, int num_Direction)
+        public void DrawImage(Direction direction)
         {
-            switch (num_Direction) 
+            switch (direction) 
             {
-                /*case (int)Types.Direction.None:
-                    g.DrawImage(images[(int)Types.Direction.None], X, Y, images[(int)Types.Direction.None].Width / 2, images[(int)Types.Direction.None].Height / 2);
-                    break;*/
-                case (int)Types.Direction.Up:
-                    Y -= images[(int)Types.Direction.Up].Height / 2;
-                    g.DrawImage(images[(int)Types.Direction.Up], X, Y, images[(int)Types.Direction.Up].Width / 2, images[(int)Types.Direction.Up].Height / 2);
+                case Direction.Up:
+                    Y -= images[(int)direction].Height / 2;
                     break;
-                case (int)Types.Direction.Down:
-                    Y += images[(int)Types.Direction.Down].Height / 2;
-                    g.DrawImage(images[(int)Types.Direction.Down], X, Y, images[(int)Types.Direction.Down].Width / 2, images[(int)Types.Direction.Down].Height / 2);
+                case Direction.Down:
+                    Y += images[(int)direction].Height / 2;
                     break;
-                case (int)Types.Direction.Right:
-                    X += images[(int)Types.Direction.Right].Width / 2;
-                    g.DrawImage(images[(int)Types.Direction.Right], X, Y, images[(int)Types.Direction.Right].Width / 2, images[(int)Types.Direction.Right].Height / 2);
+                case Direction.Right:
+                    X += images[(int)direction].Width / 2;
                     break;
-                case (int)Types.Direction.Left:
-                    X -= images[(int)Types.Direction.Left].Width / 2;
-                    g.DrawImage(images[(int)Types.Direction.Left], X, Y, images[(int)Types.Direction.Left].Width / 2, images[(int)Types.Direction.Left].Height / 2);
+                case Direction.Left:
+                    X -= images[(int)direction].Width / 2;
+                    break;
+                default:
                     break;
             }
+
+            Graphics.DrawImage(images[(int)direction], X, Y, images[(int)direction].Width / 2, images[(int)direction].Height / 2);
+        }
+
+        public Bitmap GetBitmap(string name)
+        {
+            /*
+            入力:画像ファイル名
+            対象画像を読み込む
+            */
+            Bitmap bmp = new Bitmap(@".\Images\" + name);
+            return bmp;
         }
     }
 }

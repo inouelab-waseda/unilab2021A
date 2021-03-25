@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Unilab2021A.Objects;
 using Unilab2021A.Helpers;
+using static Unilab2021A.Helpers.Types;
 
 //完成に向けてすること------------------------------------------------------------------------
 //max_countはtextboxで、何回繰り返すかを書く→あとからこれを矢印の画像に対応するように変更
@@ -13,103 +14,89 @@ namespace Unilab2021A.Forms
 {
     public partial class GameForm : Form
     {
-        Person person;
-        Stage stage;
+        private Person person;
+        private Stage stage;
+        private Bitmap canvas;
+        private Bitmap itemPictureBoxCanvas;
+        private Bitmap actionPictureBoxCanvas;
         private Graphics g;
+        private Graphics itemPictureBoxGraphics;
+        private Graphics actionPictureBoxGraphics;
+        //private Field _field;
 
         public GameForm()
         {
             InitializeComponent();
-            person = new Person();
-            stage = new Stage();
-            //画像読込の開始
-            person.Image_Install();
+
+            itemPictureBoxCanvas = new Bitmap(itemPictureBox.Width * 6, itemPictureBox.Height * 6);
+            actionPictureBoxCanvas = new Bitmap(actionPictureBox.Width * 6, actionPictureBox.Height * 6);
+            canvas = new Bitmap(pictureBox1.Width*4, pictureBox1.Height*4);
+
+            itemPictureBoxGraphics = Graphics.FromImage(itemPictureBoxCanvas);
+            actionPictureBoxGraphics = Graphics.FromImage(actionPictureBoxCanvas);
+            g = Graphics.FromImage(canvas);
+
+            person = new Person(g);
+            stage = new Stage(g);
 
             //上下左右が分かりやすいように
             person.X = pictureBox1.Width / 3;
             person.Y = pictureBox1.Height / 3;
+
+            DrawStart();
+
+            stage.CreateStage();
+            person.DrawImage(Direction.Down);
+
+            DrawEnd();
         }
 
-        private void GameForm_Load(object sender, EventArgs e)
+        private void DrawStart()
         {
-            //描画先とするImageオブジェクトを作成する
-            Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            //ImageオブジェクトのGraphicsオブジェクトを作成する
-            Graphics g = Graphics.FromImage(canvas);
+            g.Clear(BackColor);
+        }
 
-            //画像をcanvasの座標(person.X, person.Y)の位置に描画する
-            person.DrawImage(g, (int)Types.Direction.Down);
-
-            stage.CreateStage(g);
-
-            //PictureBox1に表示する
+        private void DrawEnd()
+        {
             pictureBox1.Image = canvas;
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-   
-            //描画先とするImageオブジェクトを作成する
-            Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            //ImageオブジェクトのGraphicsオブジェクトを作成する
-            Graphics g = Graphics.FromImage(canvas);
-
-            //リセット用(消す予定)
-            person.X = pictureBox1.Width / 3;
-            person.Y = pictureBox1.Height / 3;
-
-            //画像をcanvasの座標(person.X, person.Y)の位置に描画する
-            person.DrawImage(g, (int)Types.Direction.Down);
-
-            //PictureBox1に表示する
-            pictureBox1.Image = canvas;
-
-            person.count = 0;
-
-            stage.CreateStage(g);
-
             //timerをスタート
             timer1.Enabled = true;
-
+            person.Count = 0;
         }
 
         //描画をtimer1で1秒ごとに処理
         private void timer1_Tick(object sender, EventArgs e)
         {
+
             //何回繰り返すかを読み取る　※のちに矢印画像から読み取れるように変更
             var count = int.Parse(max_count.Text);
 
             //上下左右判定
-            if (comboBox1.Text == "上") person.direction = (int)Types.Direction.Up;
-            else if (comboBox1.Text == "下") person.direction = (int)Types.Direction.Down;
-            else if (comboBox1.Text == "右") person.direction = (int)Types.Direction.Right;
-            else if (comboBox1.Text == "左") person.direction = (int)Types.Direction.Left;
+            if (comboBox1.Text == "上") person.Direction = Direction.Up;
+            else if (comboBox1.Text == "下") person.Direction = Direction.Down;
+            else if (comboBox1.Text == "右") person.Direction = Direction.Right;
+            else if (comboBox1.Text == "左") person.Direction = Direction.Left;
 
-            //描画先とするImageオブジェクトを作成する
-            Bitmap canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            //ImageオブジェクトのGraphicsオブジェクトを作成する
-            Graphics g = Graphics.FromImage(canvas);
-
-            if (person.count != count )
+            if (person.Count != count )
             {
-                stage.CreateStage(g);
+                DrawStart();
+                stage.CreateStage();
 
                 //画像をcanvasの座標(person.X, person.Y)の位置に描画する
-                person.DrawImage(g, person.direction);
-
-                //PictureBox1に表示する
-                pictureBox1.Image = canvas;
+                person.DrawImage(person.Direction);
 
                 //繰り返し回数を増やす
-                person.count++;
+                person.Count++;
+
+                DrawEnd();
             }
             //タイマーストップ
-            else timer1.Enabled = false;       
+            else timer1.Enabled = false;
+ 
         }
     }
 }
