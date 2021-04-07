@@ -40,8 +40,10 @@ namespace Unilab2021A.Forms
             stage = new Stage(g);
 
             //上下左右が分かりやすいように
-            person.X = pictureBox1.Width / 3;
-            person.Y = pictureBox1.Height / 3;
+            person.X_start = pictureBox1.Width / 3;
+            person.Y_start = pictureBox1.Height / 3;
+            person.X = person.X_start;
+            person.Y = person.Y_start;
 
             DrawStart();
 
@@ -97,6 +99,19 @@ namespace Unilab2021A.Forms
             //タイマーストップ
             else timer1.Enabled = false;
  
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            person.X = person.X_start;
+            person.Y = person.Y_start;
+
+            DrawStart();
+
+            stage.CreateStage();
+            person.DrawImage(Direction.Down);
+
+            DrawEnd();
         }
     }
 }

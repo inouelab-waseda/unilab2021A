@@ -18,6 +18,9 @@ namespace Unilab2021A.Objects
         //playerのx座標,y座標
         public int X { get; set; }
         public int Y { get; set; }
+        //playerのx座標,y座標の初期位置
+        public int X_start { get; set; }
+        public int Y_start { get; set; }
         //playerの移動回数
         public int Count { get; set; }
         //playerの向き
