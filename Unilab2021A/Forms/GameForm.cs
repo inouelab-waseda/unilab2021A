@@ -16,25 +16,21 @@ namespace Unilab2021A.Forms
     {
         private Person person;
         private Stage stage;
-        private Bitmap canvas;
+        private Bitmap stageCanvas;
         private Bitmap itemPictureBoxCanvas;
-        private Bitmap actionPictureBoxCanvas;
         private Graphics g;
         private Graphics itemPictureBoxGraphics;
-        private Graphics actionPictureBoxGraphics;
-        //private Field _field;
 
         public GameForm()
         {
             InitializeComponent();
 
+            //*6や*4は適当に調整する 04/12 笠井
             itemPictureBoxCanvas = new Bitmap(itemPictureBox.Width * 6, itemPictureBox.Height * 6);
-            actionPictureBoxCanvas = new Bitmap(actionPictureBox.Width * 6, actionPictureBox.Height * 6);
-            canvas = new Bitmap(pictureBox1.Width*4, pictureBox1.Height*4);
+            stageCanvas = new Bitmap(pictureBox1.Width*4, pictureBox1.Height*4);
 
             itemPictureBoxGraphics = Graphics.FromImage(itemPictureBoxCanvas);
-            actionPictureBoxGraphics = Graphics.FromImage(actionPictureBoxCanvas);
-            g = Graphics.FromImage(canvas);
+            g = Graphics.FromImage(stageCanvas);
 
             person = new Person(g);
             stage = new Stage(g);
@@ -48,7 +44,7 @@ namespace Unilab2021A.Forms
             DrawStart();
 
             stage.CreateStage();
-            person.DrawImage(Direction.Down);
+            person.DrawImage(DirectionType.Down);
 
             DrawEnd();
         }
@@ -60,11 +56,13 @@ namespace Unilab2021A.Forms
 
         private void DrawEnd()
         {
-            pictureBox1.Image = canvas;
+            pictureBox1.Image = stageCanvas;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            actionLayoutPanel.Controls.Add(new Button());
             //timerをスタート
             timer1.Enabled = true;
             person.Count = 0;
@@ -78,10 +76,10 @@ namespace Unilab2021A.Forms
             var count = int.Parse(max_count.Text);
 
             //上下左右判定
-            if (comboBox1.Text == "上") person.Direction = Direction.Up;
-            else if (comboBox1.Text == "下") person.Direction = Direction.Down;
-            else if (comboBox1.Text == "右") person.Direction = Direction.Right;
-            else if (comboBox1.Text == "左") person.Direction = Direction.Left;
+            if (comboBox1.Text == "上") person.Direction = DirectionType.Up;
+            else if (comboBox1.Text == "下") person.Direction = DirectionType.Down;
+            else if (comboBox1.Text == "右") person.Direction = DirectionType.Right;
+            else if (comboBox1.Text == "左") person.Direction = DirectionType.Left;
 
             if (person.Count != count )
             {
@@ -109,7 +107,7 @@ namespace Unilab2021A.Forms
             DrawStart();
 
             stage.CreateStage();
-            person.DrawImage(Direction.Down);
+            person.DrawImage(DirectionType.Down);
 
             DrawEnd();
         }

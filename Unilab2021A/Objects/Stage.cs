@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Unilab2021A.Fields;
+using static Unilab2021A.Helpers.Types;
 
 namespace Unilab2021A.Objects
 {
@@ -24,19 +29,32 @@ namespace Unilab2021A.Objects
         {
             // jsonファイルの読み込みなど(StageName)
             // --------
+            StageJson json = ReadFieldJson("0");
 
+            Image noneImage = Image.FromFile(@".\Images\Background.png");
+            Image enemyImage = Image.FromFile(@".\Images\Enemy.png");
 
-            Image ObjImage = Image.FromFile(@".\Images\Enemy.png");     //仮の画像
-            this.Draw(Graphics, ObjImage, ObjImage.Width * 2, 0, ObjImage.Width / 2, ObjImage.Height / 2);
-            this.Draw(Graphics, ObjImage, ObjImage.Width * 2, ObjImage.Height / 2, ObjImage.Width / 2, ObjImage.Height / 2);
-            this.Draw(Graphics, ObjImage, ObjImage.Width * 2, ObjImage.Height, ObjImage.Width / 2, ObjImage.Height / 2);
-            this.Draw(Graphics, ObjImage, ObjImage.Width * 2, ObjImage.Height * 3 / 2, ObjImage.Width / 2, ObjImage.Height / 2);
-            this.Draw(Graphics, ObjImage, ObjImage.Width * 2, ObjImage.Height * 2, ObjImage.Width / 2, ObjImage.Height / 2);
+            for (int i = 0; i < json.Path.Count; i++) {
+                if (json.Path[i].Image == ImageType.Others)
+                {
+                    Graphics.DrawImage(noneImage, json.Path[i].Position[0] * 100, json.Path[i].Position[1] * 100, noneImage.Width / 2, noneImage.Height / 2);
+                }
+                else if (json.Path[i].Image == ImageType.Enemy)
+                {
+                    Graphics.DrawImage(enemyImage, json.Path[i].Position[0] * 100, json.Path[i].Position[1] * 100, enemyImage.Width / 2, enemyImage.Height / 2);
+                }
+            }
+
         }
 
-        private void Draw(Graphics g, Image image, int x, int y, int images_width, int images_height)
+        //jsonファイルの読み出し
+        private StageJson ReadFieldJson(string name)
         {
-            g.DrawImage(image, x, y, images_width, images_height);
+            var sr = new StreamReader(@".\Fields\" + name + ".json",Encoding.GetEncoding("utf-8"));
+            var input = sr.ReadToEnd();
+            sr.Close();
+            var deserialized = JsonConvert.DeserializeObject<StageJson>(input);
+            return deserialized;
         }
     }
 }

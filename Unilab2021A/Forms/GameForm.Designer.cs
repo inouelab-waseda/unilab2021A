@@ -38,13 +38,12 @@ namespace Unilab2021A.Forms
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.itemPictureBox = new System.Windows.Forms.PictureBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.actionPictureBox = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
+            this.actionLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.actionPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -63,9 +62,9 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.itemPictureBox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.actionPictureBox, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.button1, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.resetButton, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.actionLayoutPanel, 1, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -148,15 +147,6 @@ namespace Unilab2021A.Forms
             this.textBox2.TabIndex = 9;
             this.textBox2.Text = "もってる剣";
             // 
-            // actionPictureBox
-            // 
-            this.actionPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.actionPictureBox.Location = new System.Drawing.Point(974, 199);
-            this.actionPictureBox.Name = "actionPictureBox";
-            this.actionPictureBox.Size = new System.Drawing.Size(203, 144);
-            this.actionPictureBox.TabIndex = 7;
-            this.actionPictureBox.TabStop = false;
-            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Red;
@@ -183,6 +173,13 @@ namespace Unilab2021A.Forms
             this.resetButton.UseVisualStyleBackColor = false;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
+            // actionLayoutPanel
+            // 
+            this.actionLayoutPanel.Location = new System.Drawing.Point(974, 199);
+            this.actionLayoutPanel.Name = "actionLayoutPanel";
+            this.actionLayoutPanel.Size = new System.Drawing.Size(203, 144);
+            this.actionLayoutPanel.TabIndex = 11;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -197,7 +194,6 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.actionPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -210,9 +206,9 @@ namespace Unilab2021A.Forms
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.PictureBox itemPictureBox;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.PictureBox actionPictureBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.FlowLayoutPanel actionLayoutPanel;
     }
 }

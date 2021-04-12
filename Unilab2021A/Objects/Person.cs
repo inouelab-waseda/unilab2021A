@@ -24,7 +24,7 @@ namespace Unilab2021A.Objects
         //playerの移動回数
         public int Count { get; set; }
         //playerの向き
-        public Types.Direction Direction { get; set; }
+        public DirectionType Direction { get; set; }
 
         public Graphics Graphics { get; set; }
 
@@ -32,10 +32,10 @@ namespace Unilab2021A.Objects
         {
             this.Graphics = graphics;
 
-            images[(int)Direction.Up] = GetBitmap("Player_Down.png");//上の画像
-            images[(int)Types.Direction.Down] = GetBitmap("Player_Down.png");//下の画像
-            images[(int)Types.Direction.Right] = GetBitmap("Player_Right.png");//右の画像
-            images[(int)Types.Direction.Left] = GetBitmap("Player_Left.png");//左の画像
+            images[(int)DirectionType.Up] = GetBitmap("Player_Down.png");//上の画像
+            images[(int)DirectionType.Down] = GetBitmap("Player_Down.png");//下の画像
+            images[(int)DirectionType.Right] = GetBitmap("Player_Right.png");//右の画像
+            images[(int)DirectionType.Left] = GetBitmap("Player_Left.png");//左の画像
         }
 
         public void Dispose()
@@ -44,20 +44,20 @@ namespace Unilab2021A.Objects
         }
 
         //描画
-        public void DrawImage(Direction direction)
+        public void DrawImage(DirectionType direction)
         {
             switch (direction) 
             {
-                case Direction.Up:
+                case DirectionType.Up:
                     Y -= images[(int)direction].Height / 2;
                     break;
-                case Direction.Down:
+                case DirectionType.Down:
                     Y += images[(int)direction].Height / 2;
                     break;
-                case Direction.Right:
+                case DirectionType.Right:
                     X += images[(int)direction].Width / 2;
                     break;
-                case Direction.Left:
+                case DirectionType.Left:
                     X -= images[(int)direction].Width / 2;
                     break;
                 default:
