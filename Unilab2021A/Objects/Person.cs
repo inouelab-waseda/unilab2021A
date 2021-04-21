@@ -32,7 +32,7 @@ namespace Unilab2021A.Objects
         {
             this.Graphics = graphics;
 
-            images[(int)DirectionType.Up] = GetBitmap("Player_Down.png");//上の画像
+            images[(int)DirectionType.Up] = GetBitmap("Player_Up.png");//上の画像
             images[(int)DirectionType.Down] = GetBitmap("Player_Down.png");//下の画像
             images[(int)DirectionType.Right] = GetBitmap("Player_Right.png");//右の画像
             images[(int)DirectionType.Left] = GetBitmap("Player_Left.png");//左の画像
