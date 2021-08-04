@@ -8,8 +8,7 @@ namespace Unilab2021A.Helpers
 {
     public static class Types
     {
-        public enum Instruction { IfCode, ForCode, WhileCode, Forward, TurnRight, TurnLeft, End, Stop, None }
-        public enum Direction { None, Up, Down, Right, Left, Forward, Backward }
-        public enum Obj { Wall, Enemy, Road, None }
+        public enum ImageType { Others, Road, Sword, Enemy }
+        public enum DirectionType { None, Up, Right, Down, Left }
     }
 }
