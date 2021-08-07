@@ -16,6 +16,7 @@ namespace Unilab2021A.Objects
     {
         public string StageName { get; set; }
         public Graphics Graphics { get; set; }
+        public int n_button { get; set; }
 
         public Stage(Graphics graphics)
         {

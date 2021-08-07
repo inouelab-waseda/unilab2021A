@@ -47,6 +47,10 @@ namespace Unilab2021A.Forms
             person.DrawImage(DirectionType.Down);
 
             DrawEnd();
+            stage.n_button = 3;
+            for (int i = 0; i < stage.n_button; i++) {
+               actionLayoutPanel.Controls.Add(new Button());
+            }          
         }
 
         private void DrawStart()
@@ -62,7 +66,6 @@ namespace Unilab2021A.Forms
         private void button1_Click(object sender, EventArgs e)
         {
 
-            actionLayoutPanel.Controls.Add(new Button());
             //timerをスタート
             timer1.Enabled = true;
             person.Count = 0;
