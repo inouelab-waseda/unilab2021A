@@ -47,9 +47,15 @@ namespace Unilab2021A.Forms
             person.DrawImage(DirectionType.Down);
 
             DrawEnd();
-            stage.n_button = 3;
+            stage.n_button = 3;//stage.csでjsonから受け取る
+            Button[] buttons = new Button[stage.n_button];
+            stage.button_content[0] = "↑";//ここもjsonで受け取れるといいかも
+            stage.button_content[1] = "→";
+            stage.button_content[2] = "F1";
             for (int i = 0; i < stage.n_button; i++) {
-               actionLayoutPanel.Controls.Add(new Button());
+                buttons[i] = new Button();
+                buttons[i].Text = stage.button_content[i];
+                actionLayoutPanel.Controls.Add(buttons[i]);
             }          
         }
 
