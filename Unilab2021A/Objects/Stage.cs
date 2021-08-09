@@ -16,6 +16,8 @@ namespace Unilab2021A.Objects
     {
         public string StageName { get; set; }
         public Graphics Graphics { get; set; }
+        public int n_button { get; set; }
+        public string[] button_content = new string[10];
 
         public Stage(Graphics graphics)
         {
@@ -60,6 +62,6 @@ namespace Unilab2021A.Objects
             sr.Close();
             var deserialized = JsonConvert.DeserializeObject<StageJson>(input);
             return deserialized;
-        }
+        }       
     }
 }
