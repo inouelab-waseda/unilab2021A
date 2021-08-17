@@ -20,6 +20,8 @@ namespace Unilab2021A.Forms
         private Bitmap itemPictureBoxCanvas;
         private Graphics g;
         private Graphics itemPictureBoxGraphics;
+        bool isDraging = false;
+        Point? diffPoint = null;
 
         public GameForm()
         {
@@ -45,18 +47,25 @@ namespace Unilab2021A.Forms
 
             stage.CreateStage();
             person.DrawImage(DirectionType.Down);
-
-            DrawEnd();
             stage.n_button = 3;//stage.csでjsonから受け取る
             Button[] buttons = new Button[stage.n_button];
             stage.button_content[0] = "↑";//ここもjsonで受け取れるといいかも
             stage.button_content[1] = "→";
             stage.button_content[2] = "F1";
-            for (int i = 0; i < stage.n_button; i++) {
+            
+            DrawEnd();
+
+            for (int i = 0; i < stage.n_button; i++)
+            {
                 buttons[i] = new Button();
                 buttons[i].Text = stage.button_content[i];
-                actionLayoutPanel.Controls.Add(buttons[i]);
-            }          
+                buttons[i].Location = new Point(10, 30 * i);
+                buttons[i].AllowDrop = true;
+                buttons[i].MouseDown += new MouseEventHandler(buttons_MouseDown);
+                buttons[i].MouseMove += new MouseEventHandler(buttons_MouseMove);
+                buttons[i].MouseUp += new MouseEventHandler(buttons_MouseUp);
+                panel1.Controls.Add(buttons[i]);
+            }
         }
 
         private void DrawStart()
@@ -120,5 +129,38 @@ namespace Unilab2021A.Forms
 
             DrawEnd();
         }
+
+        private void buttons_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            Cursor.Current = Cursors.Hand;
+            isDraging = true;
+            diffPoint = e.Location;
+        }
+        
+        private void buttons_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!isDraging)
+            {
+                return;
+            }
+            Button bt = (System.Windows.Forms.Button)sender;
+            int x = bt.Location.X + e.X - diffPoint.Value.X;
+            int y = bt.Location.Y + e.Y - diffPoint.Value.Y;
+
+            bt.Location = new Point(x, y);
+        }
+        void buttons_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+            Cursor.Current = Cursors.Default;
+            isDraging = false;
+        }      
     }
 }
