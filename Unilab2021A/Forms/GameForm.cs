@@ -59,12 +59,9 @@ namespace Unilab2021A.Forms
             {
                 buttons[i] = new Button();
                 buttons[i].Text = stage.button_content[i];
-                buttons[i].Location = new Point(10, 30 * i);
                 buttons[i].AllowDrop = true;
-                buttons[i].MouseDown += new MouseEventHandler(buttons_MouseDown);
-                buttons[i].MouseMove += new MouseEventHandler(buttons_MouseMove);
-                buttons[i].MouseUp += new MouseEventHandler(buttons_MouseUp);
-                panel1.Controls.Add(buttons[i]);
+                buttons[i].MouseDown += new MouseEventHandler(button_MouseDown);
+                flowLayoutPanel1.Controls.Add(buttons[i]);
             }
         }
 
@@ -94,10 +91,10 @@ namespace Unilab2021A.Forms
             var count = int.Parse(max_count.Text);
 
             //上下左右判定
-            if (comboBox1.Text == "上") person.Direction = DirectionType.Up;
-            else if (comboBox1.Text == "下") person.Direction = DirectionType.Down;
-            else if (comboBox1.Text == "右") person.Direction = DirectionType.Right;
-            else if (comboBox1.Text == "左") person.Direction = DirectionType.Left;
+            //if (comboBox1.Text == "上") person.Direction = DirectionType.Up;
+            //else if (comboBox1.Text == "下") person.Direction = DirectionType.Down;
+            //else if (comboBox1.Text == "右") person.Direction = DirectionType.Right;
+            //else if (comboBox1.Text == "左") person.Direction = DirectionType.Left;
 
             if (person.Count != count )
             {
@@ -130,37 +127,19 @@ namespace Unilab2021A.Forms
             DrawEnd();
         }
 
-        private void buttons_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-            {
-                return;
-            }
-            Cursor.Current = Cursors.Hand;
-            isDraging = true;
-            diffPoint = e.Location;
-        }
-        
-        private void buttons_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!isDraging)
-            {
-                return;
-            }
-            Button bt = (System.Windows.Forms.Button)sender;
-            int x = bt.Location.X + e.X - diffPoint.Value.X;
-            int y = bt.Location.Y + e.Y - diffPoint.Value.Y;
+        // Initiate the drag
+        private void button_MouseDown(object sender, MouseEventArgs e) =>
+            DoDragDrop(((Button)sender).Text, DragDropEffects.All);
 
-            bt.Location = new Point(x, y);
-        }
-        void buttons_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-            {
-                return;
-            }
-            Cursor.Current = Cursors.Default;
-            isDraging = false;
-        }      
+        // Set the effect filter and allow the drop on this control
+        private void textBox3_DragOver(object sender, DragEventArgs e) =>
+            e.Effect = DragDropEffects.All;
+
+        private void textBox3_DragEnter(object sender, DragEventArgs e) =>
+            e.Effect = DragDropEffects.All;
+
+        // React to the drop on this control
+        private void textBox3_DragDrop(object sender, DragEventArgs e) =>
+            textBox3.Text = (string)e.Data.GetData(typeof(string));
     }
 }
