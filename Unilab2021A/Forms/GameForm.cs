@@ -125,6 +125,8 @@ namespace Unilab2021A.Forms
             person.DrawImage(DirectionType.Down);
 
             DrawEnd();
+
+            textBox3.Clear();
         }
 
         // Initiate the drag
