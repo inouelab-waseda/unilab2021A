@@ -20,6 +20,8 @@ namespace Unilab2021A.Forms
         private Bitmap itemPictureBoxCanvas;
         private Graphics g;
         private Graphics itemPictureBoxGraphics;
+        bool isDraging = false;
+        Point? diffPoint = null;
 
         public GameForm()
         {
@@ -45,18 +47,22 @@ namespace Unilab2021A.Forms
 
             stage.CreateStage();
             person.DrawImage(DirectionType.Down);
-
-            DrawEnd();
             stage.n_button = 3;//stage.csでjsonから受け取る
             Button[] buttons = new Button[stage.n_button];
             stage.button_content[0] = "↑";//ここもjsonで受け取れるといいかも
             stage.button_content[1] = "→";
             stage.button_content[2] = "F1";
-            for (int i = 0; i < stage.n_button; i++) {
+            
+            DrawEnd();
+
+            for (int i = 0; i < stage.n_button; i++)
+            {
                 buttons[i] = new Button();
                 buttons[i].Text = stage.button_content[i];
-                actionLayoutPanel.Controls.Add(buttons[i]);
-            }          
+                buttons[i].AllowDrop = true;
+                buttons[i].MouseDown += new MouseEventHandler(button_MouseDown);
+                flowLayoutPanel1.Controls.Add(buttons[i]);
+            }
         }
 
         private void DrawStart()
@@ -85,10 +91,10 @@ namespace Unilab2021A.Forms
             var count = int.Parse(max_count.Text);
 
             //上下左右判定
-            if (comboBox1.Text == "上") person.Direction = DirectionType.Up;
-            else if (comboBox1.Text == "下") person.Direction = DirectionType.Down;
-            else if (comboBox1.Text == "右") person.Direction = DirectionType.Right;
-            else if (comboBox1.Text == "左") person.Direction = DirectionType.Left;
+            //if (comboBox1.Text == "上") person.Direction = DirectionType.Up;
+            //else if (comboBox1.Text == "下") person.Direction = DirectionType.Down;
+            //else if (comboBox1.Text == "右") person.Direction = DirectionType.Right;
+            //else if (comboBox1.Text == "左") person.Direction = DirectionType.Left;
 
             if (person.Count != count )
             {
@@ -119,6 +125,23 @@ namespace Unilab2021A.Forms
             person.DrawImage(DirectionType.Down);
 
             DrawEnd();
+
+            textBox3.Clear();
         }
+
+        // Initiate the drag
+        private void button_MouseDown(object sender, MouseEventArgs e) =>
+            DoDragDrop(((Button)sender).Text, DragDropEffects.All);
+
+        // Set the effect filter and allow the drop on this control
+        private void textBox3_DragOver(object sender, DragEventArgs e) =>
+            e.Effect = DragDropEffects.All;
+
+        private void textBox3_DragEnter(object sender, DragEventArgs e) =>
+            e.Effect = DragDropEffects.All;
+
+        // React to the drop on this control
+        private void textBox3_DragDrop(object sender, DragEventArgs e) =>
+            textBox3.Text = (string)e.Data.GetData(typeof(string));
     }
 }
