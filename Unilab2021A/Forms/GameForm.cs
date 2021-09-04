@@ -143,5 +143,10 @@ namespace Unilab2021A.Forms
         // React to the drop on this control
         private void textBox3_DragDrop(object sender, DragEventArgs e) =>
             textBox3.Text = (string)e.Data.GetData(typeof(string));
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
