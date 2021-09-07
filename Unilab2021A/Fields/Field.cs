@@ -9,7 +9,9 @@ namespace Unilab2021A.Fields
         public string StageName { get; set; }
         public List<int> StartPosition { get; set; }
         public List<Cell> Path { get; set; } = new List<Cell>();
-        }
+        public int MaxBlock { get; set; }
+        public List<int> BlockType { get; set; }
+    }
 
     class Cell
     {

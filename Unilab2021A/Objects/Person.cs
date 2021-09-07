@@ -49,22 +49,26 @@ namespace Unilab2021A.Objects
             switch (direction) 
             {
                 case DirectionType.Up:
-                    Y -= images[(int)direction].Height / 2;
+                    //Y -= images[(int)direction].Height / 2;
+                    Y -= 2130 / 12;
                     break;
                 case DirectionType.Down:
-                    Y += images[(int)direction].Height / 2;
+                   //Y += images[(int)direction].Height / 2;
+                    Y += 2130 / 12;
                     break;
                 case DirectionType.Right:
-                    X += images[(int)direction].Width / 2;
+                    //X += images[(int)direction].Width / 2;
+                    X += 2904 / 16;
                     break;
                 case DirectionType.Left:
-                    X -= images[(int)direction].Width / 2;
+                    //X -= images[(int)direction].Width / 2;
+                    X -= 2904 / 16;
                     break;
                 default:
                     break;
             }
 
-            Graphics.DrawImage(images[(int)direction], X, Y, images[(int)direction].Width / 2, images[(int)direction].Height / 2);
+            Graphics.DrawImage(images[(int)direction], X, Y, 2904 / 16 + 1, 2130 / 12 + 1);
         }
 
         public Bitmap GetBitmap(string name)

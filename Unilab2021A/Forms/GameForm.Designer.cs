@@ -170,7 +170,7 @@ namespace Unilab2021A.Forms
             // 
             this.textBox3.AllowDrop = true;
             this.textBox3.Location = new System.Drawing.Point(1060, 409);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(66, 57);
@@ -182,7 +182,7 @@ namespace Unilab2021A.Forms
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Location = new System.Drawing.Point(1060, 233);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(218, 168);
             this.flowLayoutPanel1.TabIndex = 13;

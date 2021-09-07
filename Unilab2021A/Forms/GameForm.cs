@@ -37,15 +37,15 @@ namespace Unilab2021A.Forms
             person = new Person(g);
             stage = new Stage(g);
 
-            //上下左右が分かりやすいように
-            person.X_start = pictureBox1.Width / 3;
-            person.Y_start = pictureBox1.Height / 3;
-            person.X = person.X_start;
-            person.Y = person.Y_start;
-
             DrawStart();
 
             stage.CreateStage();
+            //上下左右が分かりやすいように
+            person.X_start = stage.StartPosition_X;
+            person.Y_start = stage.StartPosition_Y;
+            person.X = person.X_start;
+            person.Y = person.Y_start;
+
             person.DrawImage(DirectionType.Down);
             stage.n_button = 3;//stage.csでjsonから受け取る
             Button[] buttons = new Button[stage.n_button];
@@ -88,21 +88,81 @@ namespace Unilab2021A.Forms
         {
 
             //何回繰り返すかを読み取る　※のちに矢印画像から読み取れるように変更
-            var count = int.Parse(max_count.Text);
+            var count = 10;//int.Parse(max_count.Text);
 
             //上下左右判定
-            //if (comboBox1.Text == "上") person.Direction = DirectionType.Up;
-            //else if (comboBox1.Text == "下") person.Direction = DirectionType.Down;
-            //else if (comboBox1.Text == "右") person.Direction = DirectionType.Right;
-            //else if (comboBox1.Text == "左") person.Direction = DirectionType.Left;
+            if (textBox3.Text == "↑") person.Direction = DirectionType.Up;
+            else if (textBox3.Text == "↓") person.Direction = DirectionType.Down;
+            else if (textBox3.Text == "→") person.Direction = DirectionType.Right;
+            else if (textBox3.Text == "←") person.Direction = DirectionType.Left;
 
             if (person.Count != count )
             {
                 DrawStart();
                 stage.CreateStage();
 
-                //画像をcanvasの座標(person.X, person.Y)の位置に描画する
-                person.DrawImage(person.Direction);
+                if (person.Direction == DirectionType.Up)
+                {
+                    if (stage.flag[person.X / (2904 / 16), person.Y / (2130 / 12) - 1] == true)//先が道の時
+                    {
+                        person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                    }
+                    else//先が草の時
+                    {
+                        person.Y += 2130 / 12;
+                        person.DrawImage(person.Direction);
+                    }
+                }
+                else if (person.Direction == DirectionType.Down)
+                {
+                    if (stage.flag[person.X / (2904 / 16), person.Y / (2130 / 12) + 1] == true)//先が道の時
+                    {
+                        person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                    }
+                    else//先が草の時
+                    {
+                        person.Y -= 2130 / 12;
+                        person.DrawImage(person.Direction);
+                    }
+                }
+                else if (person.Direction == DirectionType.Left)
+                {
+                    if (stage.flag[person.X / (2904 / 16) - 1, person.Y / (2130 / 12)] == true)//先が道の時
+                    {
+                        person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                    }
+                    else//先が草の時
+                    {
+                        person.X += 2904 / 16;
+                        person.DrawImage(person.Direction);
+                    }
+                }
+                else if (person.Direction == DirectionType.Right)
+                {
+                    if (stage.flag[person.X / (2904 / 16) + 1, person.Y / (2130 / 12)] == true)//先が道の時
+                    {
+                        person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                    }
+                    else//先が草の時
+                    {
+                        person.X -= 2904 / 16;
+                        person.DrawImage(person.Direction);
+                    }
+                }
+
+                /*if (stage.flag[person.X / (2904 / 16), person.Y / (2130 / 12)] == true) 
+                {
+                    person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                } */
+                /*else
+                {
+                    if (person.Direction == DirectionType.Up) person.Y += 2130 / 12;
+                    else if (person.Direction == DirectionType.Down) person.Y -= 2130 / 12;
+                    else if (person.Direction == DirectionType.Left) person.X += 2904 / 16;
+                    else if (person.Direction == DirectionType.Right) person.X -= 2904 / 16;
+                    person.DrawImage(person.Direction);
+                }*/
+
 
                 //繰り返し回数を増やす
                 person.Count++;
