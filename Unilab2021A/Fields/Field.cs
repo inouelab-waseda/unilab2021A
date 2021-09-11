@@ -4,13 +4,13 @@ using static Unilab2021A.Helpers.Types;
 
 namespace Unilab2021A.Fields
 {
-        class StageJson
-        {
+    class StageJson
+    {
         public string StageName { get; set; }
         public List<int> StartPosition { get; set; }
         public List<Cell> Path { get; set; } = new List<Cell>();
-        public int MaxBlock { get; set; }
-        public List<int> BlockType { get; set; }
+        public int MaxActionBlock { get; set; }
+        public List<ActionBlockType> ActionBlockTypes { get; set; }
     }
 
     class Cell

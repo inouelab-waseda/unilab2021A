@@ -20,8 +20,6 @@ namespace Unilab2021A.Forms
         private Bitmap itemPictureBoxCanvas;
         private Graphics g;
         private Graphics itemPictureBoxGraphics;
-        bool isDraging = false;
-        Point? diffPoint = null;
 
         public GameForm()
         {
@@ -29,17 +27,16 @@ namespace Unilab2021A.Forms
 
             //*6や*4は適当に調整する 04/12 笠井
             itemPictureBoxCanvas = new Bitmap(itemPictureBox.Width * 6, itemPictureBox.Height * 6);
-            stageCanvas = new Bitmap(pictureBox1.Width*4, pictureBox1.Height*4);
+            stageCanvas = new Bitmap(pictureBox1.Width * 4, pictureBox1.Height * 4);
 
             itemPictureBoxGraphics = Graphics.FromImage(itemPictureBoxCanvas);
             g = Graphics.FromImage(stageCanvas);
 
-            person = new Person(g);
-            stage = new Stage(g);
-
             DrawStart();
 
-            stage.CreateStage();
+            person = new Person(g);
+            stage = new Stage(g, ActionBlockTypeSection,MainActionSection, button_MouseDown);
+
             //上下左右が分かりやすいように
             person.X_start = stage.StartPosition_X;
             person.Y_start = stage.StartPosition_Y;
@@ -47,22 +44,8 @@ namespace Unilab2021A.Forms
             person.Y = person.Y_start;
 
             person.DrawImage(DirectionType.Down);
-            stage.n_button = 3;//stage.csでjsonから受け取る
-            Button[] buttons = new Button[stage.n_button];
-            stage.button_content[0] = "↑";//ここもjsonで受け取れるといいかも
-            stage.button_content[1] = "→";
-            stage.button_content[2] = "F1";
-            
-            DrawEnd();
 
-            for (int i = 0; i < stage.n_button; i++)
-            {
-                buttons[i] = new Button();
-                buttons[i].Text = stage.button_content[i];
-                buttons[i].AllowDrop = true;
-                buttons[i].MouseDown += new MouseEventHandler(button_MouseDown);
-                flowLayoutPanel1.Controls.Add(buttons[i]);
-            }
+            DrawEnd();
         }
 
         private void DrawStart()
@@ -90,20 +73,20 @@ namespace Unilab2021A.Forms
             //何回繰り返すかを読み取る　※のちに矢印画像から読み取れるように変更
             var count = 10;//int.Parse(max_count.Text);
 
-            //上下左右判定
-            if (textBox3.Text == "↑") person.Direction = DirectionType.Up;
-            else if (textBox3.Text == "↓") person.Direction = DirectionType.Down;
-            else if (textBox3.Text == "→") person.Direction = DirectionType.Right;
-            else if (textBox3.Text == "←") person.Direction = DirectionType.Left;
+            ////上下左右判定
+            //if (textBox3.Text == "↑") person.Direction = DirectionType.Up;
+            //else if (textBox3.Text == "↓") person.Direction = DirectionType.Down;
+            //else if (textBox3.Text == "→") person.Direction = DirectionType.Right;
+            //else if (textBox3.Text == "←") person.Direction = DirectionType.Left;
 
-            if (person.Count != count )
+            if (person.Count != count)
             {
                 DrawStart();
-                stage.CreateStage();
+                stage.CreatePath();
 
                 if (person.Direction == DirectionType.Up)
                 {
-                    if (stage.flag[person.X / (2904 / 16), person.Y / (2130 / 12) - 1] == true)//先が道の時
+                    if (stage.canMove[person.X / (2904 / 16), person.Y / (2130 / 12) - 1] == true)//先が道の時
                     {
                         person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
                     }
@@ -115,7 +98,7 @@ namespace Unilab2021A.Forms
                 }
                 else if (person.Direction == DirectionType.Down)
                 {
-                    if (stage.flag[person.X / (2904 / 16), person.Y / (2130 / 12) + 1] == true)//先が道の時
+                    if (stage.canMove[person.X / (2904 / 16), person.Y / (2130 / 12) + 1] == true)//先が道の時
                     {
                         person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
                     }
@@ -127,7 +110,7 @@ namespace Unilab2021A.Forms
                 }
                 else if (person.Direction == DirectionType.Left)
                 {
-                    if (stage.flag[person.X / (2904 / 16) - 1, person.Y / (2130 / 12)] == true)//先が道の時
+                    if (stage.canMove[person.X / (2904 / 16) - 1, person.Y / (2130 / 12)] == true)//先が道の時
                     {
                         person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
                     }
@@ -139,7 +122,7 @@ namespace Unilab2021A.Forms
                 }
                 else if (person.Direction == DirectionType.Right)
                 {
-                    if (stage.flag[person.X / (2904 / 16) + 1, person.Y / (2130 / 12)] == true)//先が道の時
+                    if (stage.canMove[person.X / (2904 / 16) + 1, person.Y / (2130 / 12)] == true)//先が道の時
                     {
                         person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
                     }
@@ -171,7 +154,7 @@ namespace Unilab2021A.Forms
             }
             //タイマーストップ
             else timer1.Enabled = false;
- 
+
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -181,27 +164,14 @@ namespace Unilab2021A.Forms
 
             DrawStart();
 
-            stage.CreateStage();
+            stage = new Stage(g, ActionBlockTypeSection,MainActionSection, button_MouseDown);
             person.DrawImage(DirectionType.Down);
 
             DrawEnd();
-
-            textBox3.Clear();
         }
 
         // Initiate the drag
         private void button_MouseDown(object sender, MouseEventArgs e) =>
             DoDragDrop(((Button)sender).Text, DragDropEffects.All);
-
-        // Set the effect filter and allow the drop on this control
-        private void textBox3_DragOver(object sender, DragEventArgs e) =>
-            e.Effect = DragDropEffects.All;
-
-        private void textBox3_DragEnter(object sender, DragEventArgs e) =>
-            e.Effect = DragDropEffects.All;
-
-        // React to the drop on this control
-        private void textBox3_DragDrop(object sender, DragEventArgs e) =>
-            textBox3.Text = (string)e.Data.GetData(typeof(string));
     }
 }

@@ -38,11 +38,6 @@ namespace Unilab2021A.Objects
             images[(int)DirectionType.Left] = GetBitmap("Player_Left.png");//左の画像
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         //描画
         public void DrawImage(DirectionType direction)
         {
