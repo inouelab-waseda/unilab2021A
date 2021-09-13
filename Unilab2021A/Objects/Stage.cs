@@ -9,37 +9,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unilab2021A.Fields;
+using Unilab2021A.Helpers;
 using static Unilab2021A.Helpers.Types;
 
 namespace Unilab2021A.Objects
 {
     class Stage
     {
-
-        public bool[,] canMove = new bool[16, 12];//道か草かの判定
-        public int StartPosition_X { get; set; }
-        public int StartPosition_Y { get; set; }
-        public ActionBlockType[] mainActions { get; set; }
+        public int StartPosition_X { get; private set; }
+        public int StartPosition_Y { get; private set; }
+        public List<ActionBlockType> FirstFunction { get; private set; }
 
         private StageJson json;
         private Graphics Graphics { get; set; }
         private FlowLayoutPanel ActionBlockTypeSection { get; set; }
-        private FlowLayoutPanel MainActionSection { get; set; }
+        private FlowLayoutPanel FirstFunctionSection { get; set; }
         private Action<object, MouseEventArgs> ActionBlock_MouseDown { get; set; }
+        private bool[,] isRoad = new bool[16, 12];//道か草かの判定
 
-        // 定数
-        private const int WIDTH = 2904;
-        private const int HEIGHT = 2130;
-        private const int WIDTH_CELL_NUM = 16;
-        private const int HEIGHT_CELL_NUM = 12;
-        private const int ACTION_BLOCK_TYPE_SIZE = 30;
-
-        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel mainActionSection, Action<object, MouseEventArgs> actionBlock_MouseDown)
+        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown)
         {
             Graphics = graphics;
             ActionBlockTypeSection = actionBlockTypeSection;
             ActionBlock_MouseDown = actionBlock_MouseDown;
-            MainActionSection = mainActionSection;
+            FirstFunctionSection = firstFunctionSection;
 
             // jsonファイルの読み込みなど(StageName)
             // --------
@@ -51,12 +44,15 @@ namespace Unilab2021A.Objects
             //アクションブロックの作成
             CreateActionBlockTypeSection();
 
-            //アクションブロックの受取先の作成
-            CreateReceivingActionBlockSection();
+            //関数セクションの作成
+            CreateFunctionSection();
+
+            //First関数
+            FirstFunction = new List<ActionBlockType>();
 
             //初期位置の座標
-            StartPosition_X = json.StartPosition[0] * WIDTH / WIDTH_CELL_NUM;
-            StartPosition_Y = (json.StartPosition[1] - 1) * HEIGHT / HEIGHT_CELL_NUM;
+            StartPosition_X = json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+            StartPosition_Y = (json.StartPosition[1] - 1) * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
         }
 
         public void CreatePath()
@@ -69,7 +65,7 @@ namespace Unilab2021A.Objects
             {
                 for (int j = 0; j < 12; j++)
                 {
-                    canMove[i, j] = true;
+                    isRoad[i, j] = true;
                 }
             }
 
@@ -80,25 +76,25 @@ namespace Unilab2021A.Objects
                 {
                     //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
                     //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
-                    Graphics.DrawImage(noneImage, json.Path[i].Position[0] * WIDTH / WIDTH_CELL_NUM, json.Path[i].Position[1] * HEIGHT / HEIGHT_CELL_NUM, WIDTH / WIDTH_CELL_NUM + 1, HEIGHT / HEIGHT_CELL_NUM + 1);
-                    canMove[json.Path[i].Position[0], json.Path[i].Position[1]] = false;//草はfalseに
+                    Graphics.DrawImage(noneImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    isRoad[json.Path[i].Position[0], json.Path[i].Position[1]] = false;//草はfalseに
                 }
                 else if (json.Path[i].Image == ImageType.Enemy)
                 {
-                    Graphics.DrawImage(enemyImage, json.Path[i].Position[0] * WIDTH / WIDTH_CELL_NUM, json.Path[i].Position[1] * HEIGHT / HEIGHT_CELL_NUM, WIDTH / WIDTH_CELL_NUM + 1, HEIGHT / HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(enemyImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
             }
         }
 
-        public void CreateActionBlockTypeSection()
+        private void CreateActionBlockTypeSection()
         {
             Button[] buttons = new Button[json.ActionBlockTypes.Count];
 
             for (int i = 0; i < json.ActionBlockTypes.Count; i++)
             {
                 buttons[i] = new Button();
-                buttons[i].Width = ACTION_BLOCK_TYPE_SIZE;
-                buttons[i].Height = ACTION_BLOCK_TYPE_SIZE;
+                buttons[i].Width = Shares.ACTION_BLOCK_TYPE_SIZE;
+                buttons[i].Height = Shares.ACTION_BLOCK_TYPE_SIZE;
                 switch (json.ActionBlockTypes[i])
                 {
                     case ActionBlockType.Up:
@@ -110,10 +106,10 @@ namespace Unilab2021A.Objects
                     case ActionBlockType.Left:
                         buttons[i].Text = "←";
                         break;
-                    case ActionBlockType.One:
+                    case ActionBlockType.First:
                         buttons[i].Text = "F1";
                         break;
-                    case ActionBlockType.Two:
+                    case ActionBlockType.Second:
                         buttons[i].Text = "F2";
                         break;
                     case ActionBlockType.Blue:
@@ -131,24 +127,31 @@ namespace Unilab2021A.Objects
             }
         }
 
-        public void CreateReceivingActionBlockSection()
+        private void CreateFunctionSection()
         {
             TextBox[] textBoxes = new TextBox[json.MaxActionBlock];
-            mainActions = new ActionBlockType[json.MaxActionBlock];
 
             for (int i = 0; i < json.MaxActionBlock; i++)
             {
                 textBoxes[i] = new TextBox();
-                textBoxes[i].Width = ACTION_BLOCK_TYPE_SIZE;
-                textBoxes[i].Height = ACTION_BLOCK_TYPE_SIZE;
+                textBoxes[i].Width = Shares.ACTION_BLOCK_TYPE_SIZE;
+                textBoxes[i].Height = Shares.ACTION_BLOCK_TYPE_SIZE;
                 textBoxes[i].DragOver += ActionBlock_DragOver;
                 textBoxes[i].DragEnter += ActionBlock_DragEnter;
                 textBoxes[i].DragDrop += ActionBlock_DragDrop;
 
                 textBoxes[i].AllowDrop = true;
-                textBoxes[i].
-                MainActionSection.Controls.Add(textBoxes[i]);
+                FirstFunctionSection.Controls.Add(textBoxes[i]);
             }
+        }
+
+        public void Reset()
+        {
+            CreatePath();
+            FirstFunction = new List<ActionBlockType>();
+            FirstFunctionSection.Controls.Clear();
+            CreateFunctionSection();
+
         }
 
         // Set the effect filter and allow the drop on this control
@@ -162,38 +165,77 @@ namespace Unilab2021A.Objects
         private void ActionBlock_DragDrop(object sender, DragEventArgs e)
         {
             string data = (string)e.Data.GetData(typeof(string));
-            ((TextBox)sender).Text = 
+            TextBox textBox = (TextBox)sender;
 
             switch (data)
             {
                 case "↑":
-                    mainActions[i] = ActionBlockType.
-                    buttons[i].Text = "↑";
+                    FirstFunction.Add(ActionBlockType.Up);
                     break;
-                case ActionBlockType.Right:
-                    buttons[i].Text = "→";
+                case "→":
+                    FirstFunction.Add(ActionBlockType.Right);
                     break;
-                case ActionBlockType.Left:
-                    buttons[i].Text = "←";
+                case "←":
+                    FirstFunction.Add(ActionBlockType.Left);
                     break;
-                case ActionBlockType.One:
-                    buttons[i].Text = "F1";
+                case "F1":
+                    FirstFunction.Add(ActionBlockType.First);
                     break;
-                case ActionBlockType.Two:
-                    buttons[i].Text = "F2";
-                    break;
-                case ActionBlockType.Blue:
-                    buttons[i].BackColor = Color.Blue;
-                    break;
-                case ActionBlockType.Red:
-                    buttons[i].BackColor = Color.Red;
-                    break;
-                case ActionBlockType.Yellow:
-                    buttons[i].BackColor = Color.Yellow;
+                case "F2":
+                    FirstFunction.Add(ActionBlockType.Second);
                     break;
             }
+
+            textBox.Text = data;
         }
-            
+
+        //道かどうか判定
+        public bool IsRoad(DirectionType directionType, int x, int y)
+        {
+
+            bool result = false;
+            switch (directionType)
+            {
+                case DirectionType.Up:
+                    result = isRoad[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM) - 1];
+                    break;
+                case DirectionType.Down:
+                    result = isRoad[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM) + 1];
+                    break;
+                case DirectionType.Left:
+                    result = isRoad[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM) - 1, y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
+                    break;
+                case DirectionType.Right:
+                    result = isRoad[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM) + 1, y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
+                    break;
+            }
+
+            return result;
+
+        }
+
+        public DirectionType getDirection(ActionBlockType type)
+        {
+            DirectionType result = DirectionType.Up;
+            switch (type)
+            {
+                case ActionBlockType.Up:
+                    result = DirectionType.Up;
+                    break;
+                //case ActionBlockType.Down:
+                //    result = DirectionType.Down;
+                //    break;
+                case ActionBlockType.Right:
+                    result = DirectionType.Right;
+                    break;
+                case ActionBlockType.Left:
+                    result = DirectionType.Left;
+                    break;
+            }
+
+            return result;
+        }
+
 
         //jsonファイルの読み出し
         private StageJson ReadFieldJson(string name)
