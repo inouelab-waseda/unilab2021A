@@ -14,19 +14,18 @@ namespace Unilab2021A.Objects
 {
     class Person
     {
-        private Image[] images = new Image[5];
         //playerのx座標,y座標
         public int X { get; set; }
         public int Y { get; set; }
         //playerのx座標,y座標の初期位置
         public int X_start { get; set; }
         public int Y_start { get; set; }
-        //playerの移動回数
-        public int Count { get; set; }
         //playerの向き
         public DirectionType Direction { get; set; }
 
-        public Graphics Graphics { get; set; }
+        private Graphics Graphics { get; set; }
+
+        private Image[] images = new Image[5];
 
         public Person(Graphics graphics)
         {
@@ -38,33 +37,28 @@ namespace Unilab2021A.Objects
             images[(int)DirectionType.Left] = GetBitmap("Player_Left.png");//左の画像
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         //描画
         public void DrawImage(DirectionType direction)
         {
-            switch (direction) 
+            switch (direction)
             {
                 case DirectionType.Up:
-                    Y -= images[(int)direction].Height / 2;
+                    Y -= Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
                     break;
                 case DirectionType.Down:
-                    Y += images[(int)direction].Height / 2;
+                    Y += Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
                     break;
                 case DirectionType.Right:
-                    X += images[(int)direction].Width / 2;
+                    X += Shares.WIDTH / Shares.WIDTH_CELL_NUM;
                     break;
                 case DirectionType.Left:
-                    X -= images[(int)direction].Width / 2;
+                    X -= Shares.WIDTH / Shares.WIDTH_CELL_NUM;
                     break;
                 default:
                     break;
             }
 
-            Graphics.DrawImage(images[(int)direction], X, Y, images[(int)direction].Width / 2, images[(int)direction].Height / 2);
+            Graphics.DrawImage(images[(int)direction], X, Y, 2904 / 16 + 1, 2130 / 12 + 1);
         }
 
         public Bitmap GetBitmap(string name)

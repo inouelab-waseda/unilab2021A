@@ -32,15 +32,14 @@ namespace Unilab2021A.Forms
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.max_count = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.itemPictureBox = new System.Windows.Forms.PictureBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ActionBlockTypeSection = new System.Windows.Forms.FlowLayoutPanel();
+            this.FirstFunctionSection = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPictureBox)).BeginInit();
@@ -56,18 +55,17 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 82.37288F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.62712F));
-            this.tableLayoutPanel1.Controls.Add(this.max_count, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.itemPictureBox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button1, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.resetButton, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.textBox3, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.ActionBlockTypeSection, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.FirstFunctionSection, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.569293F));
@@ -78,21 +76,11 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.89255F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.843039F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.797881F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1282, 782);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(770, 522);
             this.tableLayoutPanel1.TabIndex = 4;
-            // 
-            // max_count
-            // 
-            this.max_count.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.max_count.Location = new System.Drawing.Point(1058, 512);
-            this.max_count.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.max_count.Name = "max_count";
-            this.max_count.Size = new System.Drawing.Size(222, 25);
-            this.max_count.TabIndex = 0;
-            this.max_count.Text = "3";
             // 
             // pictureBox1
             // 
@@ -102,7 +90,7 @@ namespace Unilab2021A.Forms
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 8);
-            this.pictureBox1.Size = new System.Drawing.Size(1052, 778);
+            this.pictureBox1.Size = new System.Drawing.Size(630, 518);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -110,32 +98,32 @@ namespace Unilab2021A.Forms
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(1058, 204);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.textBox1.Location = new System.Drawing.Point(636, 135);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(222, 25);
+            this.textBox1.Size = new System.Drawing.Size(132, 19);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = "使えるブロック";
             // 
             // itemPictureBox
             // 
             this.itemPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemPictureBox.Location = new System.Drawing.Point(1058, 31);
-            this.itemPictureBox.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.itemPictureBox.Location = new System.Drawing.Point(636, 20);
+            this.itemPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.itemPictureBox.Name = "itemPictureBox";
-            this.itemPictureBox.Size = new System.Drawing.Size(222, 165);
+            this.itemPictureBox.Size = new System.Drawing.Size(132, 111);
             this.itemPictureBox.TabIndex = 8;
             this.itemPictureBox.TabStop = false;
             // 
             // textBox2
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(1058, 4);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.textBox2.Location = new System.Drawing.Point(636, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(222, 25);
+            this.textBox2.Size = new System.Drawing.Size(132, 19);
             this.textBox2.TabIndex = 9;
             this.textBox2.Text = "もってる剣";
             // 
@@ -144,10 +132,10 @@ namespace Unilab2021A.Forms
             this.button1.BackColor = System.Drawing.Color.Red;
             this.button1.Dock = System.Windows.Forms.DockStyle.Top;
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(1058, 718);
+            this.button1.Location = new System.Drawing.Point(636, 478);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(222, 61);
+            this.button1.Size = new System.Drawing.Size(132, 41);
             this.button1.TabIndex = 1;
             this.button1.Text = "たおしにいく";
             this.button1.UseVisualStyleBackColor = false;
@@ -157,44 +145,41 @@ namespace Unilab2021A.Forms
             // 
             this.resetButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.resetButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resetButton.Location = new System.Drawing.Point(1058, 667);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.resetButton.Location = new System.Drawing.Point(636, 443);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(2);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(222, 45);
+            this.resetButton.Size = new System.Drawing.Size(132, 31);
             this.resetButton.TabIndex = 10;
             this.resetButton.Text = "やりなおす";
             this.resetButton.UseVisualStyleBackColor = false;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
-            // textBox3
+            // ActionBlockTypeSection
             // 
-            this.textBox3.AllowDrop = true;
-            this.textBox3.Location = new System.Drawing.Point(1060, 409);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(66, 57);
-            this.textBox3.TabIndex = 12;
-            this.textBox3.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox3_DragDrop);
-            this.textBox3.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox3_DragEnter);
-            this.textBox3.DragOver += new System.Windows.Forms.DragEventHandler(this.textBox3_DragOver);
+            this.ActionBlockTypeSection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ActionBlockTypeSection.Location = new System.Drawing.Point(636, 154);
+            this.ActionBlockTypeSection.Margin = new System.Windows.Forms.Padding(2);
+            this.ActionBlockTypeSection.Name = "ActionBlockTypeSection";
+            this.ActionBlockTypeSection.Size = new System.Drawing.Size(132, 113);
+            this.ActionBlockTypeSection.TabIndex = 13;
             // 
-            // flowLayoutPanel1
+            // FirstFunctionSection
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(1060, 233);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(218, 168);
-            this.flowLayoutPanel1.TabIndex = 13;
+            this.FirstFunctionSection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FirstFunctionSection.Location = new System.Drawing.Point(636, 271);
+            this.FirstFunctionSection.Margin = new System.Windows.Forms.Padding(2);
+            this.FirstFunctionSection.Name = "FirstFunctionSection";
+            this.FirstFunctionSection.Size = new System.Drawing.Size(132, 65);
+            this.FirstFunctionSection.TabIndex = 14;
             // 
             // GameForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1282, 782);
+            this.ClientSize = new System.Drawing.Size(770, 522);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -209,14 +194,13 @@ namespace Unilab2021A.Forms
         #endregion
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox max_count;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.PictureBox itemPictureBox;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel ActionBlockTypeSection;
+        private System.Windows.Forms.FlowLayoutPanel FirstFunctionSection;
     }
 }

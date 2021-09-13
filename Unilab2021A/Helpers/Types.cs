@@ -10,5 +10,7 @@ namespace Unilab2021A.Helpers
     {
         public enum ImageType { Others, Road, Sword, Enemy }
         public enum DirectionType { None, Up, Right, Down, Left }
+
+        public enum ActionBlockType { Up, Right, Left, Blue, Red, Yellow, First, Second }
     }
 }
