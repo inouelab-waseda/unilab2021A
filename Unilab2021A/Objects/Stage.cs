@@ -140,6 +140,7 @@ namespace Unilab2021A.Objects
                 textBoxes[i].DragEnter += ActionBlock_DragEnter;
                 textBoxes[i].DragDrop += ActionBlock_DragDrop;
 
+                textBoxes[i].Name = i.ToString();
                 textBoxes[i].AllowDrop = true;
                 FirstFunctionSection.Controls.Add(textBoxes[i]);
             }
@@ -161,30 +162,58 @@ namespace Unilab2021A.Objects
         private void ActionBlock_DragEnter(object sender, DragEventArgs e) =>
             e.Effect = DragDropEffects.All;
 
-        // React to the drop on this control
+    
         private void ActionBlock_DragDrop(object sender, DragEventArgs e)
         {
             string data = (string)e.Data.GetData(typeof(string));
             TextBox textBox = (TextBox)sender;
+            int i = int.Parse(textBox.Name);
 
-            switch (data)
+            //すでにブロックがあった場合
+            if (textBox.Text != "")
             {
-                case "↑":
-                    FirstFunction.Add(ActionBlockType.Up);
-                    break;
-                case "→":
-                    FirstFunction.Add(ActionBlockType.Right);
-                    break;
-                case "←":
-                    FirstFunction.Add(ActionBlockType.Left);
-                    break;
-                case "F1":
-                    FirstFunction.Add(ActionBlockType.First);
-                    break;
-                case "F2":
-                    FirstFunction.Add(ActionBlockType.Second);
-                    break;
+                switch (data)
+                {
+                    case "↑":
+                        FirstFunction[i] = ActionBlockType.Up;
+                        break;
+                    case "→":
+                        FirstFunction[i] = ActionBlockType.Right;
+                        break;
+                    case "←":
+                        FirstFunction[i] = ActionBlockType.Left;
+                        break;
+                    case "F1":
+                        FirstFunction[i] = ActionBlockType.First;
+                        break;
+                    case "F2":
+                        FirstFunction[i] = ActionBlockType.Second;
+                        break;
+                }
             }
+            else
+            {
+                switch (data)
+                {
+                    case "↑":
+                        FirstFunction.Add(ActionBlockType.Up);
+                        break;
+                    case "→":
+                        FirstFunction.Add(ActionBlockType.Right);
+                        break;
+                    case "←":
+                        FirstFunction.Add(ActionBlockType.Left);
+                        break;
+                    case "F1":
+                        FirstFunction.Add(ActionBlockType.First);
+                        break;
+                    case "F2":
+                        FirstFunction.Add(ActionBlockType.Second);
+                        break;
+                }
+            }
+
+
 
             textBox.Text = data;
         }
