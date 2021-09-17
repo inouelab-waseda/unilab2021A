@@ -57,8 +57,13 @@ namespace Unilab2021A.Objects
 
         public void CreatePath()
         {
+            Image roadImage = Image.FromFile(@".\Images\Road.png");
             Image noneImage = Image.FromFile(@".\Images\Background.png");
             Image enemyImage = Image.FromFile(@".\Images\Enemy.png");
+            Image swordImage = Image.FromFile(@".\Images\Sword.png");
+            Image blueblockImage = Image.FromFile(@".\Images\BlueBlock.png");//json.Path[i].Image = 4として設定
+            Image redblockImage = Image.FromFile(@".\Images\RedBlock.png");//json.Path[i].Image = 5として設定
+            Image yellowblockImage = Image.FromFile(@".\Images\YellowBlock.png");//json.Path[i].Image = 6として設定
 
             //flagの初期化
             for (int i = 0; i < 16; i++)
@@ -72,6 +77,7 @@ namespace Unilab2021A.Objects
             //道の作成
             for (int i = 0; i < json.Path.Count; i++)
             {
+                Graphics.DrawImage(roadImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 if (json.Path[i].Image == ImageType.Others)
                 {
                     //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
@@ -79,9 +85,26 @@ namespace Unilab2021A.Objects
                     Graphics.DrawImage(noneImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                     isRoad[json.Path[i].Position[0], json.Path[i].Position[1]] = false;//草はfalseに
                 }
+                
                 else if (json.Path[i].Image == ImageType.Enemy)
                 {
                     Graphics.DrawImage(enemyImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                }
+                else if (json.Path[i].Image == ImageType.Sword)
+                {
+                    Graphics.DrawImage(swordImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                }
+                else if (json.Path[i].Image == ImageType.Blue)
+                {
+                    Graphics.DrawImage(blueblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                }
+                else if (json.Path[i].Image == ImageType.Red)
+                {
+                    Graphics.DrawImage(redblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                }
+                else if (json.Path[i].Image == ImageType.Yellow)
+                {
+                    Graphics.DrawImage(yellowblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
             }
         }
