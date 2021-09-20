@@ -8,7 +8,7 @@ namespace Unilab2021A.Helpers
 {
     public static class Types
     {
-        public enum ImageType { Others, Road, Sword, Enemy }
+        public enum ImageType { Others, Road, Sword, Enemy, Blue, Red, Yellow }
         public enum DirectionType { None, Up, Right, Down, Left }
 
         public enum ActionBlockType { Up, Right, Left, Blue, Red, Yellow, First, Second }
