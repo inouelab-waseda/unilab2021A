@@ -33,7 +33,7 @@ namespace Unilab2021A.Forms
             DrawStart();
 
             person = new Person(g);
-            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection, button_MouseDown);
+            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection, button_MouseDown);
 
             //上下左右が分かりやすいように
             person.X_start = stage.StartPosition_X;
