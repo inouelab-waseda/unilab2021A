@@ -186,7 +186,7 @@ namespace Unilab2021A.Objects
 
                     secondTextBoxes[i].Name = i.ToString();
                     secondTextBoxes[i].AllowDrop = true;
-                    FirstFunctionSection.Controls.Add(secondTextBoxes[i]);
+                    SecondFunctionSection.Controls.Add(secondTextBoxes[i]);
                 }
             }
         }
