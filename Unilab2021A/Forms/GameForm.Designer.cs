@@ -40,6 +40,7 @@ namespace Unilab2021A.Forms
             this.resetButton = new System.Windows.Forms.Button();
             this.ActionBlockTypeSection = new System.Windows.Forms.FlowLayoutPanel();
             this.FirstFunctionSection = new System.Windows.Forms.FlowLayoutPanel();
+            this.SecondFunctionSection = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPictureBox)).BeginInit();
@@ -59,26 +60,25 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.itemPictureBox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.resetButton, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.resetButton, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.ActionBlockTypeSection, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.FirstFunctionSection, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.SecondFunctionSection, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.569293F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.19169F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.81937F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.59794F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.28823F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.89255F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.843039F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.797881F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.040896F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.49747F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.421254F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.76884F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.662835F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.279694F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.45977F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.45649F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.21786F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(770, 522);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
@@ -89,7 +89,7 @@ namespace Unilab2021A.Forms
             this.pictureBox1.Location = new System.Drawing.Point(2, 2);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 8);
+            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 9);
             this.pictureBox1.Size = new System.Drawing.Size(630, 518);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
@@ -98,7 +98,7 @@ namespace Unilab2021A.Forms
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(636, 135);
+            this.textBox1.Location = new System.Drawing.Point(636, 114);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
@@ -109,10 +109,10 @@ namespace Unilab2021A.Forms
             // itemPictureBox
             // 
             this.itemPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemPictureBox.Location = new System.Drawing.Point(636, 20);
+            this.itemPictureBox.Location = new System.Drawing.Point(636, 28);
             this.itemPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.itemPictureBox.Name = "itemPictureBox";
-            this.itemPictureBox.Size = new System.Drawing.Size(132, 111);
+            this.itemPictureBox.Size = new System.Drawing.Size(132, 82);
             this.itemPictureBox.TabIndex = 8;
             this.itemPictureBox.TabStop = false;
             // 
@@ -132,10 +132,10 @@ namespace Unilab2021A.Forms
             this.button1.BackColor = System.Drawing.Color.Red;
             this.button1.Dock = System.Windows.Forms.DockStyle.Top;
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(636, 478);
+            this.button1.Location = new System.Drawing.Point(636, 489);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 41);
+            this.button1.Size = new System.Drawing.Size(132, 31);
             this.button1.TabIndex = 1;
             this.button1.Text = "たおしにいく";
             this.button1.UseVisualStyleBackColor = false;
@@ -145,10 +145,10 @@ namespace Unilab2021A.Forms
             // 
             this.resetButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.resetButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resetButton.Location = new System.Drawing.Point(636, 443);
+            this.resetButton.Location = new System.Drawing.Point(636, 461);
             this.resetButton.Margin = new System.Windows.Forms.Padding(2);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(132, 31);
+            this.resetButton.Size = new System.Drawing.Size(132, 24);
             this.resetButton.TabIndex = 10;
             this.resetButton.Text = "やりなおす";
             this.resetButton.UseVisualStyleBackColor = false;
@@ -157,20 +157,28 @@ namespace Unilab2021A.Forms
             // ActionBlockTypeSection
             // 
             this.ActionBlockTypeSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ActionBlockTypeSection.Location = new System.Drawing.Point(636, 154);
+            this.ActionBlockTypeSection.Location = new System.Drawing.Point(636, 142);
             this.ActionBlockTypeSection.Margin = new System.Windows.Forms.Padding(2);
             this.ActionBlockTypeSection.Name = "ActionBlockTypeSection";
-            this.ActionBlockTypeSection.Size = new System.Drawing.Size(132, 113);
+            this.ActionBlockTypeSection.Size = new System.Drawing.Size(132, 78);
             this.ActionBlockTypeSection.TabIndex = 13;
             // 
             // FirstFunctionSection
             // 
             this.FirstFunctionSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FirstFunctionSection.Location = new System.Drawing.Point(636, 271);
+            this.FirstFunctionSection.Location = new System.Drawing.Point(636, 224);
             this.FirstFunctionSection.Margin = new System.Windows.Forms.Padding(2);
             this.FirstFunctionSection.Name = "FirstFunctionSection";
-            this.FirstFunctionSection.Size = new System.Drawing.Size(132, 65);
+            this.FirstFunctionSection.Size = new System.Drawing.Size(132, 36);
             this.FirstFunctionSection.TabIndex = 14;
+            // 
+            // SecondFunctionSection
+            // 
+            this.SecondFunctionSection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SecondFunctionSection.Location = new System.Drawing.Point(637, 265);
+            this.SecondFunctionSection.Name = "SecondFunctionSection";
+            this.SecondFunctionSection.Size = new System.Drawing.Size(130, 32);
+            this.SecondFunctionSection.TabIndex = 15;
             // 
             // GameForm
             // 
@@ -202,5 +210,6 @@ namespace Unilab2021A.Forms
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.FlowLayoutPanel ActionBlockTypeSection;
         private System.Windows.Forms.FlowLayoutPanel FirstFunctionSection;
+        private System.Windows.Forms.FlowLayoutPanel SecondFunctionSection;
     }
 }

@@ -24,15 +24,17 @@ namespace Unilab2021A.Objects
         private Graphics Graphics { get; set; }
         private FlowLayoutPanel ActionBlockTypeSection { get; set; }
         private FlowLayoutPanel FirstFunctionSection { get; set; }
+        private FlowLayoutPanel SecondFunctionSection { get; set; }
         private Action<object, MouseEventArgs> ActionBlock_MouseDown { get; set; }
         private bool[,] isRoad = new bool[16, 12];//道か草かの判定
 
-        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown)
+        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection,FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown)
         {
             Graphics = graphics;
             ActionBlockTypeSection = actionBlockTypeSection;
             ActionBlock_MouseDown = actionBlock_MouseDown;
             FirstFunctionSection = firstFunctionSection;
+            SecondFunctionSection = secondFunctionSection;
 
             // jsonファイルの読み込みなど(StageName)
             // --------
@@ -111,14 +113,14 @@ namespace Unilab2021A.Objects
 
         private void CreateActionBlockTypeSection()
         {
-            Button[] buttons = new Button[json.ActionBlockTypes.Count];
+            Button[] buttons = new Button[json.ActionBlocks.Count];
 
-            for (int i = 0; i < json.ActionBlockTypes.Count; i++)
+            for (int i = 0; i < json.ActionBlocks.Count; i++)
             {
                 buttons[i] = new Button();
-                buttons[i].Width = Shares.ACTION_BLOCK_TYPE_SIZE;
-                buttons[i].Height = Shares.ACTION_BLOCK_TYPE_SIZE;
-                switch (json.ActionBlockTypes[i])
+                buttons[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
+                buttons[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
+                switch (json.ActionBlocks[i])
                 {
                     case ActionBlockType.Up:
                         buttons[i].Text = "↑";
@@ -152,13 +154,13 @@ namespace Unilab2021A.Objects
 
         private void CreateFunctionSection()
         {
-            TextBox[] textBoxes = new TextBox[json.MaxActionBlock];
+            TextBox[] textBoxes = new TextBox[json.MaxActionBlockCounts[0]];
 
-            for (int i = 0; i < json.MaxActionBlock; i++)
+            for (int i = 0; i < json.MaxActionBlockCounts[0]; i++)
             {
                 textBoxes[i] = new TextBox();
-                textBoxes[i].Width = Shares.ACTION_BLOCK_TYPE_SIZE;
-                textBoxes[i].Height = Shares.ACTION_BLOCK_TYPE_SIZE;
+                textBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
+                textBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
                 textBoxes[i].DragOver += ActionBlock_DragOver;
                 textBoxes[i].DragEnter += ActionBlock_DragEnter;
                 textBoxes[i].DragDrop += ActionBlock_DragDrop;
@@ -166,6 +168,26 @@ namespace Unilab2021A.Objects
                 textBoxes[i].Name = i.ToString();
                 textBoxes[i].AllowDrop = true;
                 FirstFunctionSection.Controls.Add(textBoxes[i]);
+            }
+
+            //関数が2つある場合
+            if (json.MaxActionBlockCounts.Count==2)
+            {
+                TextBox[] secondTextBoxes = new TextBox[json.MaxActionBlockCounts[1]];
+
+                for (int i = 0; i < json.MaxActionBlockCounts[1]; i++)
+                {
+                    secondTextBoxes[i] = new TextBox();
+                    secondTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
+                    secondTextBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
+                    secondTextBoxes[i].DragOver += ActionBlock_DragOver;
+                    secondTextBoxes[i].DragEnter += ActionBlock_DragEnter;
+                    secondTextBoxes[i].DragDrop += ActionBlock_DragDrop;
+
+                    secondTextBoxes[i].Name = i.ToString();
+                    secondTextBoxes[i].AllowDrop = true;
+                    SecondFunctionSection.Controls.Add(secondTextBoxes[i]);
+                }
             }
         }
 
