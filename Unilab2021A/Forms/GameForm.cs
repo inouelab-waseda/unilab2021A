@@ -20,6 +20,8 @@ namespace Unilab2021A.Forms
         private Graphics g;
         //ステップの進んだ数
         private int firstStep;
+        //ボタンの矢印を受け取る変数
+        DirectionType block_direction;
 
         public GameForm()
         {
@@ -40,8 +42,9 @@ namespace Unilab2021A.Forms
             person.Y_start = stage.StartPosition_Y;
             person.X = person.X_start;
             person.Y = person.Y_start;
+            person.Direction = DirectionType.Right;
 
-            person.DrawImage(DirectionType.Down);
+            person.DrawImage(person.Direction);
 
             DrawEnd();
         }
@@ -71,36 +74,106 @@ namespace Unilab2021A.Forms
             {
                 DrawStart();
                 stage.CreatePath();
-                person.Direction = stage.getDirection(stage.FirstFunction[firstStep]);
 
+                //person.Direction = stage.getDirection(stage.FirstFunction[firstStep]);
+
+
+                block_direction = stage.getDirection(stage.FirstFunction[firstStep]);
                 bool isRoad = stage.IsRoad(person.Direction, person.X, person.Y);
 
                 if (isRoad)
                 {
-                    person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                    if (block_direction == DirectionType.Up)
+                    {
+                        if (person.Direction == DirectionType.Up)
+                        {
+                            person.DrawImage(person.Direction);
+
+                        }
+                        else if (person.Direction == DirectionType.Down)
+                        {
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Left)
+                        {
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Right)
+                        {
+                            person.DrawImage(person.Direction);
+                        }                       
+                    }
+                    else if (block_direction == DirectionType.Right)
+                    {
+                        if (person.Direction == DirectionType.Up)
+                        {                          
+                            person.Direction = DirectionType.Right;
+                            person.X -= Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Down)
+                        {
+                            person.Direction = DirectionType.Left;
+                            person.X += Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Left)
+                        {
+                            person.Direction = DirectionType.Up;
+                            person.Y += Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Right)
+                        {
+                            person.Direction = DirectionType.Down;
+                            person.Y -= Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                    }
+                    else if (block_direction == DirectionType.Left)
+                    {
+                        if (person.Direction == DirectionType.Up)
+                        {
+                            person.Direction = DirectionType.Left;
+                            person.X += Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Down)
+                        {
+                            person.Direction = DirectionType.Right;
+                            person.X -= Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Left)
+                        {
+                            person.Direction = DirectionType.Down;
+                            person.Y -= Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                        else if (person.Direction == DirectionType.Right)
+                        {
+                            person.Direction = DirectionType.Up;
+                            person.Y += Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+                            person.DrawImage(person.Direction);
+                        }
+                    }
                 }
                 else
                 {
                     if (person.Direction == DirectionType.Up)
                     {
-
                         person.Y += Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
                         person.DrawImage(person.Direction);
-
                     }
                     else if (person.Direction == DirectionType.Down)
                     {
-
                         person.Y -= Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
                         person.DrawImage(person.Direction);
-
                     }
                     else if (person.Direction == DirectionType.Left)
                     {
-
                         person.X += Shares.WIDTH / Shares.WIDTH_CELL_NUM;
                         person.DrawImage(person.Direction);
-
                     }
                     else if (person.Direction == DirectionType.Right)
                     {
@@ -126,7 +199,8 @@ namespace Unilab2021A.Forms
             DrawStart();
 
             stage.Reset();
-            person.DrawImage(DirectionType.Down);
+            person.Direction = DirectionType.Right;
+            person.DrawImage(person.Direction);
 
             DrawEnd();
         }

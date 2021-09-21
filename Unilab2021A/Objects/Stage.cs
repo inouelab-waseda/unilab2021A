@@ -53,8 +53,8 @@ namespace Unilab2021A.Objects
             FirstFunction = new List<ActionBlockType>();
 
             //初期位置の座標
-            StartPosition_X = json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
-            StartPosition_Y = (json.StartPosition[1] - 1) * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+            StartPosition_X = (json.StartPosition[0] - 1) * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+            StartPosition_Y = json.StartPosition[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
         }
 
         public void CreatePath()
@@ -296,9 +296,9 @@ namespace Unilab2021A.Objects
                 case ActionBlockType.Up:
                     result = DirectionType.Up;
                     break;
-                //case ActionBlockType.Down:
-                //    result = DirectionType.Down;
-                //    break;
+                /*case ActionBlockType.Down:
+                    result = DirectionType.Down;
+                    break;*/
                 case ActionBlockType.Right:
                     result = DirectionType.Right;
                     break;
