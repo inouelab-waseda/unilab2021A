@@ -20,8 +20,6 @@ namespace Unilab2021A.Forms
         private Graphics g;
         //ステップの進んだ数
         private int firstStep;
-        //ボタンの矢印を受け取る変数
-        DirectionType block_direction;
 
         public GameForm()
         {
