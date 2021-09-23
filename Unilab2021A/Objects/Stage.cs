@@ -23,13 +23,17 @@ namespace Unilab2021A.Objects
 
         private StageJson Json { get; }
         private Graphics Graphics { get; }
+
         private FlowLayoutPanel BlockTypeSection { get; }
         private FlowLayoutPanel FirstFunctionSection { get; }
         private FlowLayoutPanel SecondFunctionSection { get; }
         private Action<object, MouseEventArgs> ActionBlock_MouseDown { get; }
         private Action<object, MouseEventArgs> ConditionBlock_MouseDown { get; }
+
         private bool[,] isRoad = new bool[16, 12];//道か草かの判定
         private ConditionBlockType[,] cellConditions = new ConditionBlockType[16, 12];//セルの状態 (色)
+        private bool[,] isSword = new bool[16, 12];//剣があるかないか
+        private bool[,] isEnemy = new bool[16, 12];//敵がいるかないか
 
         public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection,FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown, Action<object, MouseEventArgs> conditionBlock_MouseDown)
         {
@@ -45,7 +49,7 @@ namespace Unilab2021A.Objects
             Json = ReadFieldJson("1_1");
 
             //道の作成
-            CreatePath();
+            initPath();
 
             //ブロックの作成
             CreateBlockTypeSection();
@@ -62,7 +66,7 @@ namespace Unilab2021A.Objects
             StartPosition_Y = Json.StartPosition[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
         }
 
-        public void CreatePath()
+        private void initPath()
         {
             Image roadImage = Image.FromFile(@".\Images\Road.png");
             Image noneImage = Image.FromFile(@".\Images\Background.png");
@@ -78,46 +82,110 @@ namespace Unilab2021A.Objects
                 for (int j = 0; j < 12; j++)
                 {
                     isRoad[i, j] = true;
-                    cellConditions[i,j] = ConditionBlockType.None;
+                    cellConditions[i, j] = ConditionBlockType.None;
+                    isSword[i, j] = false;
+                    isEnemy[i, j] = false;
                 }
             }
 
             //道の作成
             for (int i = 0; i < Json.Path.Count; i++)
             {
-                Graphics.DrawImage(roadImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                int x = Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+                int y = Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+                int width = Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1;
+                int height = Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1;
+
+                Graphics.DrawImage(roadImage,x, y, width, height);
                 if (Json.Path[i].Image == ImageType.Others)
                 {
                     //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
                     //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
-                    Graphics.DrawImage(noneImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(noneImage,x, y, width, height);
                     isRoad[Json.Path[i].Position[0], Json.Path[i].Position[1]] = false;//草はfalseに
                 }
                 else if (Json.Path[i].Image == ImageType.Enemy)
                 {
-                    Graphics.DrawImage(enemyImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    isEnemy[Json.Path[i].Position[0], Json.Path[i].Position[1]] = true;//敵がいる場所はtrue
+                    Graphics.DrawImage(enemyImage,x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Sword)
                 {
-                    Graphics.DrawImage(swordImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    isSword[Json.Path[i].Position[0], Json.Path[i].Position[1]] = true;//剣がある場所はtrue
+                    Graphics.DrawImage(swordImage,x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Blue)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Blue;
-                    Graphics.DrawImage(blueblockImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(blueblockImage,x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Red)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Red;
-                    Graphics.DrawImage(redblockImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(redblockImage,x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Yellow)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Yellow;
-                    Graphics.DrawImage(yellowblockImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(yellowblockImage,x, y, width, height);
                 }
             }
         }
+
+        public void DrawPath()
+        {
+            Image roadImage = Image.FromFile(@".\Images\Road.png");
+            Image noneImage = Image.FromFile(@".\Images\Background.png");
+            Image enemyImage = Image.FromFile(@".\Images\Enemy.png");
+            Image swordImage = Image.FromFile(@".\Images\Sword.png");
+            Image blueblockImage = Image.FromFile(@".\Images\BlueBlock.png");//Json.Path[i].Image = 4として設定
+            Image redblockImage = Image.FromFile(@".\Images\RedBlock.png");//Json.Path[i].Image = 5として設定
+            Image yellowblockImage = Image.FromFile(@".\Images\YellowBlock.png");//Json.Path[i].Image = 6として設定
+
+            //道の作成
+            for (int i = 0; i < Json.Path.Count; i++)
+            {
+                int x = Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+                int y = Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+                int width = Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1;
+                int height = Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1;
+
+                Graphics.DrawImage(roadImage,x, y, width, height);
+                if (Json.Path[i].Image == ImageType.Others)
+                {
+                    //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
+                    //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
+                    Graphics.DrawImage(noneImage,x, y, width, height);
+                    isRoad[Json.Path[i].Position[0], Json.Path[i].Position[1]] = false;//草はfalseに
+                }
+                else if (Json.Path[i].Image == ImageType.Blue)
+                {
+                    cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Blue;
+                    Graphics.DrawImage(blueblockImage,x, y, width, height);
+                }
+                else if (Json.Path[i].Image == ImageType.Red)
+                {
+                    cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Red;
+                    Graphics.DrawImage(redblockImage,x, y, width, height);
+                }
+                else if (Json.Path[i].Image == ImageType.Yellow)
+                {
+                    cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Yellow;
+                    Graphics.DrawImage(yellowblockImage,x, y, width, height);
+                }
+
+                //可変なもの
+                if (isEnemy[Json.Path[i].Position[0], Json.Path[i].Position[1]])
+                {
+                    Graphics.DrawImage(enemyImage, x, y, width, height);
+                }
+                if (isSword[Json.Path[i].Position[0], Json.Path[i].Position[1]])
+                {
+                    Graphics.DrawImage(swordImage, x, y, width, height);
+                }
+            }
+        }
+
 
         private void CreateBlockTypeSection()
         {
@@ -126,8 +194,8 @@ namespace Unilab2021A.Objects
             for (int i = 0; i < Json.Blocks.Count; i++)
             {
                 buttons[i] = new Button();
-                buttons[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
-                buttons[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
+                buttons[i].Width = Shares.BLOCK_CELL_SIZE;
+                buttons[i].Height = Shares.BLOCK_CELL_SIZE;
                 switch (Json.Blocks[i])
                 {
                     case BlockType.GoStraight:
@@ -175,8 +243,8 @@ namespace Unilab2021A.Objects
             for (int i = 0; i < Json.MaxBlockCounts[0]; i++)
             {
                 firstTextBoxes[i] = new TextBox();
-                firstTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
-                firstTextBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
+                firstTextBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
+                firstTextBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
                 firstTextBoxes[i].DragOver += Block_DragOver;
                 firstTextBoxes[i].DragEnter += Block_DragEnter;
 
@@ -196,8 +264,8 @@ namespace Unilab2021A.Objects
                 for (int i = 0; i < Json.MaxBlockCounts[1]; i++)
                 {
                     secondTextBoxes[i] = new TextBox();
-                    secondTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
-                    secondTextBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
+                    secondTextBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
+                    secondTextBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
                     secondTextBoxes[i].DragOver += Block_DragOver;
                     secondTextBoxes[i].DragEnter += Block_DragEnter;
 
@@ -214,7 +282,7 @@ namespace Unilab2021A.Objects
 
         public void Reset()
         {
-            CreatePath();
+            initPath();
             FirstActions = new List<ActionBlockType>();
             FirstConditions = new ConditionBlockType[FirstConditions.Length];
             FirstFunctionSection.Controls.Clear();
@@ -368,6 +436,40 @@ namespace Unilab2021A.Objects
                 return personCondition == cellCondition;
             }
             
+        }
+
+        //剣があるかどうか判定
+        public bool IsSword(int x, int y)
+        {
+
+            bool result = isSword[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
+
+            //もし剣があれば、取得するので剣は消える
+            if (result)
+            {
+                isSword[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)] = false;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        //剣があるかどうか判定
+        public bool IsEnemy(int swordCount ,int x, int y)
+        {
+
+            bool result = isEnemy[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
+
+            //もし剣があれば、倒すので敵は消える
+            if (result && swordCount>0)
+            {
+                isEnemy[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)] = false;
+
+                return true;
+            }
+
+            return false;
         }
 
         //Jsonファイルの読み出し
