@@ -32,16 +32,8 @@ namespace Unilab2021A.Forms
 
             DrawStart();
 
-            person = new Person(g);
             stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection, button_MouseDown);
-
-            //上下左右が分かりやすいように
-            person.X_start = stage.StartPosition_X;
-            person.Y_start = stage.StartPosition_Y;
-            person.X = person.X_start;
-            person.Y = person.Y_start;
-
-            person.DrawImage(DirectionType.Down);
+            person = new Person(g,stage.StartPosition_X,stage.StartPosition_Y, DirectionType.Right);
 
             DrawEnd();
         }
@@ -71,43 +63,28 @@ namespace Unilab2021A.Forms
             {
                 DrawStart();
                 stage.CreatePath();
-                person.Direction = stage.getDirection(stage.FirstFunction[firstStep]);
 
-                bool isRoad = stage.IsRoad(person.Direction, person.X, person.Y);
-
-                if (isRoad)
+                
+                //方向転換ブロック
+                if (stage.FirstFunction[firstStep] == ActionBlockType.TurnLeft || stage.FirstFunction[firstStep] == ActionBlockType.TurnRight)
                 {
-                    person.DrawImage(person.Direction);//画像をcanvasの座標(person.X, person.Y)の位置に描画する
+                    person.SetPersonDirection(stage.FirstFunction[firstStep]);
                 }
-                else
+                //進行ブロック
+                else if (stage.FirstFunction[firstStep] == ActionBlockType.GoStraight)
                 {
-                    if (person.Direction == DirectionType.Up)
+                    bool isRoad = stage.IsRoad(person.Direction, person.X, person.Y);
+                    if (isRoad)
                     {
-
-                        person.Y += Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
-                        person.DrawImage(person.Direction);
-
+                        person.GoStraight();
                     }
-                    else if (person.Direction == DirectionType.Down)
+                    else
                     {
-
-                        person.Y -= Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
-                        person.DrawImage(person.Direction);
-
+                        person.Draw();
                     }
-                    else if (person.Direction == DirectionType.Left)
-                    {
-
-                        person.X += Shares.WIDTH / Shares.WIDTH_CELL_NUM;
-                        person.DrawImage(person.Direction);
-
-                    }
-                    else if (person.Direction == DirectionType.Right)
-                    {
-                        person.X -= Shares.WIDTH / Shares.WIDTH_CELL_NUM;
-                        person.DrawImage(person.Direction);
-                    }
+                   
                 }
+                    
 
                 DrawEnd();
                 firstStep++;
@@ -120,13 +97,11 @@ namespace Unilab2021A.Forms
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            person.X = person.X_start;
-            person.Y = person.Y_start;
 
             DrawStart();
 
             stage.Reset();
-            person.DrawImage(DirectionType.Down);
+            person.Reset();
 
             DrawEnd();
         }

@@ -54,7 +54,7 @@ namespace Unilab2021A.Objects
 
             //初期位置の座標
             StartPosition_X = json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
-            StartPosition_Y = (json.StartPosition[1] - 1) * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+            StartPosition_Y = json.StartPosition[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
         }
 
         public void CreatePath()
@@ -122,13 +122,13 @@ namespace Unilab2021A.Objects
                 buttons[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
                 switch (json.ActionBlocks[i])
                 {
-                    case ActionBlockType.Up:
+                    case ActionBlockType.GoStraight:
                         buttons[i].Text = "↑";
                         break;
-                    case ActionBlockType.Right:
+                    case ActionBlockType.TurnRight:
                         buttons[i].Text = "→";
                         break;
-                    case ActionBlockType.Left:
+                    case ActionBlockType.TurnLeft:
                         buttons[i].Text = "←";
                         break;
                     case ActionBlockType.First:
@@ -220,13 +220,13 @@ namespace Unilab2021A.Objects
                 switch (data)
                 {
                     case "↑":
-                        FirstFunction[i] = ActionBlockType.Up;
+                        FirstFunction[i] = ActionBlockType.GoStraight;
                         break;
                     case "→":
-                        FirstFunction[i] = ActionBlockType.Right;
+                        FirstFunction[i] = ActionBlockType.TurnRight;
                         break;
                     case "←":
-                        FirstFunction[i] = ActionBlockType.Left;
+                        FirstFunction[i] = ActionBlockType.TurnLeft;
                         break;
                     case "F1":
                         FirstFunction[i] = ActionBlockType.First;
@@ -241,13 +241,13 @@ namespace Unilab2021A.Objects
                 switch (data)
                 {
                     case "↑":
-                        FirstFunction.Add(ActionBlockType.Up);
+                        FirstFunction.Add(ActionBlockType.GoStraight);
                         break;
                     case "→":
-                        FirstFunction.Add(ActionBlockType.Right);
+                        FirstFunction.Add(ActionBlockType.TurnRight);
                         break;
                     case "←":
-                        FirstFunction.Add(ActionBlockType.Left);
+                        FirstFunction.Add(ActionBlockType.TurnLeft);
                         break;
                     case "F1":
                         FirstFunction.Add(ActionBlockType.First);
@@ -287,29 +287,6 @@ namespace Unilab2021A.Objects
             return result;
 
         }
-
-        public DirectionType getDirection(ActionBlockType type)
-        {
-            DirectionType result = DirectionType.Up;
-            switch (type)
-            {
-                case ActionBlockType.Up:
-                    result = DirectionType.Up;
-                    break;
-                //case ActionBlockType.Down:
-                //    result = DirectionType.Down;
-                //    break;
-                case ActionBlockType.Right:
-                    result = DirectionType.Right;
-                    break;
-                case ActionBlockType.Left:
-                    result = DirectionType.Left;
-                    break;
-            }
-
-            return result;
-        }
-
 
         //jsonファイルの読み出し
         private StageJson ReadFieldJson(string name)

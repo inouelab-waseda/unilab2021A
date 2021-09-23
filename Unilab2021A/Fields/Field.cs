@@ -17,7 +17,6 @@ namespace Unilab2021A.Fields
     class Cell
     {
         public ImageType Image { get; set; }
-        public DirectionType Direction { get; set; }
         public List<int> Position { get; set; }
     }
 }
