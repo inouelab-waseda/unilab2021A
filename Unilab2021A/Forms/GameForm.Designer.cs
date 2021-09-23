@@ -34,16 +34,15 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.itemPictureBox = new System.Windows.Forms.PictureBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
             this.ActionBlockTypeSection = new System.Windows.Forms.FlowLayoutPanel();
             this.FirstFunctionSection = new System.Windows.Forms.FlowLayoutPanel();
             this.SecondFunctionSection = new System.Windows.Forms.FlowLayoutPanel();
+            this.SwordSection = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -58,13 +57,13 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.62712F));
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.itemPictureBox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button1, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.resetButton, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.ActionBlockTypeSection, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.FirstFunctionSection, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.SecondFunctionSection, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.SwordSection, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
@@ -105,16 +104,6 @@ namespace Unilab2021A.Forms
             this.textBox1.Size = new System.Drawing.Size(132, 19);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = "使えるブロック";
-            // 
-            // itemPictureBox
-            // 
-            this.itemPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemPictureBox.Location = new System.Drawing.Point(636, 28);
-            this.itemPictureBox.Margin = new System.Windows.Forms.Padding(2);
-            this.itemPictureBox.Name = "itemPictureBox";
-            this.itemPictureBox.Size = new System.Drawing.Size(132, 82);
-            this.itemPictureBox.TabIndex = 8;
-            this.itemPictureBox.TabStop = false;
             // 
             // textBox2
             // 
@@ -180,6 +169,14 @@ namespace Unilab2021A.Forms
             this.SecondFunctionSection.Size = new System.Drawing.Size(130, 32);
             this.SecondFunctionSection.TabIndex = 15;
             // 
+            // SwordSection
+            // 
+            this.SwordSection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SwordSection.Location = new System.Drawing.Point(637, 29);
+            this.SwordSection.Name = "SwordSection";
+            this.SwordSection.Size = new System.Drawing.Size(130, 80);
+            this.SwordSection.TabIndex = 16;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -194,7 +191,6 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,7 +199,6 @@ namespace Unilab2021A.Forms
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.PictureBox itemPictureBox;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button resetButton;
@@ -211,5 +206,6 @@ namespace Unilab2021A.Forms
         private System.Windows.Forms.FlowLayoutPanel ActionBlockTypeSection;
         private System.Windows.Forms.FlowLayoutPanel FirstFunctionSection;
         private System.Windows.Forms.FlowLayoutPanel SecondFunctionSection;
+        private System.Windows.Forms.FlowLayoutPanel SwordSection;
     }
 }

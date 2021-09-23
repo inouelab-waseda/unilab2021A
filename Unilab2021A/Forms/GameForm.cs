@@ -33,7 +33,7 @@ namespace Unilab2021A.Forms
             DrawStart();
 
             stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection, actionBlock_MouseDown,conditionBlock_MouseDown);
-            person = new Person(g,stage.StartPosition_X,stage.StartPosition_Y, DirectionType.Right);
+            person = new Person(g, SwordSection, stage.StartPosition_X,stage.StartPosition_Y, DirectionType.Right);
 
             DrawEnd();
         }
@@ -62,7 +62,7 @@ namespace Unilab2021A.Forms
             if (firstStep < stage.FirstActions.Count)
             {
                 DrawStart();
-                stage.CreatePath();
+                stage.DrawPath();
 
                 //状態ブロック
                 if (stage.CanAct(stage.FirstConditions[firstStep], person.X, person.Y))
@@ -92,8 +92,15 @@ namespace Unilab2021A.Forms
                     person.Draw();
                 }
                 
+                if(stage.IsSword(person.X, person.Y))
+                {
+                    person.AddSword(); 
+                }
 
-                    
+                if (stage.IsEnemy(person.SwordCount,person.X, person.Y))
+                {
+                    person.UseSword();
+                }
 
                 DrawEnd();
                 firstStep++;

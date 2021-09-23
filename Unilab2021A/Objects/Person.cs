@@ -19,17 +19,22 @@ namespace Unilab2021A.Objects
         public int Y { get;private set; }
         //playerの向き
         public DirectionType Direction { get; set; }
-        private int StartX { get; set; }
-        private int StartY { get; set; }
-        private DirectionType StartDirectionType { get; set; }
 
-        private Graphics Graphics { get; set; }
+        public int SwordCount { get; private set; }
 
-        private Image[] images = new Image[5];
+        private Graphics Graphics { get; }
+        private FlowLayoutPanel SwordSection { get; }
+        private int StartX { get; }
+        private int StartY { get; }
+        private DirectionType StartDirectionType { get; }
 
-        public Person(Graphics graphics,int x,int y,DirectionType direction)
+        
+        private Image[] images = new Image[4];
+
+        public Person(Graphics graphics, FlowLayoutPanel swordSection, int x,int y,DirectionType direction)
         {
-            this.Graphics = graphics;
+            Graphics = graphics;
+            SwordSection = swordSection;
 
             images[(int)DirectionType.Up] = GetBitmap("Player_Up.png");//上の画像
             images[(int)DirectionType.Down] = GetBitmap("Player_Down.png");//下の画像
@@ -130,12 +135,38 @@ namespace Unilab2021A.Objects
             Draw();
         }
 
+        public void AddSword()
+        {
+            SwordCount++;
+
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Image = GetBitmap("Sword.png");
+            pictureBox.Width = Shares.BLOCK_CELL_SIZE;
+            pictureBox.Height = Shares.BLOCK_CELL_SIZE;
+
+            SwordSection.Controls.Add(pictureBox);
+
+            Draw();
+        }
+        public void UseSword()
+        {
+            SwordCount--;
+
+            int count = SwordSection.Controls.Count;
+            SwordSection.Controls.Remove(SwordSection.Controls[count - 1]);
+
+            Draw();
+        }
+
         public void Reset()
         {
 
             X = StartX;
             Y = StartY;
             Direction = StartDirectionType;
+            SwordCount = 0;
+            SwordSection.Controls.Clear();
 
             Draw();
         }

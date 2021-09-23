@@ -13,6 +13,6 @@ namespace Unilab2021A.Helpers
         public const int HEIGHT = 2130;
         public const int WIDTH_CELL_NUM = 16;
         public const int HEIGHT_CELL_NUM = 12;
-        public const int ACTION_BLOCK_CELL_SIZE = 30;
+        public const int BLOCK_CELL_SIZE = 30;
     }
 }
