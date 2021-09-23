@@ -21,7 +21,7 @@ namespace Unilab2021A.Objects
         public List<ActionBlockType> FirstActions { get; private set; }
         public ConditionBlockType[] FirstConditions { get; private set; }
 
-        private StageJson json;
+        private StageJson Json { get; }
         private Graphics Graphics { get; }
         private FlowLayoutPanel BlockTypeSection { get; }
         private FlowLayoutPanel FirstFunctionSection { get; }
@@ -40,9 +40,9 @@ namespace Unilab2021A.Objects
             FirstFunctionSection = firstFunctionSection;
             SecondFunctionSection = secondFunctionSection;
 
-            // jsonファイルの読み込みなど(StageName)
+            // Jsonファイルの読み込みなど(StageName)
             // --------
-            json = ReadFieldJson("1_1");
+            Json = ReadFieldJson("1_1");
 
             //道の作成
             CreatePath();
@@ -55,11 +55,11 @@ namespace Unilab2021A.Objects
 
             //First関数
             FirstActions = new List<ActionBlockType>();
-            FirstConditions = new ConditionBlockType[json.MaxBlockCounts[0]];
+            FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]];
 
             //初期位置の座標
-            StartPosition_X = json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
-            StartPosition_Y = json.StartPosition[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
+            StartPosition_X = Json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
+            StartPosition_Y = Json.StartPosition[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
         }
 
         public void CreatePath()
@@ -68,9 +68,9 @@ namespace Unilab2021A.Objects
             Image noneImage = Image.FromFile(@".\Images\Background.png");
             Image enemyImage = Image.FromFile(@".\Images\Enemy.png");
             Image swordImage = Image.FromFile(@".\Images\Sword.png");
-            Image blueblockImage = Image.FromFile(@".\Images\BlueBlock.png");//json.Path[i].Image = 4として設定
-            Image redblockImage = Image.FromFile(@".\Images\RedBlock.png");//json.Path[i].Image = 5として設定
-            Image yellowblockImage = Image.FromFile(@".\Images\YellowBlock.png");//json.Path[i].Image = 6として設定
+            Image blueblockImage = Image.FromFile(@".\Images\BlueBlock.png");//Json.Path[i].Image = 4として設定
+            Image redblockImage = Image.FromFile(@".\Images\RedBlock.png");//Json.Path[i].Image = 5として設定
+            Image yellowblockImage = Image.FromFile(@".\Images\YellowBlock.png");//Json.Path[i].Image = 6として設定
 
             //flagの初期化
             for (int i = 0; i < 16; i++)
@@ -78,59 +78,57 @@ namespace Unilab2021A.Objects
                 for (int j = 0; j < 12; j++)
                 {
                     isRoad[i, j] = true;
+                    cellConditions[i,j] = ConditionBlockType.None;
                 }
             }
 
             //道の作成
-            for (int i = 0; i < json.Path.Count; i++)
+            for (int i = 0; i < Json.Path.Count; i++)
             {
-                Graphics.DrawImage(roadImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
-                if (json.Path[i].Image == ImageType.Others)
+                Graphics.DrawImage(roadImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                if (Json.Path[i].Image == ImageType.Others)
                 {
                     //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
                     //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
-                    Graphics.DrawImage(noneImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
-                    isRoad[json.Path[i].Position[0], json.Path[i].Position[1]] = false;//草はfalseに
-                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.None;
+                    Graphics.DrawImage(noneImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    isRoad[Json.Path[i].Position[0], Json.Path[i].Position[1]] = false;//草はfalseに
                 }
-                else if (json.Path[i].Image == ImageType.Enemy)
+                else if (Json.Path[i].Image == ImageType.Enemy)
                 {
-                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.None;
-                    Graphics.DrawImage(enemyImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(enemyImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
-                else if (json.Path[i].Image == ImageType.Sword)
+                else if (Json.Path[i].Image == ImageType.Sword)
                 {
-                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.None;
-                    Graphics.DrawImage(swordImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    Graphics.DrawImage(swordImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
-                else if (json.Path[i].Image == ImageType.Blue)
+                else if (Json.Path[i].Image == ImageType.Blue)
                 {
-                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.Blue;
-                    Graphics.DrawImage(blueblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Blue;
+                    Graphics.DrawImage(blueblockImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
-                else if (json.Path[i].Image == ImageType.Red)
+                else if (Json.Path[i].Image == ImageType.Red)
                 {
-                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.Red;
-                    Graphics.DrawImage(redblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Red;
+                    Graphics.DrawImage(redblockImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
-                else if (json.Path[i].Image == ImageType.Yellow)
+                else if (Json.Path[i].Image == ImageType.Yellow)
                 {
-                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.Yellow;
-                    Graphics.DrawImage(yellowblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+                    cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Yellow;
+                    Graphics.DrawImage(yellowblockImage, Json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, Json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
             }
         }
 
         private void CreateBlockTypeSection()
         {
-            Button[] buttons = new Button[json.Blocks.Count];
+            Button[] buttons = new Button[Json.Blocks.Count];
 
-            for (int i = 0; i < json.Blocks.Count; i++)
+            for (int i = 0; i < Json.Blocks.Count; i++)
             {
                 buttons[i] = new Button();
                 buttons[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
                 buttons[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
-                switch (json.Blocks[i])
+                switch (Json.Blocks[i])
                 {
                     case BlockType.GoStraight:
                         buttons[i].Text = "↑";
@@ -157,7 +155,7 @@ namespace Unilab2021A.Objects
                         buttons[i].BackColor = Color.Yellow;
                         break;
                 }
-                if (json.Blocks[i] == BlockType.Blue || json.Blocks[i] == BlockType.Red || json.Blocks[i] == BlockType.Yellow)
+                if (Json.Blocks[i] == BlockType.Blue || Json.Blocks[i] == BlockType.Red || Json.Blocks[i] == BlockType.Yellow)
                 {
                     buttons[i].MouseDown += new MouseEventHandler(ConditionBlock_MouseDown);
                 }
@@ -172,9 +170,9 @@ namespace Unilab2021A.Objects
 
         private void CreateFunctionSection()
         {
-            TextBox[] firstTextBoxes = new TextBox[json.MaxBlockCounts[0]];
+            TextBox[] firstTextBoxes = new TextBox[Json.MaxBlockCounts[0]];
 
-            for (int i = 0; i < json.MaxBlockCounts[0]; i++)
+            for (int i = 0; i < Json.MaxBlockCounts[0]; i++)
             {
                 firstTextBoxes[i] = new TextBox();
                 firstTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
@@ -191,11 +189,11 @@ namespace Unilab2021A.Objects
             }
 
             //関数が2つある場合
-            if (json.MaxBlockCounts.Count==2)
+            if (Json.MaxBlockCounts.Count==2)
             {
-                TextBox[] secondTextBoxes = new TextBox[json.MaxBlockCounts[1]];
+                TextBox[] secondTextBoxes = new TextBox[Json.MaxBlockCounts[1]];
 
-                for (int i = 0; i < json.MaxBlockCounts[1]; i++)
+                for (int i = 0; i < Json.MaxBlockCounts[1]; i++)
                 {
                     secondTextBoxes[i] = new TextBox();
                     secondTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
@@ -372,10 +370,10 @@ namespace Unilab2021A.Objects
             
         }
 
-        //jsonファイルの読み出し
+        //Jsonファイルの読み出し
         private StageJson ReadFieldJson(string name)
         {
-            var sr = new StreamReader(@".\Fields\" + name + ".json", Encoding.GetEncoding("utf-8"));
+            var sr = new StreamReader(@".\Fields\" + name + ".Json", Encoding.GetEncoding("utf-8"));
             var input = sr.ReadToEnd();
             sr.Close();
             var deserialized = JsonConvert.DeserializeObject<StageJson>(input);
