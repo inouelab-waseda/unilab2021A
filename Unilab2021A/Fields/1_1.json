@@ -1350,7 +1350,7 @@
             ]
         }
     ],
-    "ActionBlocks": [
+    "Blocks": [
         0,
         1,
         2,
@@ -1361,6 +1361,6 @@
         7
     ],
     "FunctionCount": 1,
-    "MaxActionBlockCounts": [ 6 ]
+    "MaxBlockCounts": [ 6 ]
 
 }
