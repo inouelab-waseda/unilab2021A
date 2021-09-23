@@ -9,9 +9,9 @@ namespace Unilab2021A.Fields
         public string StageName { get; set; }
         public List<int> StartPosition { get; set; }
         public List<Cell> Path { get; set; } = new List<Cell>();
-        public List<ActionBlockType> ActionBlocks { get; set; }
+        public List<BlockType> Blocks { get; set; }
         public int FunctionCount { get; set; } //1か2のみ受け付ける
-        public List<int> MaxActionBlockCounts { get; set; } //FunctionCountの数に合わせる
+        public List<int> MaxBlockCounts { get; set; } //FunctionCountの数に合わせる
     }
 
     class Cell

@@ -18,21 +18,25 @@ namespace Unilab2021A.Objects
     {
         public int StartPosition_X { get; private set; }
         public int StartPosition_Y { get; private set; }
-        public List<ActionBlockType> FirstFunction { get; private set; }
+        public List<ActionBlockType> FirstActions { get; private set; }
+        public ConditionBlockType[] FirstConditions { get; private set; }
 
         private StageJson json;
-        private Graphics Graphics { get; set; }
-        private FlowLayoutPanel ActionBlockTypeSection { get; set; }
-        private FlowLayoutPanel FirstFunctionSection { get; set; }
-        private FlowLayoutPanel SecondFunctionSection { get; set; }
-        private Action<object, MouseEventArgs> ActionBlock_MouseDown { get; set; }
+        private Graphics Graphics { get; }
+        private FlowLayoutPanel BlockTypeSection { get; }
+        private FlowLayoutPanel FirstFunctionSection { get; }
+        private FlowLayoutPanel SecondFunctionSection { get; }
+        private Action<object, MouseEventArgs> ActionBlock_MouseDown { get; }
+        private Action<object, MouseEventArgs> ConditionBlock_MouseDown { get; }
         private bool[,] isRoad = new bool[16, 12];//道か草かの判定
+        private ConditionBlockType[,] cellConditions = new ConditionBlockType[16, 12];//セルの状態 (色)
 
-        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection,FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown)
+        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection,FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown, Action<object, MouseEventArgs> conditionBlock_MouseDown)
         {
             Graphics = graphics;
-            ActionBlockTypeSection = actionBlockTypeSection;
+            BlockTypeSection = actionBlockTypeSection;
             ActionBlock_MouseDown = actionBlock_MouseDown;
+            ConditionBlock_MouseDown = conditionBlock_MouseDown;
             FirstFunctionSection = firstFunctionSection;
             SecondFunctionSection = secondFunctionSection;
 
@@ -43,14 +47,15 @@ namespace Unilab2021A.Objects
             //道の作成
             CreatePath();
 
-            //アクションブロックの作成
-            CreateActionBlockTypeSection();
+            //ブロックの作成
+            CreateBlockTypeSection();
 
             //関数セクションの作成
             CreateFunctionSection();
 
             //First関数
-            FirstFunction = new List<ActionBlockType>();
+            FirstActions = new List<ActionBlockType>();
+            FirstConditions = new ConditionBlockType[json.MaxBlockCounts[0]];
 
             //初期位置の座標
             StartPosition_X = json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
@@ -86,103 +91,121 @@ namespace Unilab2021A.Objects
                     //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
                     Graphics.DrawImage(noneImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                     isRoad[json.Path[i].Position[0], json.Path[i].Position[1]] = false;//草はfalseに
+                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.None;
                 }
-                
                 else if (json.Path[i].Image == ImageType.Enemy)
                 {
+                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.None;
                     Graphics.DrawImage(enemyImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
                 else if (json.Path[i].Image == ImageType.Sword)
                 {
+                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.None;
                     Graphics.DrawImage(swordImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
                 else if (json.Path[i].Image == ImageType.Blue)
                 {
+                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.Blue;
                     Graphics.DrawImage(blueblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
                 else if (json.Path[i].Image == ImageType.Red)
                 {
+                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.Red;
                     Graphics.DrawImage(redblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
                 else if (json.Path[i].Image == ImageType.Yellow)
                 {
+                    cellConditions[json.Path[i].Position[0], json.Path[i].Position[1]] = ConditionBlockType.Yellow;
                     Graphics.DrawImage(yellowblockImage, json.Path[i].Position[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM, json.Path[i].Position[1] * Shares.HEIGHT / Shares.HEIGHT_CELL_NUM, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
                 }
             }
         }
 
-        private void CreateActionBlockTypeSection()
+        private void CreateBlockTypeSection()
         {
-            Button[] buttons = new Button[json.ActionBlocks.Count];
+            Button[] buttons = new Button[json.Blocks.Count];
 
-            for (int i = 0; i < json.ActionBlocks.Count; i++)
+            for (int i = 0; i < json.Blocks.Count; i++)
             {
                 buttons[i] = new Button();
                 buttons[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
                 buttons[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
-                switch (json.ActionBlocks[i])
+                switch (json.Blocks[i])
                 {
-                    case ActionBlockType.GoStraight:
+                    case BlockType.GoStraight:
                         buttons[i].Text = "↑";
                         break;
-                    case ActionBlockType.TurnRight:
+                    case BlockType.TurnRight:
                         buttons[i].Text = "→";
                         break;
-                    case ActionBlockType.TurnLeft:
+                    case BlockType.TurnLeft:
                         buttons[i].Text = "←";
                         break;
-                    case ActionBlockType.First:
+                    case BlockType.First:
                         buttons[i].Text = "F1";
                         break;
-                    case ActionBlockType.Second:
+                    case BlockType.Second:
                         buttons[i].Text = "F2";
                         break;
-                    case ActionBlockType.Blue:
+                    case BlockType.Blue:
                         buttons[i].BackColor = Color.Blue;
                         break;
-                    case ActionBlockType.Red:
+                    case BlockType.Red:
                         buttons[i].BackColor = Color.Red;
                         break;
-                    case ActionBlockType.Yellow:
+                    case BlockType.Yellow:
                         buttons[i].BackColor = Color.Yellow;
                         break;
                 }
-                buttons[i].MouseDown += new MouseEventHandler(ActionBlock_MouseDown);
-                ActionBlockTypeSection.Controls.Add(buttons[i]);
+                if (json.Blocks[i] == BlockType.Blue || json.Blocks[i] == BlockType.Red || json.Blocks[i] == BlockType.Yellow)
+                {
+                    buttons[i].MouseDown += new MouseEventHandler(ConditionBlock_MouseDown);
+                }
+                else
+                {
+                    buttons[i].MouseDown += new MouseEventHandler(ActionBlock_MouseDown);
+                }
+               
+                BlockTypeSection.Controls.Add(buttons[i]);
             }
         }
 
         private void CreateFunctionSection()
         {
-            TextBox[] textBoxes = new TextBox[json.MaxActionBlockCounts[0]];
+            TextBox[] firstTextBoxes = new TextBox[json.MaxBlockCounts[0]];
 
-            for (int i = 0; i < json.MaxActionBlockCounts[0]; i++)
+            for (int i = 0; i < json.MaxBlockCounts[0]; i++)
             {
-                textBoxes[i] = new TextBox();
-                textBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
-                textBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
-                textBoxes[i].DragOver += ActionBlock_DragOver;
-                textBoxes[i].DragEnter += ActionBlock_DragEnter;
-                textBoxes[i].DragDrop += ActionBlock_DragDrop;
+                firstTextBoxes[i] = new TextBox();
+                firstTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
+                firstTextBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
+                firstTextBoxes[i].DragOver += Block_DragOver;
+                firstTextBoxes[i].DragEnter += Block_DragEnter;
 
-                textBoxes[i].Name = i.ToString();
-                textBoxes[i].AllowDrop = true;
-                FirstFunctionSection.Controls.Add(textBoxes[i]);
+                firstTextBoxes[i].DragDrop += ConditionBlock_DragDrop;
+                firstTextBoxes[i].DragDrop += ActionBlock_DragDrop;
+
+                firstTextBoxes[i].Name = i.ToString();
+                firstTextBoxes[i].AllowDrop = true;
+                FirstFunctionSection.Controls.Add(firstTextBoxes[i]);
             }
 
             //関数が2つある場合
-            if (json.MaxActionBlockCounts.Count==2)
+            if (json.MaxBlockCounts.Count==2)
             {
-                TextBox[] secondTextBoxes = new TextBox[json.MaxActionBlockCounts[1]];
+                TextBox[] secondTextBoxes = new TextBox[json.MaxBlockCounts[1]];
 
-                for (int i = 0; i < json.MaxActionBlockCounts[1]; i++)
+                for (int i = 0; i < json.MaxBlockCounts[1]; i++)
                 {
                     secondTextBoxes[i] = new TextBox();
                     secondTextBoxes[i].Width = Shares.ACTION_BLOCK_CELL_SIZE;
                     secondTextBoxes[i].Height = Shares.ACTION_BLOCK_CELL_SIZE;
-                    secondTextBoxes[i].DragOver += ActionBlock_DragOver;
-                    secondTextBoxes[i].DragEnter += ActionBlock_DragEnter;
+                    secondTextBoxes[i].DragOver += Block_DragOver;
+                    secondTextBoxes[i].DragEnter += Block_DragEnter;
+
+                    secondTextBoxes[i].DragDrop += ConditionBlock_DragDrop;
                     secondTextBoxes[i].DragDrop += ActionBlock_DragDrop;
+
 
                     secondTextBoxes[i].Name = i.ToString();
                     secondTextBoxes[i].AllowDrop = true;
@@ -194,23 +217,29 @@ namespace Unilab2021A.Objects
         public void Reset()
         {
             CreatePath();
-            FirstFunction = new List<ActionBlockType>();
+            FirstActions = new List<ActionBlockType>();
+            FirstConditions = new ConditionBlockType[FirstConditions.Length];
             FirstFunctionSection.Controls.Clear();
             CreateFunctionSection();
 
         }
 
         // Set the effect filter and allow the drop on this control
-        private void ActionBlock_DragOver(object sender, DragEventArgs e) =>
+        private void Block_DragOver(object sender, DragEventArgs e) =>
             e.Effect = DragDropEffects.All;
 
-        private void ActionBlock_DragEnter(object sender, DragEventArgs e) =>
+        private void Block_DragEnter(object sender, DragEventArgs e) =>
             e.Effect = DragDropEffects.All;
 
     
+        //ドロップされたものをアクションブロックとしたとき
         private void ActionBlock_DragDrop(object sender, DragEventArgs e)
         {
             string data = (string)e.Data.GetData(typeof(string));
+            if (data == null) //状態ブロックの場合は処理しない
+            {
+                return;
+            }
             TextBox textBox = (TextBox)sender;
             int i = int.Parse(textBox.Name);
 
@@ -220,19 +249,19 @@ namespace Unilab2021A.Objects
                 switch (data)
                 {
                     case "↑":
-                        FirstFunction[i] = ActionBlockType.GoStraight;
+                        FirstActions[i] = ActionBlockType.GoStraight;
                         break;
                     case "→":
-                        FirstFunction[i] = ActionBlockType.TurnRight;
+                        FirstActions[i] = ActionBlockType.TurnRight;
                         break;
                     case "←":
-                        FirstFunction[i] = ActionBlockType.TurnLeft;
+                        FirstActions[i] = ActionBlockType.TurnLeft;
                         break;
                     case "F1":
-                        FirstFunction[i] = ActionBlockType.First;
+                        FirstActions[i] = ActionBlockType.First;
                         break;
                     case "F2":
-                        FirstFunction[i] = ActionBlockType.Second;
+                        FirstActions[i] = ActionBlockType.Second;
                         break;
                 }
             }
@@ -241,19 +270,19 @@ namespace Unilab2021A.Objects
                 switch (data)
                 {
                     case "↑":
-                        FirstFunction.Add(ActionBlockType.GoStraight);
+                        FirstActions.Add(ActionBlockType.GoStraight);
                         break;
                     case "→":
-                        FirstFunction.Add(ActionBlockType.TurnRight);
+                        FirstActions.Add(ActionBlockType.TurnRight);
                         break;
                     case "←":
-                        FirstFunction.Add(ActionBlockType.TurnLeft);
+                        FirstActions.Add(ActionBlockType.TurnLeft);
                         break;
                     case "F1":
-                        FirstFunction.Add(ActionBlockType.First);
+                        FirstActions.Add(ActionBlockType.First);
                         break;
                     case "F2":
-                        FirstFunction.Add(ActionBlockType.Second);
+                        FirstActions.Add(ActionBlockType.Second);
                         break;
                 }
             }
@@ -261,6 +290,46 @@ namespace Unilab2021A.Objects
 
 
             textBox.Text = data;
+        }
+
+        //ドロップされたものを状態ブロックとしたとき
+        private void ConditionBlock_DragDrop(object sender, DragEventArgs e)
+        {
+
+            try
+            {
+                Color data = (Color)e.Data.GetData(typeof(Color));
+                TextBox textBox = (TextBox)sender;
+                int i = int.Parse(textBox.Name);
+
+
+
+                if (data.Name == Color.Blue.Name)
+                {
+                    FirstConditions[i] = ConditionBlockType.Blue;
+                }
+                else if (data.Name == Color.Red.Name)
+                {
+                    FirstConditions[i] = ConditionBlockType.Red;
+                }
+                else if (data.Name == Color.Yellow.Name)
+                {
+                    FirstConditions[i] = ConditionBlockType.Yellow;
+                }
+                else if (data.Name == "Window")
+                {
+                    FirstConditions[i] = ConditionBlockType.None;
+                }
+
+
+                    textBox.BackColor = data;
+            }
+            catch (NullReferenceException exception)//アクションブロックの場合は処理しない
+            {
+                Console.WriteLine(exception.ToString());
+                return;
+            }
+
         }
 
         //道かどうか判定
@@ -286,6 +355,21 @@ namespace Unilab2021A.Objects
 
             return result;
 
+        }
+
+        //行動できるかどうか判定
+        public bool CanAct(ConditionBlockType personCondition,int x, int y)
+        {
+            ConditionBlockType cellCondition = cellConditions[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
+            if (personCondition == ConditionBlockType.None)
+            {
+                return true;
+            }
+            else
+            {
+                return personCondition == cellCondition;
+            }
+            
         }
 
         //jsonファイルの読み出し

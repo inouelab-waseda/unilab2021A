@@ -32,7 +32,7 @@ namespace Unilab2021A.Forms
 
             DrawStart();
 
-            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection, button_MouseDown);
+            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection, actionBlock_MouseDown,conditionBlock_MouseDown);
             person = new Person(g,stage.StartPosition_X,stage.StartPosition_Y, DirectionType.Right);
 
             DrawEnd();
@@ -59,31 +59,40 @@ namespace Unilab2021A.Forms
         //描画をtimer1で1秒ごとに処理
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (firstStep < stage.FirstFunction.Count)
+            if (firstStep < stage.FirstActions.Count)
             {
                 DrawStart();
                 stage.CreatePath();
 
+                //状態ブロック
+                if (stage.CanAct(stage.FirstConditions[firstStep], person.X, person.Y))
+                {
+                    //方向転換ブロック
+                    if (stage.FirstActions[firstStep] == ActionBlockType.TurnLeft || stage.FirstActions[firstStep] == ActionBlockType.TurnRight)
+                    {
+                        person.SetPersonDirection(stage.FirstActions[firstStep]);
+                    }
+                    //進行ブロック
+                    else if (stage.FirstActions[firstStep] == ActionBlockType.GoStraight)
+                    {
+                        bool isRoad = stage.IsRoad(person.Direction, person.X, person.Y);
+                        if (isRoad)
+                        {
+                            person.GoStraight();
+                        }
+                        else
+                        {
+                            person.Draw();
+                        }
+
+                    }
+                }
+                else
+                {
+                    person.Draw();
+                }
                 
-                //方向転換ブロック
-                if (stage.FirstFunction[firstStep] == ActionBlockType.TurnLeft || stage.FirstFunction[firstStep] == ActionBlockType.TurnRight)
-                {
-                    person.SetPersonDirection(stage.FirstFunction[firstStep]);
-                }
-                //進行ブロック
-                else if (stage.FirstFunction[firstStep] == ActionBlockType.GoStraight)
-                {
-                    bool isRoad = stage.IsRoad(person.Direction, person.X, person.Y);
-                    if (isRoad)
-                    {
-                        person.GoStraight();
-                    }
-                    else
-                    {
-                        person.Draw();
-                    }
-                   
-                }
+
                     
 
                 DrawEnd();
@@ -106,8 +115,11 @@ namespace Unilab2021A.Forms
             DrawEnd();
         }
 
-        // Initiate the drag
-        private void button_MouseDown(object sender, MouseEventArgs e) =>
+        private void conditionBlock_MouseDown(object sender, MouseEventArgs e) =>
+            DoDragDrop(((Button)sender).BackColor, DragDropEffects.All);
+        private void actionBlock_MouseDown(object sender, MouseEventArgs e) =>
             DoDragDrop(((Button)sender).Text, DragDropEffects.All);
+
+
     }
 }
