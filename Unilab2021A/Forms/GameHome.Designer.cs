@@ -43,20 +43,20 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.Controls.Add(this.startButton, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.36449F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.63551F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1010, 643);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1641, 1029);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // startButton
             // 
             this.startButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.startButton.Location = new System.Drawing.Point(412, 473);
-            this.startButton.Margin = new System.Windows.Forms.Padding(2);
+            this.startButton.Location = new System.Drawing.Point(670, 757);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(188, 168);
+            this.startButton.Size = new System.Drawing.Size(306, 269);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "ゲームを始める";
             this.startButton.UseVisualStyleBackColor = false;
@@ -64,12 +64,11 @@ namespace Unilab2021A.Forms
             // 
             // GameHome
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1010, 643);
+            this.ClientSize = new System.Drawing.Size(1641, 1029);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "GameHome";
             this.Text = "GameHome";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
