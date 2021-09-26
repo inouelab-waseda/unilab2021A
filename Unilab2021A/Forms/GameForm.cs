@@ -107,7 +107,10 @@ namespace Unilab2021A.Forms
             }
             //タイマーストップ
             //クリアできたか判定の処理を入れる？(笠井)
-            else timer1.Enabled = false; 
+            else timer1.Enabled = false;
+
+            // クリア判定入れる場合：クリアできなかったらリセットの処理(高橋)→関数(resetButton_Click)をそのまま使える？
+            // 座標は同じで回転（向き変更のループなど）はタイマー止まらないので別に記述
 
         }
 
