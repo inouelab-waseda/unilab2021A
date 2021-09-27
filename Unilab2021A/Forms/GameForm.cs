@@ -106,15 +106,21 @@ namespace Unilab2021A.Forms
                 firstStep++;
             }
             //タイマーストップ
-            //クリアできたか判定の処理を入れる？(笠井)
             else 
             {
                 timer1.Enabled = false;
 
-                // クリア判定入れる(高橋)
+                if (stage.IsEnemyRemained())
+                {
+                    // 失敗
+                    resetGame();
+                }
+                else
+                {
+                    // クリア
+                }
 
-                // クリアしたかにかかわらず一旦リセット(高橋)
-                resetGame();
+
             }
         }
 

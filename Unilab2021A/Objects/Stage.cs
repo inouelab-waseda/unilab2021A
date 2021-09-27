@@ -455,7 +455,7 @@ namespace Unilab2021A.Objects
             return false;
         }
 
-        //剣があるかどうか判定
+        //敵がいるかどうか判定
         public bool IsEnemy(int swordCount ,int x, int y)
         {
 
@@ -470,6 +470,22 @@ namespace Unilab2021A.Objects
             }
 
             return false;
+        }
+
+        //敵が全滅したかどうか判定
+        public bool IsEnemyRemained()
+        {
+            bool result = false;
+            foreach(bool enemy in isEnemy)
+            {
+                if (enemy)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         //Jsonファイルの読み出し
