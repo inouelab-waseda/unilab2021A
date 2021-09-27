@@ -14,58 +14,168 @@ namespace Unilab2021A.Objects
 {
     class Person
     {
-        private Image[] images = new Image[5];
         //playerのx座標,y座標
-        public int X { get; set; }
-        public int Y { get; set; }
-        //playerのx座標,y座標の初期位置
-        public int X_start { get; set; }
-        public int Y_start { get; set; }
-        //playerの移動回数
-        public int Count { get; set; }
+        public int X { get;private set; }
+        public int Y { get;private set; }
         //playerの向き
         public DirectionType Direction { get; set; }
 
-        public Graphics Graphics { get; set; }
+        public int SwordCount { get; private set; }
 
-        public Person(Graphics graphics)
+        private Graphics Graphics { get; }
+        private FlowLayoutPanel SwordSection { get; }
+        private int StartX { get; }
+        private int StartY { get; }
+        private DirectionType StartDirectionType { get; }
+
+        
+        private Image[] images = new Image[4];
+
+        public Person(Graphics graphics, FlowLayoutPanel swordSection, int x,int y,DirectionType direction)
         {
-            this.Graphics = graphics;
+            Graphics = graphics;
+            SwordSection = swordSection;
 
             images[(int)DirectionType.Up] = GetBitmap("Player_Up.png");//上の画像
             images[(int)DirectionType.Down] = GetBitmap("Player_Down.png");//下の画像
             images[(int)DirectionType.Right] = GetBitmap("Player_Right.png");//右の画像
             images[(int)DirectionType.Left] = GetBitmap("Player_Left.png");//左の画像
+
+            X = x;
+            Y = y;
+            Direction = direction;
+
+            StartX = x;
+            StartY = y;
+            StartDirectionType = direction;
+
+            Draw();
         }
 
-        public void Dispose()
+        //進行
+        public void GoStraight()
         {
-            throw new NotImplementedException();
-        }
-
-        //描画
-        public void DrawImage(DirectionType direction)
-        {
-            switch (direction) 
+            switch (Direction)
             {
                 case DirectionType.Up:
-                    Y -= images[(int)direction].Height / 2;
+                    Y -= Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
                     break;
                 case DirectionType.Down:
-                    Y += images[(int)direction].Height / 2;
+                    Y += Shares.HEIGHT / Shares.HEIGHT_CELL_NUM;
                     break;
                 case DirectionType.Right:
-                    X += images[(int)direction].Width / 2;
+                    X += Shares.WIDTH / Shares.WIDTH_CELL_NUM;
                     break;
                 case DirectionType.Left:
-                    X -= images[(int)direction].Width / 2;
+                    X -= Shares.WIDTH / Shares.WIDTH_CELL_NUM;
                     break;
                 default:
                     break;
             }
 
-            Graphics.DrawImage(images[(int)direction], X, Y, images[(int)direction].Width / 2, images[(int)direction].Height / 2);
+            Draw();
         }
+
+        public void SetPersonDirection(ActionBlockType type)
+        {
+            switch (Direction)
+            {
+                case DirectionType.Up:
+                    switch (type)
+                    {
+                        case ActionBlockType.TurnRight:
+                            Direction = DirectionType.Right;
+                            break;
+                        case ActionBlockType.TurnLeft:
+                            Direction = DirectionType.Left;
+                            break;
+
+                    }
+                    break;
+                case DirectionType.Right:
+                    switch (type)
+                    {
+                        case ActionBlockType.TurnRight:
+                            Direction = DirectionType.Down;
+                            break;
+                        case ActionBlockType.TurnLeft:
+                            Direction = DirectionType.Up;
+                            break;
+
+                    }
+                    break;
+                case DirectionType.Down:
+                    switch (type)
+                    {
+                        case ActionBlockType.TurnRight:
+                            Direction = DirectionType.Left;
+                            break;
+                        case ActionBlockType.TurnLeft:
+                            Direction = DirectionType.Right;
+                            break;
+
+                    }
+                    break;
+                case DirectionType.Left:
+                    switch (type)
+                    {
+                        case ActionBlockType.TurnRight:
+                            Direction = DirectionType.Up;
+                            break;
+                        case ActionBlockType.TurnLeft:
+                            Direction = DirectionType.Down;
+                            break;
+
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            Draw();
+        }
+
+        public void AddSword()
+        {
+            SwordCount++;
+
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Image = GetBitmap("Sword.png");
+            pictureBox.Width = Shares.BLOCK_CELL_SIZE;
+            pictureBox.Height = Shares.BLOCK_CELL_SIZE;
+
+            SwordSection.Controls.Add(pictureBox);
+
+            Draw();
+        }
+        public void UseSword()
+        {
+            SwordCount--;
+
+            int count = SwordSection.Controls.Count;
+            SwordSection.Controls.Remove(SwordSection.Controls[count - 1]);
+
+            Draw();
+        }
+
+        public void Reset()
+        {
+
+            X = StartX;
+            Y = StartY;
+            Direction = StartDirectionType;
+            SwordCount = 0;
+            SwordSection.Controls.Clear();
+
+            Draw();
+        }
+
+        public void Draw()
+        {
+            Graphics.DrawImage(images[(int)Direction], X, Y, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
+        }
+
 
         public Bitmap GetBitmap(string name)
         {
