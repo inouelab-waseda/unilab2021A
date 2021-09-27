@@ -91,13 +91,13 @@ namespace Unilab2021A.Forms
                 {
                     person.Draw();
                 }
-                
-                if(stage.IsSword(person.X, person.Y))
+
+                if (stage.IsSword(person.X, person.Y))
                 {
-                    person.AddSword(); 
+                    person.AddSword();
                 }
 
-                if (stage.IsEnemy(person.SwordCount,person.X, person.Y))
+                if (stage.IsEnemy(person.SwordCount, person.X, person.Y))
                 {
                     person.UseSword();
                 }
@@ -107,22 +107,30 @@ namespace Unilab2021A.Forms
             }
             //タイマーストップ
             //クリアできたか判定の処理を入れる？(笠井)
-            else timer1.Enabled = false;
+            else 
+            {
+                timer1.Enabled = false;
 
-            // クリア判定入れる場合：クリアできなかったらリセットの処理(高橋)→関数(resetButton_Click)をそのまま使える？
-            // 座標は同じで回転（向き変更のループなど）はタイマー止まらないので別に記述
+                // クリア判定入れる(高橋)
 
+                // クリアしたかにかかわらず一旦リセット(高橋)
+                resetGame();
+            }
         }
 
-        private void resetButton_Click(object sender, EventArgs e)
+        private void resetGame()
         {
-
             DrawStart();
 
             stage.Reset();
             person.Reset();
 
             DrawEnd();
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            resetGame();
         }
 
         private void conditionBlock_MouseDown(object sender, MouseEventArgs e) =>
