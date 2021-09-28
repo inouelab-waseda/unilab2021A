@@ -88,12 +88,6 @@
     <Compile Include="Forms\SelectStage.Designer.cs">
       <DependentUpon>SelectStage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StageClear.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\StageClear.Designer.cs">
-      <DependentUpon>StageClear.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Tutorial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,9 +108,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectStage.resx">
       <DependentUpon>SelectStage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StageClear.resx">
-      <DependentUpon>StageClear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Tutorial.resx">
       <DependentUpon>Tutorial.cs</DependentUpon>
