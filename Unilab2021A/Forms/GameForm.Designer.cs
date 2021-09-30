@@ -66,7 +66,6 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.Controls.Add(this.SwordSection, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.040896F));
@@ -78,18 +77,17 @@ namespace Unilab2021A.Forms
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.45977F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.45649F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.21786F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(770, 522);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1283, 783);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(2, 2);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 9);
-            this.pictureBox1.Size = new System.Drawing.Size(630, 518);
+            this.pictureBox1.Size = new System.Drawing.Size(1050, 777);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -97,22 +95,20 @@ namespace Unilab2021A.Forms
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(636, 114);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Location = new System.Drawing.Point(1059, 171);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(132, 19);
+            this.textBox1.Size = new System.Drawing.Size(221, 25);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = "使えるブロック";
             // 
             // textBox2
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(636, 2);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox2.Location = new System.Drawing.Point(1059, 3);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(132, 19);
+            this.textBox2.Size = new System.Drawing.Size(221, 25);
             this.textBox2.TabIndex = 9;
             this.textBox2.Text = "もってる剣";
             // 
@@ -121,10 +117,9 @@ namespace Unilab2021A.Forms
             this.button1.BackColor = System.Drawing.Color.Red;
             this.button1.Dock = System.Windows.Forms.DockStyle.Top;
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(636, 489);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Location = new System.Drawing.Point(1059, 733);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 31);
+            this.button1.Size = new System.Drawing.Size(221, 46);
             this.button1.TabIndex = 1;
             this.button1.Text = "たおしにいく";
             this.button1.UseVisualStyleBackColor = false;
@@ -134,10 +129,9 @@ namespace Unilab2021A.Forms
             // 
             this.resetButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.resetButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resetButton.Location = new System.Drawing.Point(636, 461);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(2);
+            this.resetButton.Location = new System.Drawing.Point(1059, 691);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(132, 24);
+            this.resetButton.Size = new System.Drawing.Size(221, 36);
             this.resetButton.TabIndex = 10;
             this.resetButton.Text = "やりなおす";
             this.resetButton.UseVisualStyleBackColor = false;
@@ -146,45 +140,44 @@ namespace Unilab2021A.Forms
             // ActionBlockTypeSection
             // 
             this.ActionBlockTypeSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ActionBlockTypeSection.Location = new System.Drawing.Point(636, 142);
-            this.ActionBlockTypeSection.Margin = new System.Windows.Forms.Padding(2);
+            this.ActionBlockTypeSection.Location = new System.Drawing.Point(1059, 213);
             this.ActionBlockTypeSection.Name = "ActionBlockTypeSection";
-            this.ActionBlockTypeSection.Size = new System.Drawing.Size(132, 78);
+            this.ActionBlockTypeSection.Size = new System.Drawing.Size(221, 117);
             this.ActionBlockTypeSection.TabIndex = 13;
             // 
             // FirstFunctionSection
             // 
             this.FirstFunctionSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FirstFunctionSection.Location = new System.Drawing.Point(636, 224);
-            this.FirstFunctionSection.Margin = new System.Windows.Forms.Padding(2);
+            this.FirstFunctionSection.Location = new System.Drawing.Point(1059, 336);
             this.FirstFunctionSection.Name = "FirstFunctionSection";
-            this.FirstFunctionSection.Size = new System.Drawing.Size(132, 36);
+            this.FirstFunctionSection.Size = new System.Drawing.Size(221, 54);
             this.FirstFunctionSection.TabIndex = 14;
             // 
             // SecondFunctionSection
             // 
             this.SecondFunctionSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SecondFunctionSection.Location = new System.Drawing.Point(637, 265);
+            this.SecondFunctionSection.Location = new System.Drawing.Point(1061, 397);
+            this.SecondFunctionSection.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.SecondFunctionSection.Name = "SecondFunctionSection";
-            this.SecondFunctionSection.Size = new System.Drawing.Size(130, 32);
+            this.SecondFunctionSection.Size = new System.Drawing.Size(217, 49);
             this.SecondFunctionSection.TabIndex = 15;
             // 
             // SwordSection
             // 
             this.SwordSection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SwordSection.Location = new System.Drawing.Point(637, 29);
+            this.SwordSection.Location = new System.Drawing.Point(1061, 43);
+            this.SwordSection.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.SwordSection.Name = "SwordSection";
-            this.SwordSection.Size = new System.Drawing.Size(130, 80);
+            this.SwordSection.Size = new System.Drawing.Size(217, 121);
             this.SwordSection.TabIndex = 16;
             // 
             // GameForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(770, 522);
+            this.ClientSize = new System.Drawing.Size(1283, 783);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

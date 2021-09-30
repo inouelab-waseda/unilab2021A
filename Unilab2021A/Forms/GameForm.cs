@@ -101,9 +101,15 @@ namespace Unilab2021A.Forms
                 {
                     person.UseSword();
                 }
+               
 
                 DrawEnd();
                 firstStep++;
+
+                if (stage.FirstActions[firstStep] == ActionBlockType.First)
+                {
+                    firstStep = 0;
+                }
             }
             //タイマーストップ
             else 
