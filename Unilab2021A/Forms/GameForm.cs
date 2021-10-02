@@ -20,6 +20,7 @@ namespace Unilab2021A.Forms
         private Graphics g;
         //ステップの進んだ数
         private int firstStep;
+        private int secondStep;
 
         public GameForm()
         {
@@ -104,11 +105,30 @@ namespace Unilab2021A.Forms
 
                 DrawEnd();
                 firstStep++;
+
+                if (firstStep < stage.FirstActions.Count)
+                {
+                    if (stage.FirstActions[firstStep] == ActionBlockType.First)
+                    {
+                        person.Draw();
+                        firstStep = 0;
+                    }
+                }
+                if (firstStep < stage.FirstActions.Count)
+                {           
+                    if (stage.FirstActions[firstStep] == ActionBlockType.Second)
+                    {
+                        person.Draw();
+                        //timerをスタート
+                        timer2.Enabled = true;
+                        secondStep = 0;
+                    }              
+                }
             }
             //タイマーストップ
             else 
             {
-                timer1.Enabled = false;
+                timer1.Enabled = false;              
 
                 if (stage.IsEnemyRemained())
                 {
@@ -122,6 +142,79 @@ namespace Unilab2021A.Forms
 
 
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (secondStep < stage.SecondActions.Count)
+            {
+                DrawStart();
+                stage.DrawPath();
+
+                //状態ブロック
+                if (stage.CanAct(stage.SecondConditions[secondStep], person.X, person.Y))
+                {
+                    //方向転換ブロック
+                    if (stage.SecondActions[secondStep] == ActionBlockType.TurnLeft || stage.SecondActions[secondStep] == ActionBlockType.TurnRight)
+                    {
+                        person.SetPersonDirection(stage.SecondActions[secondStep]);
+                    }
+                    //進行ブロック
+                    else if (stage.SecondActions[secondStep] == ActionBlockType.GoStraight)
+                    {
+                        bool isRoad = stage.IsRoad(person.Direction, person.X, person.Y);
+                        if (isRoad)
+                        {
+                            person.GoStraight();
+                        }
+                        else
+                        {
+                            person.Draw();
+                        }
+
+                    }
+                }
+                else
+                {
+                    person.Draw();
+                }
+
+                if (stage.IsSword(person.X, person.Y))
+                {
+                    person.AddSword();
+                }
+
+                if (stage.IsEnemy(person.SwordCount, person.X, person.Y))
+                {
+                    person.UseSword();
+                }
+
+                DrawEnd();
+                secondStep++;
+
+                if (secondStep < stage.SecondActions.Count)
+                {
+                    if (stage.SecondActions[secondStep] == ActionBlockType.First)
+                    {
+                        firstStep = 0;
+                    }
+                }
+                if (secondStep < stage.SecondActions.Count)
+                {
+                    if (stage.SecondActions[secondStep] == ActionBlockType.Second)
+                    {
+                        //timerをスタート
+                        timer2.Enabled = true;
+                        secondStep = 0;
+                    }
+                }
+            }
+            //タイマーストップ
+            else
+            {          
+                timer2.Enabled = false;
+            }
+
         }
 
         private void resetGame()
