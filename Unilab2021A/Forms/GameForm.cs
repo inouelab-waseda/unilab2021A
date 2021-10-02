@@ -32,7 +32,7 @@ namespace Unilab2021A.Forms
 
             DrawStart();
 
-            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection, actionBlock_MouseDown,conditionBlock_MouseDown);
+            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection,block_MouseDown);
             person = new Person(g, SwordSection, stage.StartPosition_X,stage.StartPosition_Y, DirectionType.Right);
 
             DrawEnd();
@@ -49,7 +49,7 @@ namespace Unilab2021A.Forms
             pictureBox1.Image = stageCanvas;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void startButton_Click(object sender, EventArgs e)
         {
             //timerをスタート
             timer1.Enabled = true;
@@ -139,11 +139,7 @@ namespace Unilab2021A.Forms
             resetGame();
         }
 
-        private void conditionBlock_MouseDown(object sender, MouseEventArgs e) =>
-            DoDragDrop(((Button)sender).BackColor, DragDropEffects.All);
-        private void actionBlock_MouseDown(object sender, MouseEventArgs e) =>
-            DoDragDrop(((Button)sender).Text, DragDropEffects.All);
-
-
+        private void block_MouseDown(object sender, MouseEventArgs e) =>
+            DoDragDrop(stage.TransformNameIntoBlockType(((PictureBox)sender).Name), DragDropEffects.All);
     }
 }
