@@ -36,10 +36,10 @@ namespace Unilab2021A.Objects
             Graphics = graphics;
             SwordSection = swordSection;
 
-            images[(int)DirectionType.Up] = GetBitmap("Player_Up.png");//上の画像
-            images[(int)DirectionType.Down] = GetBitmap("Player_Down.png");//下の画像
-            images[(int)DirectionType.Right] = GetBitmap("Player_Right.png");//右の画像
-            images[(int)DirectionType.Left] = GetBitmap("Player_Left.png");//左の画像
+            images[(int)DirectionType.Up] = Shares.GetBitmap(@"Objects\Player_Up.png");//上の画像
+            images[(int)DirectionType.Down] = Shares.GetBitmap(@"Objects\Player_Down.png");//下の画像
+            images[(int)DirectionType.Right] = Shares.GetBitmap(@"Objects\Player_Right.png");//右の画像
+            images[(int)DirectionType.Left] = Shares.GetBitmap(@"Objects\Player_Left.png");//左の画像
 
             X = x;
             Y = y;
@@ -141,7 +141,7 @@ namespace Unilab2021A.Objects
 
             PictureBox pictureBox = new PictureBox();
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox.Image = GetBitmap("Sword.png");
+            pictureBox.Image = Shares.GetBitmap(@"Objects\Sword.png");
             pictureBox.Width = Shares.BLOCK_CELL_SIZE;
             pictureBox.Height = Shares.BLOCK_CELL_SIZE;
 
@@ -176,15 +176,5 @@ namespace Unilab2021A.Objects
             Graphics.DrawImage(images[(int)Direction], X, Y, Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1, Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1);
         }
 
-
-        public Bitmap GetBitmap(string name)
-        {
-            /*
-            入力:画像ファイル名
-            対象画像を読み込む
-            */
-            Bitmap bmp = new Bitmap(@".\Images\" + name);
-            return bmp;
-        }
     }
 }

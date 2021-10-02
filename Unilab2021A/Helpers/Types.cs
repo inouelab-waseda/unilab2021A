@@ -12,6 +12,6 @@ namespace Unilab2021A.Helpers
         public enum DirectionType { Up, Right, Down, Left }
         public enum BlockType { GoStraight, TurnRight, TurnLeft, Blue, Red, Yellow, First, Second }
         public enum ActionBlockType { GoStraight, TurnRight, TurnLeft, First, Second }
-        public enum ConditionBlockType {  None,Blue, Red, Yellow }
+        public enum ConditionBlockType { None, Blue, Red, Yellow }
     }
 }

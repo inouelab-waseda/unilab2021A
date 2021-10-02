@@ -27,26 +27,41 @@ namespace Unilab2021A.Objects
         private FlowLayoutPanel BlockTypeSection { get; }
         private FlowLayoutPanel FirstFunctionSection { get; }
         private FlowLayoutPanel SecondFunctionSection { get; }
-        private Action<object, MouseEventArgs> ActionBlock_MouseDown { get; }
-        private Action<object, MouseEventArgs> ConditionBlock_MouseDown { get; }
+        private Action<object, MouseEventArgs> Block_MouseDown { get; }
 
         private bool[,] isRoad = new bool[16, 12];//道か草かの判定
         private ConditionBlockType[,] cellConditions = new ConditionBlockType[16, 12];//セルの状態 (色)
         private bool[,] isSword = new bool[16, 12];//剣があるかないか
         private bool[,] isEnemy = new bool[16, 12];//敵がいるかないか
 
-        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection,FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> actionBlock_MouseDown, Action<object, MouseEventArgs> conditionBlock_MouseDown)
+        private Image roadImage { get; }
+        private Image noneImage { get; }
+        private Image enemyImage { get; }
+        private Image swordImage { get; }
+        private Image blueblockImage { get; }//Json.Path[i].Image = 4として設定
+        private Image redblockImage { get; }//Json.Path[i].Image = 5として設定
+        private Image yellowblockImage { get; }//Json.Path[i].Image = 6として設定
+
+        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection, FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> block_MouseDown)
         {
             Graphics = graphics;
             BlockTypeSection = actionBlockTypeSection;
-            ActionBlock_MouseDown = actionBlock_MouseDown;
-            ConditionBlock_MouseDown = conditionBlock_MouseDown;
+            Block_MouseDown = block_MouseDown;
             FirstFunctionSection = firstFunctionSection;
             SecondFunctionSection = secondFunctionSection;
 
+            //画像の設定
+            roadImage = Shares.GetBitmap(@"Background\Road.png");
+            noneImage = Shares.GetBitmap(@"Background\No_Road.png");
+            enemyImage = Shares.GetBitmap(@"Objects\Enemy.png");
+            swordImage = Shares.GetBitmap(@"Objects\Sword.png");
+            blueblockImage = Shares.GetBitmap(@"Blocks\BlueBlock.png");//Json.Path[i].Image = 4として設定
+            redblockImage = Shares.GetBitmap(@"Blocks\RedBlock.png");//Json.Path[i].Image = 5として設定
+            yellowblockImage = Shares.GetBitmap(@"Blocks\YellowBlock.png");//Json.Path[i].Image = 6として設定
+
             // Jsonファイルの読み込みなど(StageName)
             // --------
-            Json = ReadFieldJson("1_1");
+            Json = ReadFieldJson("2_1");
 
             //道の作成
             initPath();
@@ -68,14 +83,6 @@ namespace Unilab2021A.Objects
 
         private void initPath()
         {
-            Image roadImage = Image.FromFile(@".\Images\Road.png");
-            Image noneImage = Image.FromFile(@".\Images\Background.png");
-            Image enemyImage = Image.FromFile(@".\Images\Enemy.png");
-            Image swordImage = Image.FromFile(@".\Images\Sword.png");
-            Image blueblockImage = Image.FromFile(@".\Images\BlueBlock.png");//Json.Path[i].Image = 4として設定
-            Image redblockImage = Image.FromFile(@".\Images\RedBlock.png");//Json.Path[i].Image = 5として設定
-            Image yellowblockImage = Image.FromFile(@".\Images\YellowBlock.png");//Json.Path[i].Image = 6として設定
-
             //flagの初期化
             for (int i = 0; i < 16; i++)
             {
@@ -96,51 +103,44 @@ namespace Unilab2021A.Objects
                 int width = Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1;
                 int height = Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1;
 
-                Graphics.DrawImage(roadImage,x, y, width, height);
+                Graphics.DrawImage(roadImage, x, y, width, height);
                 if (Json.Path[i].Image == ImageType.Others)
                 {
                     //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
                     //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
-                    Graphics.DrawImage(noneImage,x, y, width, height);
+                    Graphics.DrawImage(noneImage, x, y, width, height);
                     isRoad[Json.Path[i].Position[0], Json.Path[i].Position[1]] = false;//草はfalseに
                 }
                 else if (Json.Path[i].Image == ImageType.Enemy)
                 {
                     isEnemy[Json.Path[i].Position[0], Json.Path[i].Position[1]] = true;//敵がいる場所はtrue
-                    Graphics.DrawImage(enemyImage,x, y, width, height);
+                    Graphics.DrawImage(enemyImage, x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Sword)
                 {
                     isSword[Json.Path[i].Position[0], Json.Path[i].Position[1]] = true;//剣がある場所はtrue
-                    Graphics.DrawImage(swordImage,x, y, width, height);
+                    Graphics.DrawImage(swordImage, x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Blue)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Blue;
-                    Graphics.DrawImage(blueblockImage,x, y, width, height);
+                    Graphics.DrawImage(blueblockImage, x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Red)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Red;
-                    Graphics.DrawImage(redblockImage,x, y, width, height);
+                    Graphics.DrawImage(redblockImage, x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Yellow)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Yellow;
-                    Graphics.DrawImage(yellowblockImage,x, y, width, height);
+                    Graphics.DrawImage(yellowblockImage, x, y, width, height);
                 }
             }
         }
 
         public void DrawPath()
         {
-            Image roadImage = Image.FromFile(@".\Images\Road.png");
-            Image noneImage = Image.FromFile(@".\Images\Background.png");
-            Image enemyImage = Image.FromFile(@".\Images\Enemy.png");
-            Image swordImage = Image.FromFile(@".\Images\Sword.png");
-            Image blueblockImage = Image.FromFile(@".\Images\BlueBlock.png");//Json.Path[i].Image = 4として設定
-            Image redblockImage = Image.FromFile(@".\Images\RedBlock.png");//Json.Path[i].Image = 5として設定
-            Image yellowblockImage = Image.FromFile(@".\Images\YellowBlock.png");//Json.Path[i].Image = 6として設定
 
             //道の作成
             for (int i = 0; i < Json.Path.Count; i++)
@@ -150,28 +150,28 @@ namespace Unilab2021A.Objects
                 int width = Shares.WIDTH / Shares.WIDTH_CELL_NUM + 1;
                 int height = Shares.HEIGHT / Shares.HEIGHT_CELL_NUM + 1;
 
-                Graphics.DrawImage(roadImage,x, y, width, height);
+                Graphics.DrawImage(roadImage, x, y, width, height);
                 if (Json.Path[i].Image == ImageType.Others)
                 {
                     //中島4/16 GraphicsがWIDTH×HEIGHTで表現されているため、WIDTH_CELL_NUM×HEIGHT_CELL_NUMに無理やり変えた,画像サイズでそれぞれ+1しているのは+1しないとintに変化しているため、微妙にサイズが小さくなりつなぎ目が出るから
                     //中島4/16 具体的な数字を使ったためうまく表現する方法があるかも
-                    Graphics.DrawImage(noneImage,x, y, width, height);
+                    Graphics.DrawImage(noneImage, x, y, width, height);
                     isRoad[Json.Path[i].Position[0], Json.Path[i].Position[1]] = false;//草はfalseに
                 }
                 else if (Json.Path[i].Image == ImageType.Blue)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Blue;
-                    Graphics.DrawImage(blueblockImage,x, y, width, height);
+                    Graphics.DrawImage(blueblockImage, x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Red)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Red;
-                    Graphics.DrawImage(redblockImage,x, y, width, height);
+                    Graphics.DrawImage(redblockImage, x, y, width, height);
                 }
                 else if (Json.Path[i].Image == ImageType.Yellow)
                 {
                     cellConditions[Json.Path[i].Position[0], Json.Path[i].Position[1]] = ConditionBlockType.Yellow;
-                    Graphics.DrawImage(yellowblockImage,x, y, width, height);
+                    Graphics.DrawImage(yellowblockImage, x, y, width, height);
                 }
 
                 //可変なもの
@@ -189,93 +189,93 @@ namespace Unilab2021A.Objects
 
         private void CreateBlockTypeSection()
         {
-            Button[] buttons = new Button[Json.Blocks.Count];
+            PictureBox[] pictureBoxes = new PictureBox[Json.Blocks.Count];
 
             for (int i = 0; i < Json.Blocks.Count; i++)
             {
-                buttons[i] = new Button();
-                buttons[i].Width = Shares.BLOCK_CELL_SIZE;
-                buttons[i].Height = Shares.BLOCK_CELL_SIZE;
-                switch (Json.Blocks[i])
-                {
-                    case BlockType.GoStraight:
-                        buttons[i].Text = "↑";
-                        break;
-                    case BlockType.TurnRight:
-                        buttons[i].Text = "→";
-                        break;
-                    case BlockType.TurnLeft:
-                        buttons[i].Text = "←";
-                        break;
-                    case BlockType.First:
-                        buttons[i].Text = "F1";
-                        break;
-                    case BlockType.Second:
-                        buttons[i].Text = "F2";
-                        break;
-                    case BlockType.Blue:
-                        buttons[i].BackColor = Color.Blue;
-                        break;
-                    case BlockType.Red:
-                        buttons[i].BackColor = Color.Red;
-                        break;
-                    case BlockType.Yellow:
-                        buttons[i].BackColor = Color.Yellow;
-                        break;
-                }
-                if (Json.Blocks[i] == BlockType.Blue || Json.Blocks[i] == BlockType.Red || Json.Blocks[i] == BlockType.Yellow)
-                {
-                    buttons[i].MouseDown += new MouseEventHandler(ConditionBlock_MouseDown);
-                }
-                else
-                {
-                    buttons[i].MouseDown += new MouseEventHandler(ActionBlock_MouseDown);
-                }
-               
-                BlockTypeSection.Controls.Add(buttons[i]);
+                pictureBoxes[i] = new PictureBox();
+                pictureBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
+                pictureBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
+                pictureBoxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBoxes[i].Name = i.ToString();
+                pictureBoxes[i].Image = TransformBlockTypeIntoImage(Json.Blocks[i]);
+                pictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
+                pictureBoxes[i].MouseDown += new MouseEventHandler(Block_MouseDown);
+                BlockTypeSection.Controls.Add(pictureBoxes[i]);
+            }
+        }
+
+        //pictureboxからtypeに変換する
+        public BlockType TransformNameIntoBlockType(string name)
+        {
+            return Json.Blocks[int.Parse(name)];
+        }
+
+        //blocktypeからimageに変換する
+        private Image TransformBlockTypeIntoImage(BlockType type)
+        {
+            switch (type)
+            {
+                case BlockType.GoStraight:
+                    return Shares.GetBitmap(@"Blocks\Go_Straight_Black.PNG");
+                case BlockType.TurnRight:
+                    return Shares.GetBitmap(@"Blocks\Turn_Right_Black.PNG");
+                case BlockType.TurnLeft:
+                    return Shares.GetBitmap(@"Blocks\Turn_Left_Black.PNG");
+                case BlockType.First:
+                    return Shares.GetBitmap(@"Blocks\F1_Black.PNG");
+                case BlockType.Second:
+                    return Shares.GetBitmap(@"Blocks\F2_Black.PNG");
+                case BlockType.Blue:
+                    return Shares.GetBitmap(@"Blocks\Blue.PNG");
+                case BlockType.Red:
+                    return Shares.GetBitmap(@"Blocks\Red.PNG");
+                case BlockType.Yellow:
+                    return Shares.GetBitmap(@"Blocks\Yellow.PNG");
+                default:
+                    return Shares.GetBitmap(@"Blocks\Go_Straight_Black.PNG");
             }
         }
 
         private void CreateFunctionSection()
         {
-            TextBox[] firstTextBoxes = new TextBox[Json.MaxBlockCounts[0]];
+            PictureBox[] firstPictureBoxes = new PictureBox[Json.MaxBlockCounts[0]];
 
             for (int i = 0; i < Json.MaxBlockCounts[0]; i++)
             {
-                firstTextBoxes[i] = new TextBox();
-                firstTextBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
-                firstTextBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
-                firstTextBoxes[i].DragOver += Block_DragOver;
-                firstTextBoxes[i].DragEnter += Block_DragEnter;
-
-                firstTextBoxes[i].DragDrop += ConditionBlock_DragDrop;
-                firstTextBoxes[i].DragDrop += ActionBlock_DragDrop;
-
-                firstTextBoxes[i].Name = i.ToString();
-                firstTextBoxes[i].AllowDrop = true;
-                FirstFunctionSection.Controls.Add(firstTextBoxes[i]);
+                firstPictureBoxes[i] = new PictureBox();
+                firstPictureBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
+                firstPictureBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
+                firstPictureBoxes[i].DragOver += Block_DragOver;
+                firstPictureBoxes[i].DragEnter += Block_DragEnter;
+                firstPictureBoxes[i].DragDrop += Block_DragDrop;
+                firstPictureBoxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                firstPictureBoxes[i].BackgroundImageLayout = ImageLayout.Stretch;
+                firstPictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
+                firstPictureBoxes[i].Name = i.ToString();
+                firstPictureBoxes[i].AllowDrop = true;
+                FirstFunctionSection.Controls.Add(firstPictureBoxes[i]);
             }
 
             //関数が2つある場合
-            if (Json.MaxBlockCounts.Count==2)
+            if (Json.MaxBlockCounts.Count == 2)
             {
-                TextBox[] secondTextBoxes = new TextBox[Json.MaxBlockCounts[1]];
+                PictureBox[] secondPictureBoxes = new PictureBox[Json.MaxBlockCounts[1]];
 
                 for (int i = 0; i < Json.MaxBlockCounts[1]; i++)
                 {
-                    secondTextBoxes[i] = new TextBox();
-                    secondTextBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
-                    secondTextBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
-                    secondTextBoxes[i].DragOver += Block_DragOver;
-                    secondTextBoxes[i].DragEnter += Block_DragEnter;
-
-                    secondTextBoxes[i].DragDrop += ConditionBlock_DragDrop;
-                    secondTextBoxes[i].DragDrop += ActionBlock_DragDrop;
-
-
-                    secondTextBoxes[i].Name = i.ToString();
-                    secondTextBoxes[i].AllowDrop = true;
-                    SecondFunctionSection.Controls.Add(secondTextBoxes[i]);
+                    secondPictureBoxes[i] = new PictureBox();
+                    secondPictureBoxes[i].Width = Shares.BLOCK_CELL_SIZE;
+                    secondPictureBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
+                    secondPictureBoxes[i].DragOver += Block_DragOver;
+                    secondPictureBoxes[i].DragEnter += Block_DragEnter;
+                    secondPictureBoxes[i].DragDrop += Block_DragDrop;
+                    secondPictureBoxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                    secondPictureBoxes[i].BackgroundImageLayout = ImageLayout.Stretch;
+                    secondPictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
+                    secondPictureBoxes[i].Name = i.ToString();
+                    secondPictureBoxes[i].AllowDrop = true;
+                    SecondFunctionSection.Controls.Add(secondPictureBoxes[i]);
                 }
             }
         }
@@ -297,36 +297,44 @@ namespace Unilab2021A.Objects
         private void Block_DragEnter(object sender, DragEventArgs e) =>
             e.Effect = DragDropEffects.All;
 
-    
-        //ドロップされたものをアクションブロックとしたとき
-        private void ActionBlock_DragDrop(object sender, DragEventArgs e)
+
+        private void Block_DragDrop(object receiver, DragEventArgs e)
         {
-            string data = (string)e.Data.GetData(typeof(string));
-            if (data == null) //状態ブロックの場合は処理しない
+            BlockType data = (BlockType)e.Data.GetData(typeof(BlockType));
+
+            if(data==BlockType.Blue|| data == BlockType.Red || data == BlockType.Yellow)
             {
-                return;
+                ConditionBlock_DragDrop((PictureBox)receiver, data);
             }
-            TextBox textBox = (TextBox)sender;
-            int i = int.Parse(textBox.Name);
+            else
+            {
+                ActionBlock_DragDrop((PictureBox)receiver, data);
+            }
+
+        }
+
+        private void ActionBlock_DragDrop(PictureBox pictureBox,BlockType data)
+        {
+            int i = int.Parse(pictureBox.Name);
 
             //すでにブロックがあった場合
-            if (textBox.Text != "")
+            if (pictureBox.Image != null)
             {
                 switch (data)
                 {
-                    case "↑":
+                    case BlockType.GoStraight:
                         FirstActions[i] = ActionBlockType.GoStraight;
                         break;
-                    case "→":
+                    case BlockType.TurnRight:
                         FirstActions[i] = ActionBlockType.TurnRight;
                         break;
-                    case "←":
+                    case BlockType.TurnLeft:
                         FirstActions[i] = ActionBlockType.TurnLeft;
                         break;
-                    case "F1":
+                    case BlockType.First:
                         FirstActions[i] = ActionBlockType.First;
                         break;
-                    case "F2":
+                    case BlockType.Second:
                         FirstActions[i] = ActionBlockType.Second;
                         break;
                 }
@@ -335,66 +343,48 @@ namespace Unilab2021A.Objects
             {
                 switch (data)
                 {
-                    case "↑":
+                    case BlockType.GoStraight:
                         FirstActions.Add(ActionBlockType.GoStraight);
                         break;
-                    case "→":
+                    case BlockType.TurnRight:
                         FirstActions.Add(ActionBlockType.TurnRight);
                         break;
-                    case "←":
+                    case BlockType.TurnLeft:
                         FirstActions.Add(ActionBlockType.TurnLeft);
                         break;
-                    case "F1":
+                    case BlockType.First:
                         FirstActions.Add(ActionBlockType.First);
                         break;
-                    case "F2":
+                    case BlockType.Second:
                         FirstActions.Add(ActionBlockType.Second);
                         break;
                 }
             }
-
-
-
-            textBox.Text = data;
+            pictureBox.Image = TransformBlockTypeIntoImage(data);
         }
 
-        //ドロップされたものを状態ブロックとしたとき
-        private void ConditionBlock_DragDrop(object sender, DragEventArgs e)
+        private void ConditionBlock_DragDrop(PictureBox pictureBox, BlockType data)
         {
 
-            try
-            {
-                Color data = (Color)e.Data.GetData(typeof(Color));
-                TextBox textBox = (TextBox)sender;
-                int i = int.Parse(textBox.Name);
+                int i = int.Parse(pictureBox.Name);
 
 
 
-                if (data.Name == Color.Blue.Name)
+                if (data == BlockType.Blue)
                 {
                     FirstConditions[i] = ConditionBlockType.Blue;
                 }
-                else if (data.Name == Color.Red.Name)
+                else if (data == BlockType.Red)
                 {
                     FirstConditions[i] = ConditionBlockType.Red;
                 }
-                else if (data.Name == Color.Yellow.Name)
+                else if (data == BlockType.Yellow)
                 {
                     FirstConditions[i] = ConditionBlockType.Yellow;
                 }
-                else if (data.Name == "Window")
-                {
-                    FirstConditions[i] = ConditionBlockType.None;
-                }
 
 
-                    textBox.BackColor = data;
-            }
-            catch (NullReferenceException exception)//アクションブロックの場合は処理しない
-            {
-                Console.WriteLine(exception.ToString());
-                return;
-            }
+            pictureBox.BackgroundImage = TransformBlockTypeIntoImage(data);
 
         }
 
@@ -424,7 +414,7 @@ namespace Unilab2021A.Objects
         }
 
         //行動できるかどうか判定
-        public bool CanAct(ConditionBlockType personCondition,int x, int y)
+        public bool CanAct(ConditionBlockType personCondition, int x, int y)
         {
             ConditionBlockType cellCondition = cellConditions[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
             if (personCondition == ConditionBlockType.None)
@@ -435,7 +425,7 @@ namespace Unilab2021A.Objects
             {
                 return personCondition == cellCondition;
             }
-            
+
         }
 
         //剣があるかどうか判定
@@ -456,13 +446,13 @@ namespace Unilab2021A.Objects
         }
 
         //敵がいるかどうか判定
-        public bool IsEnemy(int swordCount ,int x, int y)
+        public bool IsEnemy(int swordCount, int x, int y)
         {
 
             bool result = isEnemy[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
 
             //もし剣があれば、倒すので敵は消える
-            if (result && swordCount>0)
+            if (result && swordCount > 0)
             {
                 isEnemy[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)] = false;
 
@@ -476,7 +466,7 @@ namespace Unilab2021A.Objects
         public bool IsEnemyRemained()
         {
             bool result = false;
-            foreach(bool enemy in isEnemy)
+            foreach (bool enemy in isEnemy)
             {
                 if (enemy)
                 {
