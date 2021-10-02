@@ -63,7 +63,7 @@ namespace Unilab2021A.Objects
 
             // Jsonファイルの読み込みなど(StageName)
             // --------
-            Json = ReadFieldJson("1_1");
+            Json = ReadFieldJson("2_1");
 
             //道の作成
             initPath();
@@ -80,7 +80,7 @@ namespace Unilab2021A.Objects
 
             //Second関数
             SecondActions = new List<ActionBlockType>();
-            SecondConditions = new ConditionBlockType[Json.MaxBlockCounts[1]];
+            if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[Json.MaxBlockCounts[1]];
 
             //初期位置の座標
             StartPosition_X = Json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
