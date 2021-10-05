@@ -20,6 +20,8 @@ namespace Unilab2021A.Objects
         public int StartPosition_Y { get; private set; }
         public List<ActionBlockType> FirstActions { get; private set; }
         public ConditionBlockType[] FirstConditions { get; private set; }
+        public List<ActionBlockType> SecondActions { get; private set; }
+        public ConditionBlockType[] SecondConditions { get; private set; }
 
         private StageJson Json { get; }
         private Graphics Graphics { get; }
@@ -75,6 +77,10 @@ namespace Unilab2021A.Objects
             //First関数
             FirstActions = new List<ActionBlockType>();
             FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]];
+
+            //Second関数
+            SecondActions = new List<ActionBlockType>();
+            if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[Json.MaxBlockCounts[1]];
 
             //初期位置の座標
             StartPosition_X = Json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
@@ -258,7 +264,7 @@ namespace Unilab2021A.Objects
             }
 
             //関数が2つある場合
-            if (Json.MaxBlockCounts.Count == 2)
+            if (Json.FunctionCount == 2)
             {
                 PictureBox[] secondPictureBoxes = new PictureBox[Json.MaxBlockCounts[1]];
 
@@ -286,8 +292,11 @@ namespace Unilab2021A.Objects
             FirstActions = new List<ActionBlockType>();
             FirstConditions = new ConditionBlockType[FirstConditions.Length];
             FirstFunctionSection.Controls.Clear();
+            
+            SecondActions = new List<ActionBlockType>();
+            if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[SecondConditions.Length];
+            SecondFunctionSection.Controls.Clear();
             CreateFunctionSection();
-
         }
 
         // Set the effect filter and allow the drop on this control
