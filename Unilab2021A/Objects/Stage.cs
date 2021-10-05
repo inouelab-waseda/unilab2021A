@@ -292,11 +292,11 @@ namespace Unilab2021A.Objects
             FirstActions = new List<ActionBlockType>();
             FirstConditions = new ConditionBlockType[FirstConditions.Length];
             FirstFunctionSection.Controls.Clear();
+            
             SecondActions = new List<ActionBlockType>();
-            SecondConditions = new ConditionBlockType[SecondConditions.Length];
+            if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[SecondConditions.Length];
             SecondFunctionSection.Controls.Clear();
             CreateFunctionSection();
-
         }
 
         // Set the effect filter and allow the drop on this control
