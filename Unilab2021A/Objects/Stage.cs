@@ -63,7 +63,7 @@ namespace Unilab2021A.Objects
 
             // Jsonファイルの読み込みなど(StageName)
             // --------
-            Json = ReadFieldJson("2_1");
+            Json = ReadFieldJson("1_1");
 
             //道の作成
             initPath();
