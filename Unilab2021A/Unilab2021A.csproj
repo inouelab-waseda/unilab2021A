@@ -178,6 +178,17 @@
     <Content Include="Images\Blocks\Blue.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Buttons\button_rittai1.PNG" />
+    <Content Include="Images\Buttons\button_rittai2.PNG" />
+    <Content Include="Images\Buttons\button_rittai3.PNG" />
+    <Content Include="Images\Decorations\kazari1.PNG" />
+    <Content Include="Images\Decorations\kazari2.PNG" />
+    <Content Include="Images\Decorations\moji_fudesen1.PNG" />
+    <Content Include="Images\Decorations\moji_fudesen2.PNG" />
+    <Content Include="Images\Decorations\moji_tensen1.PNG" />
+    <Content Include="Images\Decorations\moji_tensen2.PNG" />
+    <Content Include="Images\Decorations\shiromoji1.PNG" />
+    <Content Include="Images\Decorations\shiromoji2.PNG" />
     <Content Include="Images\Objects\Enemy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
