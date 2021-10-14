@@ -138,7 +138,7 @@ namespace Unilab2021A.Forms
                 else
                 {
                     // クリア
-                    PopUp popUp = new PopUp(this);
+                    PopUp popUp = new PopUp();
                     popUp.ShowDialog();
                 }
 

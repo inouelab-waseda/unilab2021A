@@ -13,9 +13,10 @@ namespace Unilab2021A.Forms
     public partial class PopUp : Form
     {
         GameForm gf;
-        public PopUp(GameForm gf)
+        public PopUp()
+        // public PopUp(GameForm gf)
         {
-            this.gf = gf;
+            // this.gf = gf;
             InitializeComponent();
         }
 
@@ -24,9 +25,9 @@ namespace Unilab2021A.Forms
         {
             // 次のステージを表示（GameForm()の引数で設定？でも親というかGameFormの持ち主がPopUpになってしまう...）
             this.Close();
-            GameForm gameForm = new GameForm();
-            gf.Hide();
-            gameForm.ShowDialog();
+            // GameForm gameForm = new GameForm();
+            // gf.Hide();
+            // gameForm.ShowDialog();
         }
 
         // もう一度
