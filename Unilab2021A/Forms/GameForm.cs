@@ -62,7 +62,7 @@ namespace Unilab2021A.Forms
         {
             if (firstStep < stage.FirstActions.Count)
             {
-                DrawStart();
+                DrawStart();          
                 stage.DrawPath();
 
                 //状態ブロック
@@ -119,11 +119,13 @@ namespace Unilab2021A.Forms
                     if (stage.FirstActions[firstStep] == ActionBlockType.Second)
                     {
                         person.Draw();
+                        secondStep = 0;
                         //timerをスタート
                         timer2.Enabled = true;
-                        secondStep = 0;
+                        
                     }              
                 }
+                person.Draw();
             }
             //タイマーストップ
             else 
@@ -146,6 +148,7 @@ namespace Unilab2021A.Forms
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            
             if (secondStep < stage.SecondActions.Count)
             {
                 DrawStart();
@@ -203,16 +206,18 @@ namespace Unilab2021A.Forms
                 {
                     if (stage.SecondActions[secondStep] == ActionBlockType.Second)
                     {
+                        secondStep = 0;
                         //timerをスタート
                         timer2.Enabled = true;
-                        secondStep = 0;
+                        
                     }
                 }
             }
             //タイマーストップ
             else
-            {          
+            {
                 timer2.Enabled = false;
+                
             }
 
         }
