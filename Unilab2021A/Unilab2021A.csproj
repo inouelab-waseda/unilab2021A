@@ -79,6 +79,12 @@
     <Compile Include="Forms\GameHome.Designer.cs">
       <DependentUpon>GameHome.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PopUp.Designer.cs">
+      <DependentUpon>PopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SelectStage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameHome.resx">
       <DependentUpon>GameHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PopUp.resx">
+      <DependentUpon>PopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectStage.resx">
       <DependentUpon>SelectStage.cs</DependentUpon>
@@ -178,6 +187,17 @@
     <Content Include="Images\Blocks\Blue.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Buttons\button_rittai1.PNG" />
+    <Content Include="Images\Buttons\button_rittai2.PNG" />
+    <Content Include="Images\Buttons\button_rittai3.PNG" />
+    <Content Include="Images\Decorations\kazari1.PNG" />
+    <Content Include="Images\Decorations\kazari2.PNG" />
+    <Content Include="Images\Decorations\moji_fudesen1.PNG" />
+    <Content Include="Images\Decorations\moji_fudesen2.PNG" />
+    <Content Include="Images\Decorations\moji_tensen1.PNG" />
+    <Content Include="Images\Decorations\moji_tensen2.PNG" />
+    <Content Include="Images\Decorations\shiromoji1.PNG" />
+    <Content Include="Images\Decorations\shiromoji2.PNG" />
     <Content Include="Images\Objects\Enemy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
