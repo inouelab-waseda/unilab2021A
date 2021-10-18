@@ -198,6 +198,11 @@
     <Content Include="Images\Decorations\moji_tensen2.PNG" />
     <Content Include="Images\Decorations\shiromoji1.PNG" />
     <Content Include="Images\Decorations\shiromoji2.PNG" />
+    <Content Include="Images\Home\back.PNG" />
+    <Content Include="Images\Home\moji.PNG" />
+    <Content Include="Images\Home\start_button.PNG" />
+    <Content Include="Images\Home\tanjiro.PNG" />
+    <Content Include="Images\Home\title.PNG" />
     <Content Include="Images\Objects\Enemy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
