@@ -126,6 +126,14 @@ namespace Unilab2021A.Forms
                     }              
                 }
                 person.Draw();
+
+                // クリア判定
+                if (!stage.IsEnemyRemained())
+                {
+                    timer1.Enabled = false;
+                    PopUp popUp = new PopUp();
+                    popUp.ShowDialog();
+                }
             }
             //タイマーストップ
             else 
@@ -137,14 +145,6 @@ namespace Unilab2021A.Forms
                     // 失敗
                     resetGame();
                 }
-                else
-                {
-                    // クリア
-                    PopUp popUp = new PopUp();
-                    popUp.ShowDialog();
-                }
-
-
             }
         }
 
