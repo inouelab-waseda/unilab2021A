@@ -19,10 +19,10 @@ namespace Unilab2021A.Forms
 
         private void finishButton_Click(object sender, EventArgs e)
         {
-            // プレイ画面を表示
-            GameForm gameForm = new GameForm();
+            // ステージの選択画面を表示
+            Explanation explanation = new Explanation();
             this.Hide();
-            gameForm.ShowDialog();
+            explanation.Show();
         }
     }
 }

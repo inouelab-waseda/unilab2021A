@@ -44,7 +44,7 @@ namespace Unilab2021A.Objects
         private Image redblockImage { get; }//Json.Path[i].Image = 5として設定
         private Image yellowblockImage { get; }//Json.Path[i].Image = 6として設定
 
-        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection, FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> block_MouseDown)
+        public Stage(Graphics graphics, FlowLayoutPanel actionBlockTypeSection, FlowLayoutPanel firstFunctionSection, FlowLayoutPanel secondFunctionSection, Action<object, MouseEventArgs> block_MouseDown, String stageName)
         {
             Graphics = graphics;
             BlockTypeSection = actionBlockTypeSection;
@@ -63,7 +63,7 @@ namespace Unilab2021A.Objects
 
             // Jsonファイルの読み込みなど(StageName)
             // --------
-            Json = ReadFieldJson("1_1");
+            Json = ReadFieldJson(stageName);
 
             //道の作成
             initPath();
