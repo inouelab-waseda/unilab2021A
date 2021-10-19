@@ -21,10 +21,18 @@ namespace Unilab2021A.Forms
         //ステップの進んだ数
         private int firstStep;
         private int secondStep;
+        public string stageName;
+        private SelectStage selectStage;
 
-        public GameForm()
+        public GameForm(SelectStage selectStage)
         {
             InitializeComponent();
+            this.selectStage = selectStage;
+        }
+        
+        public void _initialize(String stageName)
+        {
+            this.stageName = stageName;
 
             //*6や*4は適当に調整する 04/12 笠井
             stageCanvas = new Bitmap(pictureBox1.Width * 4, pictureBox1.Height * 4);
@@ -33,8 +41,8 @@ namespace Unilab2021A.Forms
 
             DrawStart();
 
-            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection,SecondFunctionSection,block_MouseDown);
-            person = new Person(g, SwordSection, stage.StartPosition_X,stage.StartPosition_Y, DirectionType.Right);
+            stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection, SecondFunctionSection, block_MouseDown, stageName);
+            person = new Person(g, SwordSection, stage.StartPosition_X, stage.StartPosition_Y, DirectionType.Right);
 
             DrawEnd();
         }
@@ -131,7 +139,7 @@ namespace Unilab2021A.Forms
                 if (!stage.IsEnemyRemained())
                 {
                     timer1.Enabled = false;
-                    PopUp popUp = new PopUp();
+                    PopUp popUp = new PopUp(this, selectStage);
                     popUp.ShowDialog();
                 }
             }

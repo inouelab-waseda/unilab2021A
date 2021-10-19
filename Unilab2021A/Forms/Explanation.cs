@@ -10,19 +10,19 @@ using System.Windows.Forms;
 
 namespace Unilab2021A.Forms
 {
-    public partial class GameHome : Form
+    public partial class Explanation : Form
     {
-        public GameHome()
+        public Explanation()
         {
             InitializeComponent();
         }
 
-        private void pictureBox4_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            // チュートリアルを表示
-            Tutorial tutorial = new Tutorial();
+            // ステージの選択画面を表示
+            SelectStage selectStage = new SelectStage();
             this.Hide();
-            tutorial.Show();
+            selectStage.Show();
         }
     }
 }
