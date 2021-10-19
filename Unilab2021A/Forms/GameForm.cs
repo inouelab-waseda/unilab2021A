@@ -22,16 +22,11 @@ namespace Unilab2021A.Forms
         private int firstStep;
         private int secondStep;
         public string stageName;
-        private SelectStage selectStage;
 
-        public GameForm(SelectStage selectStage)
+        public GameForm(string stageName)
         {
             InitializeComponent();
-            this.selectStage = selectStage;
-        }
-        
-        public void _initialize(String stageName)
-        {
+
             this.stageName = stageName;
 
             //*6や*4は適当に調整する 04/12 笠井
@@ -45,6 +40,11 @@ namespace Unilab2021A.Forms
             person = new Person(g, SwordSection, stage.StartPosition_X, stage.StartPosition_Y, DirectionType.Right);
 
             DrawEnd();
+        }
+        
+        public void _initialize(String stageName)
+        {
+
         }
 
 
@@ -139,7 +139,7 @@ namespace Unilab2021A.Forms
                 if (!stage.IsEnemyRemained())
                 {
                     timer1.Enabled = false;
-                    PopUp popUp = new PopUp(this, selectStage);
+                    PopUp popUp = new PopUp(this);
                     popUp.ShowDialog();
                 }
             }

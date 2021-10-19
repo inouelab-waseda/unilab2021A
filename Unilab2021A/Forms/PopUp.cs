@@ -13,13 +13,12 @@ namespace Unilab2021A.Forms
     public partial class PopUp : Form
     {
         GameForm gameForm;
-        SelectStage selectStage;
+        private GameForm nextGameForm;
         string[] nextStages = new string[] { "1_1", "1_2", "1_3", "2_1", "2_2", "2_3", "3_1", "3_2", "3_3", "3_4", "3_5", "3_6", "3_7", "3_8", "3_9", "3_10" };
-        public PopUp(GameForm gameForm, SelectStage selectStage)
+        public PopUp(GameForm gf)
         {
             InitializeComponent();
-            this.gameForm = gameForm;
-            this.selectStage = selectStage;
+            gameForm = gf;
         }
 
         // 次のレベル
@@ -27,21 +26,24 @@ namespace Unilab2021A.Forms
         {
             if(gameForm.stageName == "3_10")
             {
+                SelectStage selectStage = new SelectStage();
                 this.Close();
                 selectStage.Show();
             }
             // 次のステージを表示
-            gameForm._initialize(GetNextStage(gameForm.stageName));
+            nextGameForm = new GameForm(GetNextStage(gameForm.stageName));
+            gameForm.Close();
             this.Close();
-            gameForm.Show();
+            nextGameForm.Show();
         }
 
         // もう一度
         private void button2_Click(object sender, EventArgs e)
         {
-            gameForm._initialize(gameForm.stageName);
+            nextGameForm = new GameForm(gameForm.stageName);
+            gameForm.Close();
             this.Close();
-            gameForm.Show();
+            nextGameForm.Show();
         }
 
         // ブロックの説明
