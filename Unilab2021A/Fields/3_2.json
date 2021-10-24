@@ -1,7 +1,7 @@
 {
     "StageName": "Stage_3_2",
     "StartPosition": [
-        5,
+        4,
         3
     ],
     "Path": [
@@ -363,7 +363,7 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 4,
                 3
@@ -475,14 +475,7 @@
             ]
         },
         {
-            "Image": 1,
-            "Position": [
-                5,
-                7
-            ]
-        },
-        {
-            "Image": 3,
+            "Image": 0,
             "Position": [
                 5,
                 7
@@ -566,7 +559,7 @@
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 6,
                 7
@@ -650,7 +643,7 @@
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 7,
                 7
@@ -734,7 +727,7 @@
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 8,
                 7
@@ -797,217 +790,224 @@
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 9,
                 4
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 9,
                 5
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 9,
                 6
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 9,
+                7
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                9,
+                8
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                9,
+                9
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                9,
+                10
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                9,
+                11
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                0
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                1
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                2
+            ]
+        },
+        {
+            "Image": 1,
+            "Position": [
+                10,
+                3
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                4
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                5
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                6
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                7
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                8
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                9
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                10
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                10,
+                11
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                11,
+                0
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                11,
+                1
+            ]
+        },
+        {
+            "Image": 0,
+            "Position": [
+                11,
+                2
+            ]
+        },
+        {
+            "Image": 6,
+            "Position": [
+                11,
+                3
+            ]
+        },
+        {
+            "Image": 1,
+            "Position": [
+                11,
+                4
+            ]
+        },
+        {
+            "Image": 1,
+            "Position": [
+                11,
+                5
+            ]
+        },
+        {
+            "Image": 1,
+            "Position": [
+                11,
+                6
+            ]
+        },
+        {
+            "Image": 1,
+            "Position": [
+                11,
                 7
             ]
         },
         {
             "Image": 2,
             "Position": [
-                9,
+                11,
                 7
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
-                9,
+                11,
                 8
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
-                9,
+                11,
                 9
             ]
         },
         {
-            "Image": 0,
-            "Position": [
-                9,
-                10
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                9,
-                11
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                0
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                1
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                2
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                3
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                4
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                5
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                6
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                7
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                8
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                9
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                10
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                10,
-                11
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                0
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                1
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                2
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                3
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                4
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                5
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                6
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                7
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                11,
-                8
-            ]
-        },
-        {
-            "Image": 0,
+            "Image": 3,
             "Position": [
                 11,
                 9
@@ -1374,9 +1374,8 @@
         6,
         7
     ],
-    "FunctionCount": 2,
+    "FunctionCount": 1,
     "MaxBlockCounts": [
-        6,
-        4
+        3
     ]
 }

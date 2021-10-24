@@ -158,7 +158,7 @@ namespace Unilab2021A.Forms
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            
+            secondStep = 0;
             if (secondStep < stage.SecondActions.Count)
             {
                 DrawStart();
@@ -203,7 +203,7 @@ namespace Unilab2021A.Forms
                 }
 
                 DrawEnd();
-                secondStep++;
+                secondStep++;               
 
                 if (secondStep < stage.SecondActions.Count)
                 {
@@ -216,6 +216,7 @@ namespace Unilab2021A.Forms
                 {
                     if (stage.SecondActions[secondStep] == ActionBlockType.Second)
                     {
+                        timer2.Enabled = false;
                         secondStep = 0;
                         //timerをスタート
                         timer2.Enabled = true;

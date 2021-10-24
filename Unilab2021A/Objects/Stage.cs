@@ -76,7 +76,8 @@ namespace Unilab2021A.Objects
 
             //First関数
             FirstActions = new List<ActionBlockType>();
-            FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]];
+            if (Json.FunctionCount == 1) FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]];
+            if (Json.FunctionCount == 2) FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]+ Json.MaxBlockCounts[1]];
 
             //Second関数
             SecondActions = new List<ActionBlockType>();

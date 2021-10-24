@@ -1,8 +1,8 @@
 {
-    "StageName": "Stage_1_1",
+    "StageName": "Stage_2_2",
     "StartPosition": [
-        5,
-        5
+        9,
+        4
     ],
     "Path": [
         {
@@ -461,7 +461,7 @@
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 5,
                 5
@@ -538,7 +538,7 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 4,
             "Position": [
                 6,
                 4
@@ -552,14 +552,21 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 6,
                 6
             ]
         },
         {
-            "Image": 0,
+            "Image": 2,
+            "Position": [
+                6,
+                6
+            ]
+        },
+        {
+            "Image": 5,
             "Position": [
                 6,
                 7
@@ -622,28 +629,35 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 7,
                 4
             ]
         },
         {
-            "Image": 1,
+            "Image": 2,
+            "Position": [
+                7,
+                4
+            ]
+        },
+        {
+            "Image": 4,
             "Position": [
                 7,
                 5
             ]
         },
         {
-            "Image": 0,
+            "Image": 5,
             "Position": [
                 7,
                 6
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 7,
                 7
@@ -706,7 +720,7 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 8,
                 4
@@ -717,26 +731,26 @@
             "Position": [
                 8,
                 5
+            ]
+        },
+        {
+            "Image": 6,
+            "Position": [
+                8,
+                6
+            ]
+        },
+        {
+            "Image": 1,
+            "Position": [
+                8,
+                7
             ]
         },
         {
             "Image": 2,
             "Position": [
                 8,
-                5
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                8,
-                6
-            ]
-        },
-        {
-            "Image": 0,
-            "Position": [
-                8,
                 7
             ]
         },
@@ -797,7 +811,7 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 9,
                 4
@@ -811,14 +825,14 @@
             ]
         },
         {
-            "Image": 0,
+            "Image": 1,
             "Position": [
                 9,
                 6
             ]
         },
         {
-            "Image": 0,
+            "Image": 6,
             "Position": [
                 9,
                 7
@@ -888,7 +902,7 @@
             ]
         },
         {
-            "Image": 1,
+            "Image": 0,
             "Position": [
                 10,
                 5
@@ -972,14 +986,7 @@
             ]
         },
         {
-            "Image": 1,
-            "Position": [
-                11,
-                5
-            ]
-        },
-        {
-            "Image": 3,
+            "Image": 0,
             "Position": [
                 11,
                 5
@@ -1367,7 +1374,12 @@
     "Blocks": [
         0,
         1,
-        2
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
     ],
     "FunctionCount": 1,
     "MaxBlockCounts": [
