@@ -39,11 +39,17 @@ namespace Unilab2021A.Forms
             // 
             // finishButton
             // 
+            this.finishButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.finishButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.finishButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.finishButton.Location = new System.Drawing.Point(655, 461);
-            this.finishButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.finishButton.FlatAppearance.BorderSize = 0;
+            this.finishButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.finishButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.finishButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.finishButton.Location = new System.Drawing.Point(1421, 922);
+            this.finishButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.finishButton.Name = "finishButton";
-            this.finishButton.Size = new System.Drawing.Size(118, 45);
+            this.finishButton.Size = new System.Drawing.Size(254, 90);
             this.finishButton.TabIndex = 0;
             this.finishButton.Text = "チュートリアル終了";
             this.finishButton.UseVisualStyleBackColor = true;
@@ -51,41 +57,45 @@ namespace Unilab2021A.Forms
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tableLayoutPanel1.BackgroundImage")));
+            this.tableLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.62532F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.37468F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.Controls.Add(this.finishButton, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tutorialMediaPlayer, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.35433F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.645669F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 508);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1677, 1016);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tutorialMediaPlayer
             // 
             this.tutorialMediaPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tutorialMediaPlayer.Enabled = true;
-            this.tutorialMediaPlayer.Location = new System.Drawing.Point(3, 3);
+            this.tutorialMediaPlayer.Location = new System.Drawing.Point(7, 6);
+            this.tutorialMediaPlayer.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.tutorialMediaPlayer.Name = "tutorialMediaPlayer";
             this.tutorialMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("tutorialMediaPlayer.OcxState")));
-            this.tutorialMediaPlayer.Size = new System.Drawing.Size(648, 453);
+            this.tutorialMediaPlayer.Size = new System.Drawing.Size(1405, 906);
             this.tutorialMediaPlayer.TabIndex = 1;
             // 
             // Tutorial
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(774, 508);
+            this.ClientSize = new System.Drawing.Size(1677, 1016);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.Name = "Tutorial";
             this.Text = "Tutorial";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

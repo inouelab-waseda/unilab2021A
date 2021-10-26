@@ -19,7 +19,7 @@ namespace Unilab2021A.Forms
 
         private void finishButton_Click(object sender, EventArgs e)
         {
-            // ステージの選択画面を表示
+            // ボタンの説明を表示
             Explanation explanation = new Explanation();
             this.Hide();
             explanation.Show();
