@@ -41,12 +41,6 @@ namespace Unilab2021A.Forms
 
             DrawEnd();
         }
-        
-        public void _initialize(String stageName)
-        {
-
-        }
-
 
         private void DrawStart()
         {
@@ -61,25 +55,30 @@ namespace Unilab2021A.Forms
         private void startButton_Click(object sender, EventArgs e)
         {
             //timerをスタート
-            timer1.Enabled = true;
-            firstStep = 0;
+            if(!timer1.Enabled && !timer2.Enabled)
+            {
+                timer1.Enabled = true;
+                firstStep = 0;
+                secondStep = 0;
+            }
         }
 
-        //描画をtimer1で1秒ごとに処理
+        //関数1を1秒ごとに処理
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (firstStep < stage.FirstActions.Count)
+            if (firstStep < stage.FirstActions.Length)
             {
                 DrawStart();          
                 stage.DrawPath();
 
                 //状態ブロック
-                if (stage.CanAct(stage.FirstConditions[firstStep], person.X, person.Y))
+                if (stage.CanAct(stage.FirstActions[firstStep],stage.FirstConditions[firstStep], person.X, person.Y))
                 {
                     //方向転換ブロック
                     if (stage.FirstActions[firstStep] == ActionBlockType.TurnLeft || stage.FirstActions[firstStep] == ActionBlockType.TurnRight)
                     {
                         person.SetPersonDirection(stage.FirstActions[firstStep]);
+                        firstStep++;
                     }
                     //進行ブロック
                     else if (stage.FirstActions[firstStep] == ActionBlockType.GoStraight)
@@ -94,11 +93,27 @@ namespace Unilab2021A.Forms
                             person.Draw();
                         }
 
+                        firstStep++;
+                    }
+                    //関数1ブロック
+                    else if (stage.FirstActions[firstStep] == ActionBlockType.First)
+                    {
+                        firstStep = 0;
+                        person.Draw();
+                    }
+                    //関数2ブロック
+                    else if (stage.FirstActions[firstStep] == ActionBlockType.Second)
+                    {
+                        secondStep = 0;
+                        timer1.Enabled = false;
+                        timer2.Enabled = true;
+                        person.Draw();
                     }
                 }
                 else
                 {
                     person.Draw();
+                    firstStep++;
                 }
 
                 if (stage.IsSword(person.X, person.Y))
@@ -112,28 +127,6 @@ namespace Unilab2021A.Forms
                 }
 
                 DrawEnd();
-                firstStep++;
-
-                if (firstStep < stage.FirstActions.Count)
-                {
-                    if (stage.FirstActions[firstStep] == ActionBlockType.First)
-                    {
-                        person.Draw();
-                        firstStep = 0;
-                    }
-                }
-                if (firstStep < stage.FirstActions.Count)
-                {           
-                    if (stage.FirstActions[firstStep] == ActionBlockType.Second)
-                    {
-                        person.Draw();
-                        secondStep = 0;
-                        //timerをスタート
-                        timer2.Enabled = true;
-                        
-                    }              
-                }
-                person.Draw();
 
                 // クリア判定
                 if (!stage.IsEnemyRemained())
@@ -142,6 +135,14 @@ namespace Unilab2021A.Forms
                     PopUp popUp = new PopUp(this);
                     popUp.ShowDialog();
                 }
+            }
+            //関数2から関数1を呼び出され、関数1の実行が終わったとき、関数2の続きを実行
+            else if (secondStep < stage.SecondActions.Length && stage.SecondActions[secondStep] == ActionBlockType.First)
+            {
+                //次のステップに進めておく
+                secondStep++;
+                timer1.Enabled = false;
+                timer2.Enabled = true;
             }
             //タイマーストップ
             else 
@@ -157,21 +158,22 @@ namespace Unilab2021A.Forms
             }
         }
 
+        //関数2を1秒ごとに処理
         private void timer2_Tick(object sender, EventArgs e)
         {
-            secondStep = 0;
-            if (secondStep < stage.SecondActions.Count)
+            if (secondStep < stage.SecondActions.Length)
             {
                 DrawStart();
                 stage.DrawPath();
 
                 //状態ブロック
-                if (stage.CanAct(stage.SecondConditions[secondStep], person.X, person.Y))
+                if (stage.CanAct(stage.SecondActions[secondStep], stage.SecondConditions[secondStep], person.X, person.Y))
                 {
                     //方向転換ブロック
                     if (stage.SecondActions[secondStep] == ActionBlockType.TurnLeft || stage.SecondActions[secondStep] == ActionBlockType.TurnRight)
                     {
                         person.SetPersonDirection(stage.SecondActions[secondStep]);
+                        secondStep++;
                     }
                     //進行ブロック
                     else if (stage.SecondActions[secondStep] == ActionBlockType.GoStraight)
@@ -186,11 +188,26 @@ namespace Unilab2021A.Forms
                             person.Draw();
                         }
 
+                        secondStep++;
+                    }
+                    //関数1ブロック
+                    else if (stage.SecondActions[secondStep] == ActionBlockType.First)
+                    {
+                        firstStep = 0;
+                        secondStep++;
+                        timer1.Enabled = true;
+                        timer2.Enabled = false;
+                    }
+                    //関数2ブロック
+                    else if (stage.SecondActions[secondStep] == ActionBlockType.Second)
+                    {
+                        secondStep = 0;
                     }
                 }
                 else
                 {
                     person.Draw();
+                    secondStep++;
                 }
 
                 if (stage.IsSword(person.X, person.Y))
@@ -203,35 +220,35 @@ namespace Unilab2021A.Forms
                     person.UseSword();
                 }
 
-                DrawEnd();
-                secondStep++;               
+                DrawEnd();             
 
-                if (secondStep < stage.SecondActions.Count)
+                // クリア判定
+                if (!stage.IsEnemyRemained())
                 {
-                    if (stage.SecondActions[secondStep] == ActionBlockType.First)
-                    {
-                        firstStep = 0;
-                    }
+                    timer2.Enabled = false;
+                    PopUp popUp = new PopUp(this);
+                    popUp.ShowDialog();
                 }
-                if (secondStep < stage.SecondActions.Count)
-                {
-                    if (stage.SecondActions[secondStep] == ActionBlockType.Second)
-                    {
-                        timer2.Enabled = false;
-                        secondStep = 0;
-                        //timerをスタート
-                        timer2.Enabled = true;
-                        
-                    }
-                }
+            }
+            //関数1から関数2を呼び出され、関数2の実行が終わったとき、関数1の続きを実行
+            else if (firstStep < stage.FirstActions.Length && stage.FirstActions[firstStep] == ActionBlockType.Second)
+            {
+                //次のステップに進めておく
+                firstStep++;
+                timer1.Enabled = true;
+                timer2.Enabled = false;
             }
             //タイマーストップ
             else
             {
                 timer2.Enabled = false;
-                
-            }
 
+                if (stage.IsEnemyRemained())
+                {
+                    // 失敗
+                    resetGame();
+                }
+            }
         }
 
         private void resetGame()

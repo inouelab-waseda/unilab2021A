@@ -18,9 +18,9 @@ namespace Unilab2021A.Objects
     {
         public int StartPosition_X { get; private set; }
         public int StartPosition_Y { get; private set; }
-        public List<ActionBlockType> FirstActions { get; private set; }
+        public ActionBlockType[] FirstActions { get; private set; }
         public ConditionBlockType[] FirstConditions { get; private set; }
-        public List<ActionBlockType> SecondActions { get; private set; }
+        public ActionBlockType[] SecondActions { get; private set; }
         public ConditionBlockType[] SecondConditions { get; private set; }
 
         private StageJson Json { get; }
@@ -74,14 +74,16 @@ namespace Unilab2021A.Objects
             //関数セクションの作成
             CreateFunctionSection();
 
-            //First関数
-            FirstActions = new List<ActionBlockType>();
-            if (Json.FunctionCount == 1) FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]];
-            if (Json.FunctionCount == 2) FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]+ Json.MaxBlockCounts[1]];
+            //関数1
+            FirstActions = new ActionBlockType[Json.MaxBlockCounts[0]];
+            FirstConditions = new ConditionBlockType[Json.MaxBlockCounts[0]];
 
-            //Second関数
-            SecondActions = new List<ActionBlockType>();
-            if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[Json.MaxBlockCounts[1]];
+            //関数2 (あれば)
+            if (Json.FunctionCount == 2)
+            {
+                SecondActions = new ActionBlockType[Json.MaxBlockCounts[1]];
+                SecondConditions = new ConditionBlockType[Json.MaxBlockCounts[1]];
+            }
 
             //初期位置の座標
             StartPosition_X = Json.StartPosition[0] * Shares.WIDTH / Shares.WIDTH_CELL_NUM;
@@ -255,7 +257,7 @@ namespace Unilab2021A.Objects
                 firstPictureBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
                 firstPictureBoxes[i].DragOver += Block_DragOver;
                 firstPictureBoxes[i].DragEnter += Block_DragEnter;
-                firstPictureBoxes[i].DragDrop += Block_DragDrop;
+                firstPictureBoxes[i].DragDrop += Block_DragDrop_First;
                 firstPictureBoxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
                 firstPictureBoxes[i].BackgroundImageLayout = ImageLayout.Stretch;
                 firstPictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
@@ -276,7 +278,7 @@ namespace Unilab2021A.Objects
                     secondPictureBoxes[i].Height = Shares.BLOCK_CELL_SIZE;
                     secondPictureBoxes[i].DragOver += Block_DragOver;
                     secondPictureBoxes[i].DragEnter += Block_DragEnter;
-                    secondPictureBoxes[i].DragDrop += Block_DragDrop;
+                    secondPictureBoxes[i].DragDrop += Block_DragDrop_Second;
                     secondPictureBoxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
                     secondPictureBoxes[i].BackgroundImageLayout = ImageLayout.Stretch;
                     secondPictureBoxes[i].BorderStyle = BorderStyle.FixedSingle;
@@ -290,11 +292,11 @@ namespace Unilab2021A.Objects
         public void Reset()
         {
             initPath();
-            FirstActions = new List<ActionBlockType>();
+            FirstActions = new ActionBlockType[FirstActions.Length];
             FirstConditions = new ConditionBlockType[FirstConditions.Length];
             FirstFunctionSection.Controls.Clear();
-            
-            SecondActions = new List<ActionBlockType>();
+
+            SecondActions = new ActionBlockType[SecondActions.Length];
             if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[SecondConditions.Length];
             SecondFunctionSection.Controls.Clear();
             CreateFunctionSection();
@@ -308,90 +310,126 @@ namespace Unilab2021A.Objects
             e.Effect = DragDropEffects.All;
 
 
-        private void Block_DragDrop(object receiver, DragEventArgs e)
+        private void Block_DragDrop_First(object receiver, DragEventArgs e)
         {
             BlockType data = (BlockType)e.Data.GetData(typeof(BlockType));
 
-            if(data==BlockType.Blue|| data == BlockType.Red || data == BlockType.Yellow)
+            if (data == BlockType.Blue || data == BlockType.Red || data == BlockType.Yellow)
             {
-                ConditionBlock_DragDrop((PictureBox)receiver, data);
+                ConditionBlock_DragDrop_First((PictureBox)receiver, data);
             }
             else
             {
-                ActionBlock_DragDrop((PictureBox)receiver, data);
+                ActionBlock_DragDrop_First((PictureBox)receiver, data);
             }
 
         }
 
-        private void ActionBlock_DragDrop(PictureBox pictureBox,BlockType data)
+        private void ActionBlock_DragDrop_First(PictureBox pictureBox, BlockType data)
         {
             int i = int.Parse(pictureBox.Name);
 
-            //すでにブロックがあった場合
-            if (pictureBox.Image != null)
+            switch (data)
             {
-                switch (data)
-                {
-                    case BlockType.GoStraight:
-                        FirstActions[i] = ActionBlockType.GoStraight;
-                        break;
-                    case BlockType.TurnRight:
-                        FirstActions[i] = ActionBlockType.TurnRight;
-                        break;
-                    case BlockType.TurnLeft:
-                        FirstActions[i] = ActionBlockType.TurnLeft;
-                        break;
-                    case BlockType.First:
-                        FirstActions[i] = ActionBlockType.First;
-                        break;
-                    case BlockType.Second:
-                        FirstActions[i] = ActionBlockType.Second;
-                        break;
-                }
-            }
-            else
-            {
-                switch (data)
-                {
-                    case BlockType.GoStraight:
-                        FirstActions.Add(ActionBlockType.GoStraight);
-                        break;
-                    case BlockType.TurnRight:
-                        FirstActions.Add(ActionBlockType.TurnRight);
-                        break;
-                    case BlockType.TurnLeft:
-                        FirstActions.Add(ActionBlockType.TurnLeft);
-                        break;
-                    case BlockType.First:
-                        FirstActions.Add(ActionBlockType.First);
-                        break;
-                    case BlockType.Second:
-                        FirstActions.Add(ActionBlockType.Second);
-                        break;
-                }
+                case BlockType.GoStraight:
+                    FirstActions[i] = ActionBlockType.GoStraight;
+                    break;
+                case BlockType.TurnRight:
+                    FirstActions[i] = ActionBlockType.TurnRight;
+                    break;
+                case BlockType.TurnLeft:
+                    FirstActions[i] = ActionBlockType.TurnLeft;
+                    break;
+                case BlockType.First:
+                    FirstActions[i] = ActionBlockType.First;
+                    break;
+                case BlockType.Second:
+                    FirstActions[i] = ActionBlockType.Second;
+                    break;
             }
             pictureBox.Image = TransformBlockTypeIntoImage(data);
         }
 
-        private void ConditionBlock_DragDrop(PictureBox pictureBox, BlockType data)
+        private void ConditionBlock_DragDrop_First(PictureBox pictureBox, BlockType data)
         {
 
-                int i = int.Parse(pictureBox.Name);
+            int i = int.Parse(pictureBox.Name);
+
+            if (data == BlockType.Blue)
+            {
+                FirstConditions[i] = ConditionBlockType.Blue;
+            }
+            else if (data == BlockType.Red)
+            {
+                FirstConditions[i] = ConditionBlockType.Red;
+            }
+            else if (data == BlockType.Yellow)
+            {
+                FirstConditions[i] = ConditionBlockType.Yellow;
+            }
 
 
+            pictureBox.BackgroundImage = TransformBlockTypeIntoImage(data);
 
-                if (data == BlockType.Blue)
-                {
-                    FirstConditions[i] = ConditionBlockType.Blue;
-                }
-                else if (data == BlockType.Red)
-                {
-                    FirstConditions[i] = ConditionBlockType.Red;
-                }
-                else if (data == BlockType.Yellow)
-                {
-                    FirstConditions[i] = ConditionBlockType.Yellow;
-                }
+        }
+
+        private void Block_DragDrop_Second(object receiver, DragEventArgs e)
+        {
+            BlockType data = (BlockType)e.Data.GetData(typeof(BlockType));
+
+            if (data == BlockType.Blue || data == BlockType.Red || data == BlockType.Yellow)
+            {
+                ConditionBlock_DragDrop_Second((PictureBox)receiver, data);
+            }
+            else
+            {
+                ActionBlock_DragDrop_Second((PictureBox)receiver, data);
+            }
+
+        }
+
+        private void ActionBlock_DragDrop_Second(PictureBox pictureBox, BlockType data)
+        {
+            int i = int.Parse(pictureBox.Name);
+
+            switch (data)
+            {
+                case BlockType.GoStraight:
+                    SecondActions[i] = ActionBlockType.GoStraight;
+                    break;
+                case BlockType.TurnRight:
+                    SecondActions[i] = ActionBlockType.TurnRight;
+                    break;
+                case BlockType.TurnLeft:
+                    SecondActions[i] = ActionBlockType.TurnLeft;
+                    break;
+                case BlockType.First:
+                    SecondActions[i] = ActionBlockType.First;
+                    break;
+                case BlockType.Second:
+                    SecondActions[i] = ActionBlockType.Second;
+                    break;
+            }
+            pictureBox.Image = TransformBlockTypeIntoImage(data);
+        }
+
+        private void ConditionBlock_DragDrop_Second(PictureBox pictureBox, BlockType data)
+        {
+
+            int i = int.Parse(pictureBox.Name);
+
+            if (data == BlockType.Blue)
+            {
+                SecondConditions[i] = ConditionBlockType.Blue;
+            }
+            else if (data == BlockType.Red)
+            {
+                SecondConditions[i] = ConditionBlockType.Red;
+            }
+            else if (data == BlockType.Yellow)
+            {
+                SecondConditions[i] = ConditionBlockType.Yellow;
+            }
 
 
             pictureBox.BackgroundImage = TransformBlockTypeIntoImage(data);
@@ -424,8 +462,14 @@ namespace Unilab2021A.Objects
         }
 
         //行動できるかどうか判定
-        public bool CanAct(ConditionBlockType personCondition, int x, int y)
+        public bool CanAct(ActionBlockType personAction, ConditionBlockType personCondition, int x, int y)
         {
+            //ブロックがそもそもないとき
+            if (personAction == ActionBlockType.None)
+            {
+                return false;
+            }
+
             ConditionBlockType cellCondition = cellConditions[x / (Shares.WIDTH / Shares.WIDTH_CELL_NUM), y / (Shares.HEIGHT / Shares.HEIGHT_CELL_NUM)];
             if (personCondition == ConditionBlockType.None)
             {
