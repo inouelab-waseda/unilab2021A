@@ -85,6 +85,12 @@
     <Compile Include="Forms\GameHome.Designer.cs">
       <DependentUpon>GameHome.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GameOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameOver.Designer.cs">
+      <DependentUpon>GameOver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PopUp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameHome.resx">
       <DependentUpon>GameHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameOver.resx">
+      <DependentUpon>GameOver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PopUp.resx">
       <DependentUpon>PopUp.cs</DependentUpon>

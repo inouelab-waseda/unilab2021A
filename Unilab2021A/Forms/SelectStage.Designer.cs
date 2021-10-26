@@ -585,6 +585,7 @@ namespace Unilab2021A.Forms
             // 
             // pictureBox18
             // 
+            this.pictureBox18.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox18.BackgroundImage")));
             this.pictureBox18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox18.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox18.Location = new System.Drawing.Point(242, 109);
@@ -595,6 +596,7 @@ namespace Unilab2021A.Forms
             // 
             // pictureBox16
             // 
+            this.pictureBox16.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox16.BackgroundImage")));
             this.pictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox16.Location = new System.Drawing.Point(142, 109);
@@ -605,6 +607,7 @@ namespace Unilab2021A.Forms
             // 
             // pictureBox17
             // 
+            this.pictureBox17.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox17.BackgroundImage")));
             this.pictureBox17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox17.Location = new System.Drawing.Point(42, 109);
@@ -851,6 +854,7 @@ namespace Unilab2021A.Forms
             // 
             // pictureBox5
             // 
+            this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox5.Location = new System.Drawing.Point(42, 104);
@@ -861,6 +865,7 @@ namespace Unilab2021A.Forms
             // 
             // pictureBox6
             // 
+            this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox6.Location = new System.Drawing.Point(142, 104);
@@ -871,6 +876,7 @@ namespace Unilab2021A.Forms
             // 
             // pictureBox7
             // 
+            this.pictureBox7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.BackgroundImage")));
             this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox7.Location = new System.Drawing.Point(242, 104);

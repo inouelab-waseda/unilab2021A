@@ -151,7 +151,8 @@ namespace Unilab2021A.Forms
                 if (stage.IsEnemyRemained())
                 {
                     // 失敗
-                    resetGame();
+                    GameOver gameOver = new GameOver(this);
+                    gameOver.ShowDialog();
                 }
             }
         }
