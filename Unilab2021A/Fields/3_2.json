@@ -1374,8 +1374,9 @@
         6,
         7
     ],
-    "FunctionCount": 1,
+    "FunctionCount": 2,
     "MaxBlockCounts": [
-        3
+        6,
+        4
     ]
 }

@@ -1367,10 +1367,15 @@
     "Blocks": [
         0,
         1,
-        2
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
     ],
     "FunctionCount": 1,
     "MaxBlockCounts": [
-        14
+        6
     ]
 }
