@@ -46,13 +46,14 @@ namespace Unilab2021A.Forms
             nextGameForm.Show();
         }
 
-        // ブロックの説明
+        // ステージ選択
         private void button3_Click(object sender, EventArgs e)
         {
             // ステージの選択画面を表示
-            Explanation explanation = new Explanation();
+            SelectStage ss = new SelectStage();
+            gameForm.Close();
             this.Close();
-            explanation.Show();
+            ss.Show();
         }
 
         private string GetNextStage(string stage)
