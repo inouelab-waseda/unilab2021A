@@ -49,7 +49,10 @@ namespace Unilab2021A.Forms
         // ブロックの説明
         private void button3_Click(object sender, EventArgs e)
         {
+            // ステージの選択画面を表示
+            Explanation explanation = new Explanation();
             this.Close();
+            explanation.Show();
         }
 
         private string GetNextStage(string stage)
