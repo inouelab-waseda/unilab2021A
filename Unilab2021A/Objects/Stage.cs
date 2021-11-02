@@ -23,6 +23,8 @@ namespace Unilab2021A.Objects
         public ActionBlockType[] SecondActions { get; private set; }
         public ConditionBlockType[] SecondConditions { get; private set; }
 
+        public DirectionType StartDirection { get; private set; }
+
         private StageJson Json { get; }
         private Graphics Graphics { get; }
 
@@ -64,6 +66,8 @@ namespace Unilab2021A.Objects
             // Jsonファイルの読み込みなど(StageName)
             // --------
             Json = ReadFieldJson(stageName);
+
+            StartDirection = Json.StartDirection;
 
             //道の作成
             initPath();

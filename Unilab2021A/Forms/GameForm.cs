@@ -37,7 +37,7 @@ namespace Unilab2021A.Forms
             DrawStart();
 
             stage = new Stage(g, ActionBlockTypeSection, FirstFunctionSection, SecondFunctionSection, block_MouseDown, stageName);
-            person = new Person(g, SwordSection, stage.StartPosition_X, stage.StartPosition_Y, DirectionType.Right);
+            person = new Person(g, SwordSection, stage.StartPosition_X, stage.StartPosition_Y, stage.StartDirection);
 
             DrawEnd();
         }

@@ -8,6 +8,7 @@ namespace Unilab2021A.Fields
     {
         public string StageName { get; set; }
         public List<int> StartPosition { get; set; }
+        public DirectionType StartDirection { get; set; }
         public List<Cell> Path { get; set; } = new List<Cell>();
         public List<BlockType> Blocks { get; set; }
         public int FunctionCount { get; set; } //1か2のみ受け付ける
