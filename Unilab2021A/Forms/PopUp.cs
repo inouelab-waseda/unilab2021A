@@ -27,14 +27,18 @@ namespace Unilab2021A.Forms
             if(gameForm.stageName == "3_10")
             {
                 SelectStage selectStage = new SelectStage();
+                gameForm.Close();
                 this.Close();
                 selectStage.Show();
             }
-            // 次のステージを表示
-            nextGameForm = new GameForm(GetNextStage(gameForm.stageName));
-            gameForm.Close();
-            this.Close();
-            nextGameForm.Show();
+            else
+            {
+                // 次のステージを表示
+                nextGameForm = new GameForm(GetNextStage(gameForm.stageName));
+                gameForm.Close();
+                this.Close();
+                nextGameForm.Show();
+            }
         }
 
         // もう一度
