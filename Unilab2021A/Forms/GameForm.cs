@@ -27,6 +27,8 @@ namespace Unilab2021A.Forms
         {
             InitializeComponent();
 
+            this.Text = stageName;
+
             this.stageName = stageName;
 
             //*6や*4は適当に調整する 04/12 笠井
@@ -55,7 +57,7 @@ namespace Unilab2021A.Forms
         private void startButton_Click(object sender, EventArgs e)
         {
             //timerをスタート
-            if(!timer1.Enabled && !timer2.Enabled)
+            if (!timer1.Enabled && !timer2.Enabled)
             {
                 timer1.Enabled = true;
                 firstStep = 0;
@@ -68,11 +70,11 @@ namespace Unilab2021A.Forms
         {
             if (firstStep < stage.FirstActions.Length)
             {
-                DrawStart();          
+                DrawStart();
                 stage.DrawPath();
 
                 //状態ブロック
-                if (stage.CanAct(stage.FirstActions[firstStep],stage.FirstConditions[firstStep], person.X, person.Y))
+                if (stage.CanAct(stage.FirstActions[firstStep], stage.FirstConditions[firstStep], person.X, person.Y))
                 {
                     //方向転換ブロック
                     if (stage.FirstActions[firstStep] == ActionBlockType.TurnLeft || stage.FirstActions[firstStep] == ActionBlockType.TurnRight)
@@ -137,17 +139,18 @@ namespace Unilab2021A.Forms
                 }
             }
             //関数2から関数1を呼び出され、関数1の実行が終わったとき、関数2の続きを実行
-            else if (secondStep < stage.SecondActions.Length && stage.SecondActions[secondStep] == ActionBlockType.First)
+            else if (stage.SecondActions != null && secondStep < stage.SecondActions.Length && stage.SecondActions[secondStep] == ActionBlockType.First)
             {
                 //次のステップに進めておく
                 secondStep++;
                 timer1.Enabled = false;
                 timer2.Enabled = true;
+
             }
             //タイマーストップ
-            else 
+            else
             {
-                timer1.Enabled = false;              
+                timer1.Enabled = false;
 
                 if (stage.IsEnemyRemained())
                 {
@@ -220,7 +223,7 @@ namespace Unilab2021A.Forms
                     person.UseSword();
                 }
 
-                DrawEnd();             
+                DrawEnd();
 
                 // クリア判定
                 if (!stage.IsEnemyRemained())

@@ -300,9 +300,13 @@ namespace Unilab2021A.Objects
             FirstConditions = new ConditionBlockType[FirstConditions.Length];
             FirstFunctionSection.Controls.Clear();
 
-            SecondActions = new ActionBlockType[SecondActions.Length];
-            if (Json.FunctionCount == 2) SecondConditions = new ConditionBlockType[SecondConditions.Length];
-            SecondFunctionSection.Controls.Clear();
+            if (Json.FunctionCount == 2)
+            {
+                SecondActions = new ActionBlockType[SecondActions.Length];
+                SecondConditions = new ConditionBlockType[SecondConditions.Length];
+                SecondFunctionSection.Controls.Clear();
+            }
+      
             CreateFunctionSection();
         }
 

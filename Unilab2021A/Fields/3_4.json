@@ -4,6 +4,7 @@
         7,
         6
     ],
+    "StartDirection": 1,
     "Path": [
         {
             "Image": 0,
@@ -986,6 +987,13 @@
             ]
         },
         {
+            "Image": 2,
+            "Position": [
+                11,
+                4
+            ]
+        },
+        {
             "Image": 1,
             "Position": [
                 11,
@@ -1022,6 +1030,13 @@
         },
         {
             "Image": 1,
+            "Position": [
+                11,
+                10
+            ]
+        },
+        {
+            "Image": 3,
             "Position": [
                 11,
                 10
@@ -1133,7 +1148,7 @@
             ]
         },
         {
-            "Image": 4,
+            "Image": 1,
             "Position": [
                 13,
                 2
@@ -1390,7 +1405,7 @@
     ],
     "FunctionCount": 2,
     "MaxBlockCounts": [
-        6,
+        4,
         4
     ]
 }
